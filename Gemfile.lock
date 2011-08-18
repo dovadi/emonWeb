@@ -49,6 +49,10 @@ GEM
       coffee-script-source
       execjs
     coffee-script-source (1.1.2)
+    devise (1.4.2)
+      bcrypt-ruby (~> 2.1.2)
+      orm_adapter (~> 0.0.3)
+      warden (~> 1.0.3)
     diff-lcs (1.1.2)
     erubis (2.7.0)
     execjs (1.2.4)
@@ -74,6 +78,7 @@ GEM
     multi_json (1.0.3)
     mysql2 (0.3.7)
     nokogiri (1.5.0)
+    orm_adapter (0.0.5)
     polyglot (0.3.2)
     rack (1.3.2)
     rack-cache (1.0.2)
@@ -125,6 +130,7 @@ GEM
       ffi (>= 1.0.7)
       json_pure
       rubyzip
+    shoulda (2.11.3)
     sprockets (2.0.0.beta.13)
       hike (~> 1.2)
       rack (~> 1.0)
@@ -141,6 +147,8 @@ GEM
     uglifier (1.0.1)
       execjs (>= 0.3.0)
       multi_json (>= 1.0.2)
+    warden (1.0.5)
+      rack (>= 1.0)
     xpath (0.1.4)
       nokogiri (~> 1.3)
 
@@ -149,10 +157,12 @@ PLATFORMS
 
 DEPENDENCIES
   coffee-rails (~> 3.1.0.rc)
+  devise
   haml-rails
   jquery-rails
   mysql2
   rails (= 3.1.0.rc6)
   sass-rails (~> 3.1.0.rc)
+  shoulda
   steak
   uglifier

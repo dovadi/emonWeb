@@ -17,9 +17,11 @@ end
 
 gem 'jquery-rails'
 gem 'haml-rails'
+gem 'devise'
 
 group :test, :development do
   gem 'steak'
+  gem 'shoulda'
 end
 
 # Use unicorn as the web server

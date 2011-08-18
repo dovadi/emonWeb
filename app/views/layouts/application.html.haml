@@ -5,11 +5,14 @@
 
     / %link{:href=>'/images/logo.png', :rel=>'apple-touch-icon'}
     / %link{:href=>'/favicon.ico', :rel=>'shortcut icon'}
-    = stylesheet_link_tag 'stylesheets/screen.css', :media => 'screen, projection'
-    = stylesheet_link_tag 'stylesheets/print.css', :media => 'print'
+    = stylesheet_link_tag 'screen', :media => 'screen, projection'
+    = stylesheet_link_tag 'print', :media => 'print'
     /[if IE]
-      = stylesheet_link_tag 'stylesheets/ie.css', :media => 'screen, projection'
+      = stylesheet_link_tag 'ie', :media => 'screen, projection'
     = csrf_meta_tag
 
   %body
+    %p.notice= notice
+    %p.alert= alert
+
     = yield
