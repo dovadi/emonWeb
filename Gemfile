@@ -7,7 +7,6 @@ gem 'rails', '3.1.0.rc6'
 
 gem 'mysql2'
 
-
 # Gems used only for assets and not required
 # in production environments by default.
 group :assets do
@@ -17,6 +16,11 @@ group :assets do
 end
 
 gem 'jquery-rails'
+gem 'haml-rails'
+
+group :test, :development do
+  gem 'steak'
+end
 
 # Use unicorn as the web server
 # gem 'unicorn'
