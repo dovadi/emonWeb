@@ -33,11 +33,10 @@ feature 'Sign in', %q{
   end
 
   scenario 'User signs in successfully with email' do
-    session = Capybara::Session.new(:culerity)
     visit '/'
     click_link 'Sign in'
     fill_in 'Email', :with => @user.email
-    fill_in 'Password', :with => 'please'
+    fill_in 'Password', :with => @user.password
     click_button 'Sign in'
     within '.alert-message.notice' do
       page.should have_content('Signed in successfully.')
