@@ -22,6 +22,10 @@ gem 'devise'
 group :test, :development do
   gem 'steak'
   gem 'shoulda'
+  gem 'guard'
+  gem 'guard-rspec'
+  gem 'rb-fsevent'
+  gem 'growl_notify'
 end
 
 # Use unicorn as the web server
