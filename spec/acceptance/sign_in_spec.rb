@@ -6,35 +6,9 @@ feature 'Sign in', %q{
   Should be able to sign in
 } do
 
-
-  # Scenario: User is not signed up                       
-  #   Given I am not logged in                            
-  #   And no user exists with an email of "user@test.com" 
-  #   When I go to the sign in page                       
-  #   And I sign in as "user@test.com/please"             
-  #   Then I should see "Invalid email or password."      
-  #   And I go to the home page                           
-  #   And I should be signed out                          
-  # 
-  # Scenario: User enters wrong password                                              
-  #   Given I am not logged in                                                        
-  #   And I am a user named "foo" with an email "user@test.com" and password "please" 
-  #   When I go to the sign in page                                                   
-  #   And I sign in as "user@test.com/wrongpassword"                                  
-  #   Then I should see "Invalid email or password."                                  
-  #   And I go to the home page                                                       
-  #   And I should be signed out                                                      
-  # 
-  # Scenario: User signs in successfully with email                                   
-  #   Given I am not logged in                                                        
-  #   And I am a user named "foo" with an email "user@test.com" and password "please" 
-  #   When I go to the sign in page                                                   
-  #   And I sign in as "user@test.com/please"                                         
-  #   Then I should see "Signed in successfully."                                     
-  #   And I should be signed in                                                       
-  #   When I return next time                                                         
-  #   Then I should be already signed in                                              
-
+  background do
+    @user = Factory(:user)
+  end
 
   scenario 'User is not signed up' do
     visit '/'
@@ -42,8 +16,33 @@ feature 'Sign in', %q{
     fill_in 'Email', :with => 'frank@dovadi.nl'
     fill_in 'Password', :with => 'password'
     click_button 'Sign in'
-    page.should have_content('Invalid email or password.')
-    
+    within '.alert-message.alert' do
+      page.should have_content('Invalid email or password.')
+    end
+  end
+
+  scenario 'User enters wrong password' do
+    visit '/'
+    click_link 'Sign in'
+    fill_in 'Email', :with => @user.email
+    fill_in 'Password', :with => 'wrong_password'
+    click_button 'Sign in'
+    within '.alert-message' do
+      page.should have_content('Invalid email or password.')
+    end
+  end
+
+  scenario 'User signs in successfully with email' do
+    session = Capybara::Session.new(:culerity)
+    visit '/'
+    click_link 'Sign in'
+    fill_in 'Email', :with => @user.email
+    fill_in 'Password', :with => 'please'
+    click_button 'Sign in'
+    within '.alert-message.notice' do
+      page.should have_content('Signed in successfully.')
+    end
+    page.should have_content @user.email
   end
 
 end
