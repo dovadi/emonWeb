@@ -12,6 +12,22 @@
   border-top: 1px solid #DDDDDD;
 }
 
+
+/* Menu links top right screen */
 .right {
   float: right;
 }
+
+
+/* Styling link page title*/
+h1 a {
+  text-decoration: none;
+  color: #000;
+}
+
+h1 a:hover {
+  text-decoration: none;
+  color: #000;
+}
+
+h1 a:visited { color: #000; }
