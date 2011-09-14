@@ -8,11 +8,11 @@ feature 'Sign in', %q{
 
   background do
     @user = Factory(:user)
+    visit homepage
+    click_link 'Sign in'
   end
 
   scenario 'User is not signed up' do
-    visit '/'
-    click_link 'Sign in'
     fill_in 'Email', :with => 'frank@dovadi.nl'
     fill_in 'Password', :with => 'password'
     click_button 'Sign in'
@@ -22,8 +22,6 @@ feature 'Sign in', %q{
   end
 
   scenario 'User enters wrong password' do
-    visit '/'
-    click_link 'Sign in'
     fill_in 'Email', :with => @user.email
     fill_in 'Password', :with => 'wrong_password'
     click_button 'Sign in'
@@ -33,8 +31,6 @@ feature 'Sign in', %q{
   end
 
   scenario 'User signs in successfully with email' do
-    visit '/'
-    click_link 'Sign in'
     fill_in 'Email', :with => @user.email
     fill_in 'Password', :with => @user.password
     click_button 'Sign in'
