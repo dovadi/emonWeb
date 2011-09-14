@@ -1,9 +1,11 @@
 .row
-  .span4.columns.offset12
+  .span6.columns.offset10
     .right
       - if current_user
         = current_user.email
         |
         = link_to 'Sign out', destroy_user_session_path, :method=>'delete'
+        |
+        = link_to 'Edit account', edit_user_registration_path
       - else
         = link_to 'Sign in', user_session_path
