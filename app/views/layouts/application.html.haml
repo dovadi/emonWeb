@@ -19,7 +19,7 @@
       = render :partial => 'layouts/user_menu'
 
       .page-header
-        %h1 emonWeb
+        %h1=link_to 'emonWeb', root_path
 
       .content
         = render :partial => 'layouts/flashes'
