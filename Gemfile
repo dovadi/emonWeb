@@ -20,6 +20,7 @@ gem 'devise'
 
 group :test, :development do
   gem 'steak'
+  gem 'email_spec'
   gem 'shoulda'
   gem 'guard'
   gem 'guard-rspec'
