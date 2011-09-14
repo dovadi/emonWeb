@@ -7,7 +7,8 @@ feature 'Sign up', %q{
 } do
 
   background do
-    visit '/users/sign_up'
+    visit homepage
+    click_link 'Sign up'
   end
 
   scenario 'User signs up with valid data' do

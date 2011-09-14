@@ -8,10 +8,10 @@ feature 'Sign out', %q{
 
   background do
     @user = Factory(:user)
+    sign_in_as @user
   end
 
   scenario 'Users signs out' do
-    sign_in_as @user
     page.should have_content @user.email
     click_link 'Sign out'
     within '.alert-message.notice' do
