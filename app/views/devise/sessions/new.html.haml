@@ -1,0 +1,16 @@
+= form_for(resource, :as => resource_name, :html => {:class => 'form-stacked'}, :url => session_path(resource_name)) do |f|
+  %fieldset
+    %legend Sign in !!
+    %p
+      = f.label :email
+      = f.email_field :email
+    %p
+      = f.label :password
+      = f.password_field :password
+    - if devise_mapping.rememberable?
+      %p
+        = f.check_box :remember_me
+        = f.label :remember_me
+  %p= f.submit "Sign in"
+.form-stacked
+  = render :partial => "devise/shared/links"
