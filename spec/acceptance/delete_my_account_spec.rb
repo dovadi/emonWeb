@@ -1,7 +1,7 @@
 require 'acceptance/acceptance_helper'
 
 feature 'Delete my account', %q{
-  In order destroy all my data
+  In order to destroy all my data
   As a user
   I want to delete my account
 } do
