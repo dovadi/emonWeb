@@ -4,14 +4,20 @@
 
   <fieldset>
     <legend>Sign up</legend>
-    <p><%= f.label :email %><br />
-    <%= f.email_field :email %></p>
+    <p>
+      <%= f.label :email %>
+      <%= f.email_field :email %>
+    </p>
 
-    <p><%= f.label :password %><br />
-    <%= f.password_field :password %></p>
+    <p>
+      <%= f.label :password %>
+      <%= f.password_field :password %>
+    </p>
 
-    <p><%= f.label :password_confirmation %><br />
-    <%= f.password_field :password_confirmation %></p>
+    <p>
+      <%= f.label :password_confirmation %>
+      <%= f.password_field :password_confirmation %>
+    </p>
   </fieldset>
 
   <p><%= f.submit "Sign up" %></p>

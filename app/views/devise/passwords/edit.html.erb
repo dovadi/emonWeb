@@ -5,11 +5,15 @@
     <legend>Change your password</legend>
     <%= f.hidden_field :reset_password_token %>
 
-    <p><%= f.label :password, "New password" %><br />
-    <%= f.password_field :password %></p>
+    <p>
+      <%= f.label :password, "New password" %>
+      <%= f.password_field :password %>
+    </p>
 
-    <p><%= f.label :password_confirmation, "Confirm new password" %><br />
-    <%= f.password_field :password_confirmation %></p>
+    <p>
+      <%= f.label :password_confirmation, "Confirm new password" %>
+      <%= f.password_field :password_confirmation %>
+    </p>
   </fieldset>
 
   <p><%= f.submit "Change my password" %></p>
