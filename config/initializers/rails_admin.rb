@@ -19,6 +19,11 @@ RailsAdmin.config do |config|
   # and will run on the default user scope.
   # If you use devise, this will authenticate the same as authenticate_user!
   # Example Devise admin
+
+  config.authorize_with do 
+    redirect_to '/' unless current_user.try(:admin?)
+  end
+
   # RailsAdmin.config do |config|
   #   config.authenticate_with do
   #     authenticate_admin!

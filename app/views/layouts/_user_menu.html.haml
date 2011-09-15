@@ -7,6 +7,9 @@
         = link_to 'Sign out', destroy_user_session_path, :method=>'delete'
         |
         = link_to 'Edit account', edit_user_registration_path
+        - if current_user.admin?
+          |
+          = link_to 'Admin', rails_admin_path
       - else
         = link_to 'Sign in', user_session_path
         or
