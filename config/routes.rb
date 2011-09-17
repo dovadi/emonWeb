@@ -6,6 +6,8 @@ Emonweb::Application.routes.draw do
 
   devise_for :users
 
+  resources :token_authentications, :only => [:create, :destroy]
+
   #get "home/index"
 
   # The priority is based upon order of creation:
