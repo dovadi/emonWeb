@@ -19,6 +19,11 @@ gem 'haml-rails'
 gem 'devise'
 gem 'rails_admin', :git => 'git://github.com/sferik/rails_admin.git'
 
+#heroku
+group :production do
+  gem 'pg'
+end
+
 group :test, :development do
   gem 'steak'
   gem 'email_spec'
