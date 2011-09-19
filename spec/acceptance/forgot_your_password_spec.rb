@@ -7,6 +7,7 @@ feature 'Forgot your password', %q{
 } do
 
   background do
+    reset_mailer
     @user = Factory(:user)
     visit forgot_your_password
   end
@@ -20,7 +21,7 @@ feature 'Forgot your password', %q{
 
     unread_emails_for(@user.email).size.should >= parse_email_count(1)
     open_email(@user.email)
-    current_email.default_part_body.to_s.should have_content "Someone has requested a link to change your password, and you can do this through the link below."
+    current_email.default_part_body.to_s.should have_content 'Someone has requested a link to change your password, and you can do this through the link below.'
     click_first_link_in_email
 
     page.should have_content('Change your password')
