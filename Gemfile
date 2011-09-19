@@ -29,6 +29,7 @@ group :test, :development do
   gem 'steak'
   gem 'email_spec'
   gem 'shoulda'
+  gem 'mocha'
   gem 'guard'
   gem 'guard-rspec'
   gem 'factory_girl'

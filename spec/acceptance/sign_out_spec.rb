@@ -14,8 +14,8 @@ feature 'Sign out', %q{
   scenario 'Users signs out' do
     page.should have_content @user.email
     click_link 'Sign out'
-    within '.alert-message.notice' do
-      page.should have_content('Signed out successfully.')
+    within '.alert-message.alert' do
+      page.should have_content('You need to sign in or sign up before continuing.')
     end
   end
 
