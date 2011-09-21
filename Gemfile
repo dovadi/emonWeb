@@ -34,7 +34,6 @@ group :test, :development do
   gem 'guard-rspec'
   gem 'factory_girl'
   gem 'factory_girl_rails'
-  gem 'rb-fsevent'
   gem 'growl_notify'
 end
 
