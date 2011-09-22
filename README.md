@@ -13,5 +13,57 @@ The core team of the [Open Energy Monitor](http://openenergymonitor.org) exists 
 * [Glyn Hudson](https://github.com/glynhudson)
 * [and others](http://openenergymonitor.org/emon/people)
 
+Installation
+============
+
+EmonWeb is tested with ruby 1.9.2 (for installation with RVM see [Install Ruby Version Manager](http://beginrescueend.com/rvm/install/) )
+
+> git clone git@github.com:dovadi/emonWeb.git
+
+> cd emonWeb
+
+> gem install bundler
+
+> bundle install
+
+> cp config/database.yml.example config/database.yml
+
+> rake db:create
+
+> rake db:migrate
+
+> rails server
+
+## Possible issues ##
+
+* libxml2 is needed to compile the native extension of Nokogiri, see [Installation instructions]( http://nokogiri.org/tutorials/installing_nokogiri.html)
+
+
+## Project .rvmrc 
+
+See for usage the (.rvmrc instructions)[http://beginrescueend.com/workflow/rvmrc/]
+
+> cp _rvmrc .rvmrc
+
+Running Specs
+=============
+
+With the use of guard:
+
+## OSX ##
+
+> gem install rb-fsevent
+
+> gem install growl_notify
+
+
+## LINUX ##
+
+> gem install rb-inotify
+
+> gem install libnotify
+
+
+
 ---
-2011
+[Open Energy Monitor](http://openenergymonitor.org) 2011
