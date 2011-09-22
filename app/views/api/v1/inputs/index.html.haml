@@ -1,0 +1,17 @@
+%h1 Listing inputs
+
+%table
+  %tr
+    %th
+    %th
+    %th
+
+  - @inputs.each do |input|
+    %tr
+      %td= link_to 'Show', input
+      %td= link_to 'Edit', edit_api_v1_input_path(input)
+      %td= link_to 'Destroy', input, :confirm => 'Are you sure?', :method => :delete
+
+%br
+
+= link_to 'New Input', new_api_v1_input_path

@@ -1,5 +1,11 @@
 Emonweb::Application.routes.draw do
 
+  namespace :api do  namespace :v1 do resources :inputs end end
+
+  get "inputs/create"
+
+  get "inputs/update"
+
   root :to => "home#index"
 
   mount RailsAdmin::Engine => '/admin', :as => 'rails_admin'
