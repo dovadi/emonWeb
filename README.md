@@ -48,7 +48,7 @@ See for usage the (.rvmrc instructions)[http://beginrescueend.com/workflow/rvmrc
 Running Specs
 =============
 
-With the use of guard:
+With the use of guard (and Spork):
 
 ## OSX ##
 
