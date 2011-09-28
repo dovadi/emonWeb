@@ -8,6 +8,8 @@ Spork.prefork do
   # This file is copied to spec/ when you run 'rails generate rspec:install'
 
   ENV["RAILS_ENV"] ||= 'test'
+  Spork.trap_method(Rails::Application::RoutesReloader, :reload!)
+  Spork.trap_class_method(RailsAdmin, :config)
   require File.expand_path("../../config/environment", __FILE__)
   require 'rspec/rails'
 
