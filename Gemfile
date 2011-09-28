@@ -28,7 +28,7 @@ end
 group :test, :development do
   gem 'steak'
   gem 'email_spec'
-  gem 'shoulda'
+  gem 'shoulda-matchers'
   gem 'mocha'
   gem 'guard'
   gem 'guard-rspec'
