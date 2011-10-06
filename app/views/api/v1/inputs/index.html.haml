@@ -8,9 +8,11 @@
 
   - @inputs.each do |input|
     %tr
-      %td= link_to 'Show', input
+      %td= input.name
+      %td= input.last_value
+      %td= link_to 'Show', api_v1_input_path(input)
       %td= link_to 'Edit', edit_api_v1_input_path(input)
-      %td= link_to 'Destroy', input, :confirm => 'Are you sure?', :method => :delete
+      %td= link_to 'Destroy', api_v1_input_path(input), :confirm => 'Are you sure?', :method => :delete
 
 %br
 

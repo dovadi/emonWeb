@@ -5,6 +5,15 @@
       %ul
         - @input.errors.full_messages.each do |msg|
           %li= msg
+  %fieldset
+    %legend Create input
+    %p
+      = f.label :name
+      = f.text_field :name
+    %p
+      = f.label :last_value
+      = f.text_field :last_value
+      
 
   .actions
     = f.submit 'Save'
