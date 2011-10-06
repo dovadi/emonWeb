@@ -1,4 +1,5 @@
 class Api::V1::InputsController < ApplicationController
+  protect_from_forgery :except => [:create, :update]
   # GET /api/v1/inputs
   # GET /api/v1/inputs.json
   def index
