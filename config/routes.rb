@@ -1,10 +1,10 @@
 Emonweb::Application.routes.draw do
 
-  namespace :api do  namespace :v1 do resources :inputs end end
-
-  get "inputs/create"
-
-  get "inputs/update"
+  namespace :api do
+    namespace :v1 do
+      resources :inputs
+    end
+  end
 
   root :to => "home#index"
 
