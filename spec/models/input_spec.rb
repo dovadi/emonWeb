@@ -9,6 +9,9 @@ describe Input do
     }
   end
 
+  it { should validate_presence_of :name }
+  it { should validate_presence_of :last_value }
+
   it 'should create a new instance given a valid attribute' do
     Input.create!(@attr)
   end
