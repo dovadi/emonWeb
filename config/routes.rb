@@ -5,6 +5,12 @@ Emonweb::Application.routes.draw do
       resources :inputs
     end
   end
+  # 
+  # api_version(1) do
+  #   post '/api' => "api/v1/inputs#create"
+  # end
+
+  match 'api' => 'api/v1/inputs#create', :via => :post
 
   root :to => "home#index"
 
