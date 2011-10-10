@@ -44,7 +44,7 @@ describe Api::V1::InputsController do
   end
 
   describe "GET show" do
-    it "assigns the requested api_v1 as @api_v1" do
+    it "assigns the requested input as @input" do
       input = Input.create! valid_attributes
       get :show, :id => input.id.to_s
       assigns(:input).should eq(input)
@@ -52,14 +52,14 @@ describe Api::V1::InputsController do
   end
 
   describe "GET new" do
-    it "assigns a new api_v1 as @api_v1" do
+    it "assigns a new input as @input" do
       get :new
       assigns(:input).should be_a_new(Input)
     end
   end
 
   describe "GET edit" do
-    it "assigns the requested api_v1 as @api_v1" do
+    it "assigns the requested input as @input" do
       input = Input.create! valid_attributes
       get :edit, :id => input.id.to_s
       assigns(:input).should eq(input)
@@ -74,20 +74,29 @@ describe Api::V1::InputsController do
         }.to change(Input, :count).by(1)
       end
 
-      it "assigns a newly created api_v1 as @api_v1" do
+      it "assigns a newly created input as @input" do
         post :create, :input => valid_attributes
         assigns(:input).should be_a(Input)
         assigns(:input).should be_persisted
       end
 
-      it "redirects to the created api_v1" do
+      it "redirects to the created input" do
         post :create, :input => valid_attributes
         response.should redirect_to(api_v1_input_path(Input.last))
       end
     end
 
+
+    describe "first post of a monitoring device" do
+      it "creates a new Input" do
+        expect {
+          post :create, { :water => 20.45, :solar => 12.34 }
+        }.to change(Input, :count).by(2)
+      end
+    end
+
     describe "with invalid params" do
-      it "assigns a newly created but unsaved api_v1 as @api_v1" do
+      it "assigns a newly created but unsaved input as @input" do
         # Trigger the behavior that occurs when invalid params are submitted
         Input.any_instance.stubs(:save).returns(false)
         post :create, :input => {}
@@ -105,7 +114,7 @@ describe Api::V1::InputsController do
 
   describe "PUT update" do
     describe "with valid params" do
-      it "updates the requested api_v1" do
+      it "updates the requested input" do
         input = Input.create! valid_attributes
         # Assuming there are no other api_v1_inputs in the database, this
         # specifies that the Input created on the previous line
@@ -115,13 +124,13 @@ describe Api::V1::InputsController do
         put :update, :id => input.id, :input => {'these' => 'params'}
       end
 
-      it "assigns the requested api_v1 as @api_v1" do
+      it "assigns the requested input as @input" do
         input = Input.create! valid_attributes
         put :update, :id => input.id, :input => valid_attributes
         assigns(:input).should eq(input)
       end
 
-      it "redirects to the api_v1" do
+      it "redirects to the input" do
         input = Input.create! valid_attributes
         put :update, :id => input.id, :input => valid_attributes
         response.should redirect_to(api_v1_input_path(input))
@@ -129,7 +138,7 @@ describe Api::V1::InputsController do
     end
 
     describe "with invalid params" do
-      it "assigns the api_v1 as @api_v1" do
+      it "assigns the input as @input" do
         input = Input.create! valid_attributes
         # Trigger the behavior that occurs when invalid params are submitted
         Input.any_instance.stubs(:save).returns(false)
@@ -148,7 +157,7 @@ describe Api::V1::InputsController do
   end
 
   describe "DELETE destroy" do
-    it "destroys the requested api_v1" do
+    it "destroys the requested input" do
       input = Input.create! valid_attributes
       expect {
         delete :destroy, :id => input.id.to_s
