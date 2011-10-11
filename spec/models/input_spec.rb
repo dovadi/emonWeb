@@ -45,7 +45,7 @@ describe Input do
 
     it 'should create or update an input based on the given attributes but ignore controller and action keys' do
       expect do
-        Input.create_or_update(@input_attrs.merge(:controller => 'inputs', :action => 'create'))
+        Input.create_or_update(@input_attrs.merge(:controller => 'inputs', :action => 'create', :auth_token => 'ej24retn0'))
       end.to change(Input, :count).by(2)
     end
 

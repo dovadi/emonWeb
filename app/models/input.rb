@@ -8,8 +8,7 @@ class Input < ActiveRecord::Base
   def self.create_or_update(attributes)
     attributes.symbolize_keys!
     raise NoUserIdGiven unless attributes.keys.include?(:user_id)
-    attributes.delete(:controller)
-    attributes.delete(:action)
+    [:controller, :action, :auth_token].each {|key| attributes.delete(key)}
     user_id = attributes.delete(:user_id)
     attributes.each do |key, value|
       existing_input = find_by_name_and_user_id(key.to_s, user_id)
