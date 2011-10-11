@@ -86,9 +86,8 @@ describe Api::V1::InputsController do
       end
     end
 
-
     describe "first post of a monitoring device" do
-      it "creates a new Input" do
+      it "creates a new inputs" do
         expect {
           post :create, { :water => 20.45, :solar => 12.34 }
         }.to change(Input, :count).by(2)

@@ -41,16 +41,20 @@ class Api::V1::InputsController < ApplicationController
   # POST /api/v1/inputs
   # POST /api/v1/inputs.json
   def create
-    @input = Input.new(params[:input])
-
-    respond_to do |format|
-      if @input.save
-        format.html { redirect_to api_v1_input_path(@input), notice: 'Input was successfully created.' }
-        format.json { render json: @input, status: :created, location: @input }
-      else
-        format.html { render action: "new" }
-        format.json { render json: @input.errors, status: :unprocessable_entity }
+    if params[:input]
+      @input = Input.new(params[:input])
+      respond_to do |format|
+        if @input.save
+          format.html { redirect_to api_v1_input_path(@input), notice: 'Input was successfully created.' }
+          format.json { render json: @input, status: :created, location: @input }
+        else
+          format.html { render action: "new" }
+          format.json { render json: @input.errors, status: :unprocessable_entity }
+        end
       end
+    else
+      Input.create_or_update(params.merge(:user_id => current_user.id).to_hash)
+      redirect_to 'index'
     end
   end
 
