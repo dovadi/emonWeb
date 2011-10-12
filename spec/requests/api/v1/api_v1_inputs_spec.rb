@@ -21,7 +21,8 @@ describe "Api::V1::Inputs" do
       expect do
         post api_path(:auth_token => @user.authentication_token, :water => 12.35, :solar => 48.23)
       end.to change(Input, :count).by(2)
-      response.status.should be(302)
+      response.status.should be(200)
+      response.body.should == 'ok'
       Input.last.user_id.should be(@user.id)
     end
   end

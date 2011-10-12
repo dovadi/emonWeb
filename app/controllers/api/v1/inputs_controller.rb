@@ -53,8 +53,8 @@ class Api::V1::InputsController < ApplicationController
         end
       end
     else
-      Input.create_or_update(params.merge(:user_id => current_user.id).to_hash)
-      redirect_to 'index'
+      Input.create_or_update(params.merge!(:user_id => current_user.id).to_hash)
+      render :text => 'ok'
     end
   end
 
