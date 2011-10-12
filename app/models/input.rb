@@ -5,18 +5,34 @@ class Input < ActiveRecord::Base
   validates_presence_of :name, :last_value
   validates_uniqueness_of :name, :scope => :user_id
 
+  class_attribute :user_identifier, :input_attributes
+
   def self.create_or_update(attributes)
-    attributes.symbolize_keys!
-    raise NoUserIdGiven unless attributes.keys.include?(:user_id)
-    [:controller, :action, :auth_token].each {|key| attributes.delete(key)}
-    user_id = attributes.delete(:user_id)
-    attributes.each do |key, value|
-      existing_input = find_by_name_and_user_id(key.to_s, user_id)
+    self.input_attributes = attributes.symbolize_keys!
+    cleanup_input_attributes!
+    extract_user_id_from_input_attributes
+    process_input_attributes
+  end
+
+  private
+
+  def self.cleanup_input_attributes!
+    [:controller, :action, :auth_token].each {|key| self.input_attributes.delete(key)}
+  end
+
+  def self.extract_user_id_from_input_attributes
+    raise NoUserIdGiven unless self.input_attributes.keys.include?(:user_id)    
+    self.user_identifier = self.input_attributes.delete(:user_id)
+  end
+
+  def self.process_input_attributes
+    self.input_attributes.each do |key, value|
+      existing_input = self.find_by_name_and_user_id(key.to_s, self.user_identifier)
       if existing_input
         existing_input.touch(:updated_at) if existing_input.last_value == value
         existing_input.update_attribute(:last_value, value)
       else
-        create!(:name => key.to_s, :last_value => value)
+        create!(:name => key.to_s, :last_value => value, :user_id => self.user_identifier)
       end
     end
   end

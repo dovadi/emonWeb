@@ -41,6 +41,7 @@ describe Input do
       expect do
         Input.create_or_update(@input_attrs)
       end.to change(Input, :count).by(2)
+      Input.last.user_id.should == 100
     end
 
     it 'should create or update an input based on the given attributes but ignore controller and action keys' do
