@@ -10,8 +10,6 @@
     %tr
       %td= input.name
       %td= input.last_value
-      %td= link_to 'Show', api_v1_input_path(input)
-      %td= link_to 'Edit', edit_api_v1_input_path(input)
       %td= link_to 'Destroy', api_v1_input_path(input), :confirm => 'Are you sure?', :method => :delete
 
 %br

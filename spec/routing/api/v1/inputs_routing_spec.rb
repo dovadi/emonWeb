@@ -35,7 +35,7 @@ describe Api::V1::InputsController do
 
   describe "Named routing for compatibilty with emoncms" do
     it "routes to #create" do
-      post("/api").should route_to("api/v1/inputs#create")
+      post("/api").should route_to("api/v1/inputs#api")
     end
   end
 end

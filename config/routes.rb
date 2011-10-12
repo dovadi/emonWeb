@@ -2,11 +2,15 @@ Emonweb::Application.routes.draw do
 
   namespace :api do
     namespace :v1 do
-      resources :inputs
+      resources :inputs do
+        collection do
+          post 'api'
+        end
+      end
     end
   end
 
-  match 'api' => 'api/v1/inputs#create', :via => :post
+  match 'api' => 'api/v1/inputs#api', :via => :post
 
   root :to => "home#index"
 
