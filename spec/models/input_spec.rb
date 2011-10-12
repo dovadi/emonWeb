@@ -5,7 +5,7 @@ describe Input do
   before(:each) do
     @attr = { 
       :name       => 'water',
-      :last_value => 252.4
+      :last_value => 252.55
     }
   end
 
@@ -67,7 +67,7 @@ describe Input do
     it 'should update the last value if input already exists and the last value is the same' do
       input = Input.create!(@attr.merge(:user_id => 100))
       Input.any_instance.expects(:touch).with(:updated_at)
-      Input.create_or_update(:water => 252.4, :user_id => 100)
+      Input.create_or_update(:water => 252.55, :user_id => 100)
     end
   end
 

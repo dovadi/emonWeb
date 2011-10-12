@@ -29,7 +29,7 @@ class Input < ActiveRecord::Base
     self.input_attributes.each do |key, value|
       existing_input = self.find_by_name_and_user_id(key.to_s, self.user_identifier)
       if existing_input
-        existing_input.touch(:updated_at) if existing_input.last_value == value
+        existing_input.touch(:updated_at) if existing_input.last_value.to_f == value.to_f
         existing_input.update_attribute(:last_value, value)
       else
         create!(:name => key.to_s, :last_value => value, :user_id => self.user_identifier)
