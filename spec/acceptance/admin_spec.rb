@@ -26,7 +26,7 @@ feature 'Admin', %q{
     end
     visit rails_admin_path
     page.should have_no_content('Emonweb Admin')
-    page.should have_content('Hello user@test.com') #home/index
+    page.should have_content('Listing inputs')
   end
 
   scenario 'Visitor is not allowed to visit the Rails admin webfrontend' do

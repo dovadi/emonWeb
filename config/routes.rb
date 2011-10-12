@@ -10,9 +10,10 @@ Emonweb::Application.routes.draw do
     end
   end
 
-  match 'api' => 'api/v1/inputs#api', :via => :post
+  match 'api'  => 'api/v1/inputs#api', :via => :post
+  match 'home' => 'home#index'
 
-  root :to => "home#index"
+  root :to => 'api/v1/inputs#index'
 
   mount RailsAdmin::Engine => '/admin', :as => 'rails_admin'
 
