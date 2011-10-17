@@ -12,6 +12,7 @@ describe Input do
   it { should validate_presence_of :name }
   it { should validate_presence_of :last_value }
   it { should belong_to :user }
+  it { should have_many :feeds }
 
   it 'should only accept an unique name' do
     Input.create!(@attr)
@@ -44,17 +45,33 @@ describe Input do
       Input.last.user_id.should == 100
     end
 
+    it 'should store its value in the feeds table' do
+      Feed.expects(:create!).with(:value => 20.45)
+      Feed.expects(:create!).with(:value => 12.34)
+      Input.create_or_update(@input_attrs)
+    end
+
     it 'should create or update an input based on the given attributes but ignore controller and action keys' do
       expect do
         Input.create_or_update(@input_attrs.merge(:controller => 'inputs', :action => 'create', :auth_token => 'ej24retn0'))
       end.to change(Input, :count).by(2)
     end
 
-    it 'should only create the input that does not exist yet' do
-      Input.create!(@attr.merge(:user_id => 100))
-      expect do
+    describe 'For only non-existant input' do
+      before(:each) do
+        Input.create!(@attr.merge(:user_id => 100))
+      end
+      it 'should create the input that does not exist yet' do
+        expect do
+          Input.create_or_update(@input_attrs)
+        end.to change(Input, :count).by(1)
+      end
+
+      it 'should store its value for all inputs' do
+        Feed.expects(:create!).with(:value => 20.45)
+        Feed.expects(:create!).with(:value => 12.34)
         Input.create_or_update(@input_attrs)
-      end.to change(Input, :count).by(1)
+      end
     end
 
     it 'should update the last value if input already exists' do
