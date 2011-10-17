@@ -7,5 +7,7 @@ class CreateFeeds < ActiveRecord::Migration
 
       t.timestamps
     end
+    add_index :feeds, :user_id
+    add_index :feeds, :input_id
   end
 end

@@ -21,6 +21,9 @@ ActiveRecord::Schema.define(:version => 20111017183804) do
     t.datetime "updated_at"
   end
 
+  add_index "feeds", ["input_id"], :name => "index_feeds_on_input_id"
+  add_index "feeds", ["user_id"], :name => "index_feeds_on_user_id"
+
   create_table "inputs", :force => true do |t|
     t.string   "name"
     t.decimal  "last_value", :precision => 10, :scale => 2
