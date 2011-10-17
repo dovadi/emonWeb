@@ -6,7 +6,7 @@ class Input < ActiveRecord::Base
   validates_presence_of :name, :last_value
   validates_uniqueness_of :name, :scope => :user_id
 
-  before_save :store_value
+  after_save :store_value
 
   class_attribute :user_identifier, :input_attributes
 
@@ -41,6 +41,6 @@ class Input < ActiveRecord::Base
   end
 
   def store_value
-    Feed.create!(:value => last_value)
+    Feed.create!(:value => last_value, :user_id => user_id, :input_id => id) if user_id
   end
 end

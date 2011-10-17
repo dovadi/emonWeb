@@ -45,10 +45,16 @@ describe Input do
       Input.last.user_id.should == 100
     end
 
-    it 'should store its value in the feeds table' do
-      Feed.expects(:create!).with(:value => 20.45)
-      Feed.expects(:create!).with(:value => 12.34)
+    it 'should store the values in the feeds table' do
       Input.create_or_update(@input_attrs)
+      first_feed = Feed.first
+      first_feed.input_id.should == Input.first.id
+      first_feed.value.should == 20.45
+      first_feed.user_id.should == 100
+      second_feed = Feed.last
+      second_feed.input_id.should == Input.last.id
+      second_feed.value.should == 12.34
+      second_feed.user_id.should == 100
     end
 
     it 'should create or update an input based on the given attributes but ignore controller and action keys' do
@@ -65,12 +71,18 @@ describe Input do
         expect do
           Input.create_or_update(@input_attrs)
         end.to change(Input, :count).by(1)
+        Feed.count.should == 3
       end
 
-      it 'should store its value for all inputs' do
-        Feed.expects(:create!).with(:value => 20.45)
-        Feed.expects(:create!).with(:value => 12.34)
+      it 'should store the values in the feeds table' do
         Input.create_or_update(@input_attrs)
+        feed = Feed.find_by_value(20.45)
+        feed.input_id.should == Input.first.id
+        feed.user_id.should == 100
+        last_feed = Feed.last
+        last_feed.input_id.should == Input.last.id
+        last_feed.value.should == 12.34
+        last_feed.user_id.should == 100
       end
     end
 
