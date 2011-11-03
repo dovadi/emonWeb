@@ -44,6 +44,6 @@ class Input < ActiveRecord::Base
   end
 
   def store_value
-    Feed.create!(:value => last_value, :user_id => user_id, :input_id => id) if user_id
+    Feed.create!(:value => last_value, :user_id => user_id, :input_id => id, :processors => processors) if user_id
   end
 end

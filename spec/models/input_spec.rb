@@ -25,12 +25,18 @@ describe Input do
 
   describe 'Defined processors' do
     before(:each) do
-      @attr.merge!(:processors => {:multiply => [2], :divide => [3]})
-      Input.create!(@attr)
+      @attr.merge!(:processors => {:multiply => [2], :divide => [3]}, :user_id => 100)
+      Feed.any_instance.stubs(:process_data)
     end
 
     it 'should serialize and store processors' do
+      Input.create!(@attr)
       Input.last.processors.should == {:multiply => [2], :divide => [3]}
+    end
+
+    it 'should store the current value with the defined processors' do
+      Feed.any_instance.expects('processors=').with({:multiply => [2], :divide => [3]})
+      Input.create!(@attr)
     end
   end
 
