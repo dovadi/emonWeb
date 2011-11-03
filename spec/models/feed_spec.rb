@@ -35,4 +35,15 @@ describe Feed do
     end
   end
 
+  describe 'Process of data with an undefined processor' do
+    before(:each) do
+      @attr.merge!(:processors => [:unknown_processor => [2]])
+    end
+    it 'should raise an UndefinedProcessor expection' do
+      expect do
+        Feed.create!(@attr)
+      end.to raise_error UndefinedProcessor
+    end
+  end
+
 end
