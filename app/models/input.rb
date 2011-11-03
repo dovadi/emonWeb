@@ -24,7 +24,7 @@ class Input < ActiveRecord::Base
   end
 
   def self.extract_user_id_from_input_attributes
-    raise NoUserIdGiven unless self.input_attributes.keys.include?(:user_id)    
+    raise NoUserIdGiven unless self.input_attributes.keys.include?(:user_id)
     self.user_identifier = self.input_attributes.delete(:user_id)
   end
 
