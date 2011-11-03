@@ -9,9 +9,13 @@ class Feed < ActiveRecord::Base
   private
 
   def process_data
-    processors.each do |process, args|
-      processor = (process.to_s.capitalize + 'Processor').constantize.new(value, args)
-      value = processor.perform
+    processors.each_with_index do |processor, index|
+      processed_value = value
+      processor.each do |name, args|
+        processor = (name.to_s.capitalize + 'Processor').constantize.new(processed_value, args)
+        processed_value = processor.perform
+      end
+      self.send('processed_value_' + index.to_s + '=', processed_value)
     end
   end
 end

@@ -20,18 +20,19 @@ describe Feed do
 
   describe 'Process of data' do
     before(:each) do
-      @attr.merge!(:processors => {:multiply => [2], :divide => [3]})
+      @attr.merge!(:processors => [{:multiply => [2], :divide => [3]}])
       @processor_klass = mock
       String.any_instance.expects(:constantize).twice.returns(@processor_klass)
     end
 
     it 'should perform the given processors' do
       processor = mock
-      processor.stubs(:perform)
+      processor.stubs(:perform).returns(500)
       @processor_klass.expects(:new).with(252.55, [2]).returns(processor)
-      @processor_klass.expects(:new).with(252.55, [3]).returns(processor)
+      @processor_klass.expects(:new).with(500, [3]).returns(processor)
       Feed.create!(@attr)
+      Feed.last.processed_value_0.should == 500
     end
-
   end
+
 end
