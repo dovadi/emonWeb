@@ -20,7 +20,7 @@ describe Feed do
 
   describe 'Process of data' do
     before(:each) do
-      @attr.merge!(:processors => {:multiply =>[2], :divide => [3]})
+      @attr.merge!(:processors => {:multiply => [2], :divide => [3]})
       @processor_klass = mock
       String.any_instance.expects(:constantize).twice.returns(@processor_klass)
     end

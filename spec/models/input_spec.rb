@@ -23,6 +23,17 @@ describe Input do
     Input.create!(@attr)
   end
 
+  describe 'Defined processors' do
+    before(:each) do
+      @attr.merge!(:processors => {:multiply => [2], :divide => [3]})
+      Input.create!(@attr)
+    end
+
+    it 'should serialize and store processors' do
+      Input.last.processors.should == {:multiply => [2], :divide => [3]}
+    end
+  end
+
   describe 'Create or Update' do
     before(:each) do
       @input_attrs ={
