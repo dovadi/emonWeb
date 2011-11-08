@@ -10,7 +10,7 @@ class Feed < ActiveRecord::Base
   #Force assigning table_name because with sanitizing it will add by default 'feeds'
   #Like for example: SELECT `feeds`.* FROM feed_236
   def self.from table_name
-    self.table_name = table_name 
+    self.table_name = table_name
     super table_name
     self.table_name = 'feeds'
     self

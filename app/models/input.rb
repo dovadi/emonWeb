@@ -2,14 +2,11 @@ class NoUserIdGiven < Exception; end
 
 class Input < ActiveRecord::Base
   belongs_to :user
-  has_many   :feeds, :dependent => :destroy
 
   validates_presence_of   :name, :last_value
   validates_uniqueness_of :name, :scope => :user_id
 
   serialize :processors
-
-  after_save :store_value
 
   class_attribute :user_identifier, :input_attributes
 
@@ -43,7 +40,4 @@ class Input < ActiveRecord::Base
     end
   end
 
-  def store_value
-    Feed.create!(:value => last_value, :user_id => user_id, :input_id => id, :processors => processors) if user_id
-  end
 end

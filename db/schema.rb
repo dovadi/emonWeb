@@ -11,18 +11,14 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20111103133011) do
+ActiveRecord::Schema.define(:version => 20111108163748) do
 
   create_table "feeds", :force => true do |t|
-    t.decimal  "value",             :precision => 10, :scale => 2
+    t.float    "value"
     t.integer  "user_id"
     t.integer  "input_id"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.decimal  "processed_value_0", :precision => 10, :scale => 2
-    t.decimal  "processed_value_1", :precision => 10, :scale => 2
-    t.decimal  "processed_value_2", :precision => 10, :scale => 2
-    t.decimal  "processed_value_3", :precision => 10, :scale => 2
   end
 
   add_index "feeds", ["input_id"], :name => "index_feeds_on_input_id"
@@ -30,7 +26,7 @@ ActiveRecord::Schema.define(:version => 20111103133011) do
 
   create_table "inputs", :force => true do |t|
     t.string   "name"
-    t.decimal  "last_value", :precision => 10, :scale => 2
+    t.float    "last_value"
     t.integer  "user_id"
     t.datetime "created_at"
     t.datetime "updated_at"
