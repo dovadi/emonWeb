@@ -47,6 +47,7 @@ describe Input do
         :solar   => 12.34,
         :user_id => 100
       }
+      Feed.delete_all
     end
 
     it 'should raise an exception if user_id is not given' do
