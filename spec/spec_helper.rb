@@ -1,6 +1,21 @@
 require 'rubygems'
 require 'spork'
 
+def suppress_savepoint_error &block
+  begin
+    block.call
+  rescue ActiveRecord::StatementInvalid
+    # Prevent throwing 'Mysql2::Error: SAVEPOINT active_record_1 does not exist: ROLLBACK TO SAVEPOINT active_record_1'
+    # after execution of raw sql (in order to create a new table),
+    # rollback is not possible because it lost its savepoint
+  end
+end
+
+def drop_table(name)
+  sql = "DROP TABLE IF EXISTS `#{name}`"
+  ActiveRecord::Base.connection.execute(sql)
+end
+
 Spork.prefork do
   # Loading more in this block will cause your tests to run faster. However,
   # if you change any configuration or code from libraries loaded here, you'll

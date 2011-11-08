@@ -17,21 +17,6 @@ describe Feed do
       Feed.expects(:table_name=).with('feeds')
       Feed.create(@attr)
     end
-
-    it 'should really create a new table in the database if not existed yet' do
-      sql = "DROP TABLE IF EXISTS `feed_236`"
-      ActiveRecord::Base.connection.execute(sql)
-      begin
-        Feed.create!(@attr)
-      rescue ActiveRecord::StatementInvalid
-        # Prevent throwing Mysql2::Error: SAVEPOINT active_record_1 does not exist: ROLLBACK TO SAVEPOINT active_record_1
-        # after creating the new feed table rollback is not possible because
-        # it is loosing its savepoint because of execution of raw sql to create a new table
-      end
-      Feed.from('feed_236').first.value.should == 252.55
-      ActiveRecord::Base.connection.execute(sql)
-    end
-
   end
 
 end

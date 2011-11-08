@@ -7,6 +7,7 @@ describe Input do
       :name       => 'water',
       :last_value => 252.55
     }
+    Input.delete_all
   end
 
   it { should validate_presence_of :name }
@@ -22,16 +23,26 @@ describe Input do
     Input.create!(@attr)
   end
 
-  describe 'Defined processors' do
+  describe 'Define processors' do
     before(:each) do
-      @processors = [[:log_to_feed, 2], [:scale, 1.32], [:offset, 4], 
-                     [:power_to_kwh, 3], [:power_to_kwh_per_day, 4], [:x_input, 3]]
+      drop_table('feed_2')
+      @processors = [[:log_to_feed, 2], [:scale, 1.32], [:offset, 4]] 
+                    #[:power_to_kwh, 3], [:power_to_kwh_per_day, 4], [:x_input, 3]]
       @attr.merge!(:processors => @processors)
     end
 
     it 'should serialize and store processors' do
-      Input.create!(@attr)
+      suppress_savepoint_error { Input.create!(@attr) }
       Input.last.processors.should == @processors
+    end
+
+    it 'should create a new feed table if not exist yet' do
+      suppress_savepoint_error { Input.create!(@attr) }
+      Feed.from('feed_2').count == 0
+    end
+
+    after(:each) do
+      drop_table('feed_2')
     end
   end
 
@@ -42,7 +53,6 @@ describe Input do
         :solar   => 12.34,
         :user_id => 100
       }
-      Feed.delete_all
     end
 
     it 'should raise an exception if user_id is not given' do
