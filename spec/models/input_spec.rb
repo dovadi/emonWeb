@@ -3,16 +3,14 @@ require File.dirname(__FILE__) + '/../spec_helper'
 describe Input do
 
   before(:each) do
-    @attr = { 
-      :name       => 'water',
-      :last_value => 252.55
-    }
+    @attr = { :name => 'water', :last_value => 252.55 }
     Input.delete_all
   end
 
   it { should validate_presence_of :name }
   it { should validate_presence_of :last_value }
   it { should belong_to :user }
+  it { should have_many :feeds }
 
   it 'should only accept an unique name' do
     Input.create!(@attr)
@@ -23,9 +21,9 @@ describe Input do
     Input.create!(@attr)
   end
 
-  describe 'Define processors' do
+  describe 'With processors' do
     before(:each) do
-      drop_table('feed_2')
+      drop_table('data_store_2')
       @processors = [[:log_to_feed, 2], [:scale, 1.32], [:offset, 4]] 
                     #[:power_to_kwh, 3], [:power_to_kwh_per_day, 4], [:x_input, 3]]
       @attr.merge!(:processors => @processors)
@@ -38,21 +36,29 @@ describe Input do
 
     it 'should create a new feed table if not exist yet' do
       suppress_savepoint_error { Input.create!(@attr) }
-      Feed.from('feed_2').count == 0
+      DataStore.from('data_store_2').count.should == 0
     end
 
     after(:each) do
-      drop_table('feed_2')
+      drop_table('data_store_2')
+    end
+  end
+
+  describe 'Define processors' do
+    before(:each) do
+      @input = Input.create!(@attr)
+    end
+
+    it 'should define a processor' do
+      expect do
+        @input.define_processor!(:power_to_kwh, 'kWh')
+      end.to change(Feed, :count).by(1)
     end
   end
 
   describe 'Create or Update' do
     before(:each) do
-      @input_attrs ={
-        :water   => 20.45,
-        :solar   => 12.34,
-        :user_id => 100
-      }
+      @input_attrs = { :water => 20.45, :solar => 12.34, :user_id => 100 }
     end
 
     it 'should raise an exception if user_id is not given' do

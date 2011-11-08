@@ -11,14 +11,26 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20111108163748) do
+ActiveRecord::Schema.define(:version => 20111108223446) do
+
+  create_table "data_stores", :force => true do |t|
+    t.float    "value"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "feed_2", :id => false, :force => true do |t|
+    t.float    "value",      :null => false
+    t.datetime "created_at", :null => false
+  end
 
   create_table "feeds", :force => true do |t|
-    t.float    "value"
+    t.float    "last_value"
     t.integer  "user_id"
     t.integer  "input_id"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "name"
   end
 
   add_index "feeds", ["input_id"], :name => "index_feeds_on_input_id"

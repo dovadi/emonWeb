@@ -2,6 +2,7 @@ class NoUserIdGiven < Exception; end
 
 class Input < ActiveRecord::Base
   belongs_to :user
+  has_many :feeds
 
   validates_presence_of   :name, :last_value
   validates_uniqueness_of :name, :scope => :user_id
@@ -17,6 +18,10 @@ class Input < ActiveRecord::Base
     cleanup_input_attributes!
     extract_user_id_from_input_attributes
     process_input_attributes
+  end
+
+  def define_processor!(processor, argument)
+    Feed.create!(:name => argument) if storing_data_needed?(processor.to_sym)
   end
 
   private
@@ -43,11 +48,11 @@ class Input < ActiveRecord::Base
   end
 
   def store_and_process_data
-    check_feed_tables if changes['processors'].present?
+    check_data_store_tables if changes['processors'].present?
   end
 
-  def check_feed_tables
-    processors.each { |processor| verify_table('feed_' + processor[1].to_s) if storing_data_needed?(processor[0]) }
+  def check_data_store_tables
+    processors.each { |processor| verify_table('data_store_' + processor[1].to_s) if storing_data_needed?(processor[0]) }
   end
 
   def storing_data_needed?(processor)
@@ -56,14 +61,14 @@ class Input < ActiveRecord::Base
 
   def verify_table(table_name)
     begin
-      Feed.from(table_name).count
+      DataStore.from(table_name).count
     rescue ActiveRecord::StatementInvalid
-      create_table(table_name)
+      create_data_store_table(table_name)
     end
   end
 
-  def create_table(table_name)
-    logger.info 'Create new feed table: #{table_name}'
+  def create_data_store_table(table_name)
+    logger.info 'Created a new date_store table: #{table_name}'
     sql = "CREATE TABLE `#{table_name}` (
             `value` float NOT NULL,
             `created_at` datetime NOT NULL
