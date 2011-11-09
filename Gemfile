@@ -36,6 +36,7 @@ group :test, :development do
   gem 'factory_girl_rails'
   gem 'spork', '> 0.9.0.rc'
   gem 'guard-spork'
+  gem 'database_cleaner'
 end
 
 # Use unicorn as the web server

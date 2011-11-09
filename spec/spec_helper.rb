@@ -1,16 +1,6 @@
 require 'rubygems'
 require 'spork'
 
-def suppress_savepoint_error &block
-  begin
-    block.call
-  rescue ActiveRecord::StatementInvalid
-    # Prevent throwing 'Mysql2::Error: SAVEPOINT active_record_1 does not exist: ROLLBACK TO SAVEPOINT active_record_1'
-    # after execution of raw sql (in order to create a new table),
-    # rollback is not possible because it lost its savepoint
-  end
-end
-
 def drop_table(name)
   sql = "DROP TABLE IF EXISTS `#{name}`"
   ActiveRecord::Base.connection.execute(sql)
@@ -38,6 +28,20 @@ Spork.prefork do
     #
     # If you prefer to use mocha, flexmock or RR, uncomment the appropriate line:
     #
+    config.before(:suite) do
+      DatabaseCleaner.strategy = :truncation
+      DatabaseCleaner.clean_with(:truncation)
+    end
+
+    config.before(:each) do
+      DatabaseCleaner.start
+    end
+
+    config.after(:each) do
+      DatabaseCleaner.clean
+    end
+
+
     config.mock_with :mocha
     # config.mock_with :flexmock
     # config.mock_with :rr
@@ -49,7 +53,7 @@ Spork.prefork do
     # If you're not using ActiveRecord, or you'd prefer not to run each of your
     # examples within a transaction, remove the following line or assign false
     # instead of true.
-    config.use_transactional_fixtures = true
+    config.use_transactional_fixtures = false
     config.include Devise::TestHelpers, :type => :controller
     config.include EmailSpec::Helpers
     config.include EmailSpec::Matchers
