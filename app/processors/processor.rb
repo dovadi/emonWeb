@@ -8,18 +8,13 @@ class Processor
 
   def self.data_stores
     array  = []
-    processors.each do |processor|
-      data_store = (processor + 'Processor').camelize.constantize.store?
-      array << processor.to_sym if data_store
-    end
+    processors.each { |processor| array << processor.to_sym if processor_class(processor).store? }
     array.sort
   end
-  
+
   def self.descriptions
     array = []
-    processors.each do |processor|
-      array << (processor + 'Processor').camelize.constantize.description
-    end
+    processors.each { |processor| array << processor_class(processor).description }
     array.sort
   end
 
@@ -27,9 +22,13 @@ class Processor
     @value    = value
     @argument = argument
   end
-  
+
   private
-  
+
+  def self.processor_class(processor)
+    (processor + 'Processor').camelize.constantize
+  end
+
   def self.processors
     array = []
     Dir.entries(File.dirname(__FILE__)).each do |file|
@@ -39,7 +38,7 @@ class Processor
   end
 
   def self.processor_file_regexp
-     /_processor\.rb/
+    /_processor\.rb/
   end
 
 end
