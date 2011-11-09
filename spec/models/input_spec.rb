@@ -10,7 +10,7 @@ describe Input do
   it { should validate_presence_of :name }
   it { should validate_presence_of :last_value }
   it { should belong_to :user }
-  it { should have_many :feeds }
+  it { should have_many :feeds }  
 
   it 'should only accept an unique name' do
     Input.create!(@attr)
@@ -27,15 +27,14 @@ describe Input do
       @processors = [[:log_to_feed, 2], [:scale, 1.32], [:offset, 4]] 
                     #[:power_to_kwh, 3], [:power_to_kwh_per_day, 4], [:x_input, 3]]
       @attr.merge!(:processors => @processors)
+      Input.create!(@attr)
     end
 
     it 'should serialize and store processors' do
-      suppress_savepoint_error { Input.create!(@attr) }
       Input.last.processors.should == @processors
     end
 
     it 'should create a new feed table if not exist yet' do
-      suppress_savepoint_error { Input.create!(@attr) }
       DataStore.from('data_store_2').count.should == 0
     end
 
@@ -44,15 +43,35 @@ describe Input do
     end
   end
 
-  describe 'Define processors' do
+  describe 'With processors' do
     before(:each) do
       @input = Input.create!(@attr)
+      @input.define_processor!(:log_to_feed, 'kWh')
+      @input.define_processor!(:scale, 1.23) 
+      @input.define_processor!(:offset, 2.5)
+      @input.define_processor!(:power_to_kwh, 'Calibrated kWh') 
+      @input.define_processor!(:power_to_kwh_per_day, 'kWh/d') 
+      @last_feed = Feed.last
     end
 
-    it 'should define a processor' do
-      expect do
-        @input.define_processor!(:power_to_kwh, 'kWh')
-      end.to change(Feed, :count).by(1)
+    it 'should create the corresponding feeds' do
+      @input.feeds.count.should == 3
+    end
+
+    it 'should define the processors' do
+      @input.processors.should == [[:log_to_feed, @last_feed.id - 2],[:scale, 1.23], [:offset, 2.5],[:power_to_kwh, @last_feed.id - 1], [:power_to_kwh_per_day, @last_feed.id]]
+    end
+
+    it 'should have created the corresponding data stores' do
+      DataStore.from('data_store_' + (@last_feed.id - 2).to_s).count.should == 0
+      DataStore.from('data_store_' + (@last_feed.id - 1).to_s).count.should == 0
+      DataStore.from('data_store_' + (@last_feed.id - 0).to_s).count.should == 0
+    end
+
+    after(:each) do
+      (@last_feed.id - 2).upto(@last_feed.id) do |id|
+        drop_table('data_store_' + id.to_s)
+      end
     end
   end
 

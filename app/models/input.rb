@@ -4,10 +4,10 @@ class Input < ActiveRecord::Base
   belongs_to :user
   has_many :feeds
 
+  serialize :processors
+
   validates_presence_of   :name, :last_value
   validates_uniqueness_of :name, :scope => :user_id
-
-  serialize :processors
 
   class_attribute :user_identifier, :input_attributes
 
@@ -21,10 +21,19 @@ class Input < ActiveRecord::Base
   end
 
   def define_processor!(processor, argument)
-    Feed.create!(:name => argument) if storing_data_needed?(processor.to_sym)
+    if storing_data_needed?(processor.to_sym)
+      feed = feeds.create!(:name => argument)
+      add_processor(processor, feed.id)
+    else
+      add_processor(processor, argument)
+    end
   end
 
   private
+
+  ##################################
+  # Private class methods          #
+  ##################################
 
   def self.cleanup_input_attributes!
     [:controller, :action, :auth_token].each {|key| self.input_attributes.delete(key)}
@@ -47,12 +56,36 @@ class Input < ActiveRecord::Base
     end
   end
 
+  ##################################
+  # Private object methods         #
+  ##################################
+
+  # Because of serialize we use a double save when adding a new processor
+  # AR doesn't set the record as changed if using
+  # self.processors << [processor, argument] 
+  # and it won't trigger callback store_and_process_data
+  def add_processor(processor, argument)
+    if self.processors.nil?
+      self.processors = [[processor, argument]]
+      save!
+    else
+      new_processors = self.processors
+      new_processors << [processor, argument]
+      self.processors = nil
+      save!
+      self.processors = new_processors
+      save!
+    end
+  end
+
   def store_and_process_data
     check_data_store_tables if changes['processors'].present?
   end
 
   def check_data_store_tables
-    processors.each { |processor| verify_table('data_store_' + processor[1].to_s) if storing_data_needed?(processor[0]) }
+    if self.processors.present?
+      self.processors.each { |processor| verify_table('data_store_' + processor[1].to_s) if storing_data_needed?(processor[0]) }
+    end
   end
 
   def storing_data_needed?(processor)
@@ -68,12 +101,13 @@ class Input < ActiveRecord::Base
   end
 
   def create_data_store_table(table_name)
-    logger.info 'Created a new date_store table: #{table_name}'
     sql = "CREATE TABLE `#{table_name}` (
-            `value` float NOT NULL,
-            `created_at` datetime NOT NULL
-          ) ENGINE=InnoDB"
+    `value` float NOT NULL,
+    `created_at` datetime NOT NULL
+    ) ENGINE=InnoDB"
+
     ActiveRecord::Base.connection.execute(sql)
+    logger.info "Created a new DateStore table: #{table_name}"
   end
 
 end
