@@ -87,10 +87,7 @@ class Input < ActiveRecord::Base
   end
 
   def store_data
-    feeds.each do |feed| 
-      feed.update_attributes(:last_value => last_value)
-      DataStore.create!(:value => last_value, :identified_by => feed.id)
-    end
+    feeds.each { |feed| feed.update_attributes(:last_value => last_value, :processors => processors) }
   end
 
   def check_data_store_tables

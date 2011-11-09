@@ -76,8 +76,8 @@ describe Input do
       @input.define_processor!(:log_to_feed, 'kWh')
       @input.define_processor!(:scale, 1.23) 
       @input.define_processor!(:offset, 2.5)
-      @input.define_processor!(:power_to_kwh, 'Calibrated kWh') 
-      @input.define_processor!(:power_to_kwh_per_day, 'kWh/d') 
+      @input.define_processor!(:power_to_kwh, 'Calibrated kWh')
+      @input.define_processor!(:power_to_kwh_per_day, 'kWh/d')
       @last_feed = Feed.last
     end
 
@@ -95,28 +95,18 @@ describe Input do
       DataStore.from('data_store_' + (@last_feed.id - 0).to_s).count.should == 0
     end
 
-    describe 'Storing data' do
-      before(:each) do
+    describe 'Updating corresponding feeds' do
+
+      it 'should update the last value of the corresponding feeds' do
+        processors = [[:log_to_feed, @last_feed.id - 2],[:scale, 1.23], [:offset, 2.5],[:power_to_kwh, @last_feed.id - 1], [:power_to_kwh_per_day, @last_feed.id]]
+        Feed.any_instance.expects(:update_attributes).times(3).with(:last_value => 255.12, :processors => processors)
         Input.create_or_update(:water => 255.12, :user_id => 3)
       end
 
-      it 'should update the last value of the corresponding feeds' do
-        @last_feed.reload.last_value.should == 255.12
-        Feed.find(@last_feed.id - 1).last_value.should == 255.12
-        Feed.find(@last_feed.id - 2).last_value.should == 255.12
-      end
-
-      it 'should update the last value of the corresponding data_stores' do
-        DataStore.from('data_store_' + (@last_feed.id - 2).to_s).last.value.should == 255.12
-        DataStore.from('data_store_' + (@last_feed.id - 1).to_s).last.value.should == 255.12
-        DataStore.from('data_store_' + (@last_feed.id).to_s).last.value.should == 255.12
-      end
     end
 
     after(:each) do
-      (@last_feed.id - 2).upto(@last_feed.id) do |id|
-        drop_table('data_store_' + id.to_s)
-      end
+      (@last_feed.id - 2).upto(@last_feed.id) { |id| drop_table('data_store_' + id.to_s) }
     end
   end
 
