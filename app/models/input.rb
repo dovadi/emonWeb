@@ -79,7 +79,18 @@ class Input < ActiveRecord::Base
   end
 
   def store_and_process_data
-    check_data_store_tables if changes['processors'].present?
+    if changes['processors'].present?
+      check_data_store_tables
+    else
+      store_data
+    end
+  end
+
+  def store_data
+    feeds.each do |feed| 
+      feed.update_attributes(:last_value => last_value)
+      DataStore.create!(:value => last_value, :identified_by => feed.id)
+    end
   end
 
   def check_data_store_tables
@@ -102,8 +113,10 @@ class Input < ActiveRecord::Base
 
   def create_data_store_table(table_name)
     sql = "CREATE TABLE `#{table_name}` (
-    `value` float NOT NULL,
-    `created_at` datetime NOT NULL
+      `id` int(11) NOT NULL AUTO_INCREMENT,
+      `value` float NOT NULL,
+      `created_at` datetime NOT NULL,
+      PRIMARY KEY (`id`)
     ) ENGINE=InnoDB"
 
     ActiveRecord::Base.connection.execute(sql)
