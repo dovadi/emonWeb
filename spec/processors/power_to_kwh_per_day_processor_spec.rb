@@ -1,9 +1,5 @@
 describe PowerToKwhPerDayProcessor do
 
-  before(:each) do
-    @feed = Feed.create(:last_value => 1, :user_id => 1, :input_id => 1)
-  end
-
   it 'should tell data should be stored' do
     PowerToKwhPerDayProcessor.store?.should == true
   end
@@ -12,12 +8,43 @@ describe PowerToKwhPerDayProcessor do
     PowerToKwhPerDayProcessor.description.should == 'Power to kWh/d'
   end
 
-  # it 'should store the data in the corresponding DataStore table' do
-  #   Time.stubs(:now).returns(Time.at(1320857865))
-  #   Feed.any_instance.stubs(:updated_at).returns(Time.now - 100.seconds)
-  #   DataStore.expects(:create).with(:value => 1.1, :identified_by => @feed.id)
-  #   processor = PowerToKwhProcessor.new(3600, @feed.id)
-  #   processor.perform
-  # end
-  # 
+  describe 'Calculate value for the first time' do
+    before(:each) do
+      @feed = Feed.create(:last_value => 1, :user_id => 1, :input_id => 1)
+    end
+
+    it 'should store the data in the corresponding DataStore table' do
+      scope_object = mock
+      scope_object.expects(:where).with(:created_at => Date.today).returns(nil)
+
+      DataStore.stubs(:from).with('data_store_' + @feed.id.to_s).returns(scope_object)
+      DataStore.expects(:create).with(:value => 0, :identified_by => @feed.id, :created_at => Date.today)
+
+      processor = PowerToKwhPerDayProcessor.new(3600, @feed.id)
+      processor.perform.should == 0
+    end
+  end
+
+  describe 'Calculate value during the day' do
+    before(:each) do
+      @feed = Feed.create(:last_value => 1, :user_id => 1, :input_id => 1)
+    end
+
+    it 'should store the data in the corresponding DataStore table' do
+      data_store   = mock
+      data_store.expects(:update_attributes).with(:value => 1.1, :identified_by => @feed.id, :created_at => Date.today)
+
+      scope_object = mock
+      scope_object.expects(:where).with(:created_at => Date.today).returns(data_store)
+
+      DataStore.stubs(:from).with('data_store_' + @feed.id.to_s).returns(scope_object)
+
+      Time.stubs(:now).returns(Time.at(1320857865))
+      Feed.any_instance.stubs(:updated_at).returns(Time.now - 100.seconds)
+
+      processor = PowerToKwhPerDayProcessor.new(3600, @feed.id)
+      processor.perform.should == 1.1
+    end
+  end
+
 end
