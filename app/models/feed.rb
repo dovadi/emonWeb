@@ -1,4 +1,4 @@
-class UndefinedProcessor < Exception; end
+class UndefinedProcessorException < Exception; end
 
 class Feed < ActiveRecord::Base
   belongs_to :input
@@ -16,7 +16,7 @@ class Feed < ActiveRecord::Base
         processor_name = (processor[0].to_s.camelize + 'Processor')
         processor_instance = processor_name.constantize.new(processed_value, processor[1])
       rescue NameError => e
-        raise UndefinedProcessor, "Undefined processor #{processor_name}"
+        raise UndefinedProcessorException, "Undefined processor #{processor_name}"
       end
       processed_value = processor_instance.perform
     end

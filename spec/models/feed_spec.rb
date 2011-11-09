@@ -46,7 +46,7 @@ describe Feed do
     it 'should raise an UndefinedProcessor expection' do
       expect do
         Feed.create!(@attr)
-      end.to raise_error UndefinedProcessor
+      end.to raise_error UndefinedProcessorException
     end
   end
 
