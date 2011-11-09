@@ -8,6 +8,10 @@ describe PowerToKwhProcessor do
     PowerToKwhProcessor.store?.should == true
   end
 
+  it 'should tell its description' do
+    PowerToKwhProcessor.description.should == 'Power to kWh'
+  end
+
   it 'should store the data in the corresponding DataStore table' do
     Time.stubs(:now).returns(Time.at(1320857865))
     Feed.any_instance.stubs(:updated_at).returns(Time.now - 100.seconds)

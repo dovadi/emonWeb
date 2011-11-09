@@ -97,7 +97,7 @@ class Input < ActiveRecord::Base
   end
 
   def storing_data_needed?(processor)
-    [:log_to_feed, :power_to_kwh, :power_to_kwh_per_day].include?(processor)
+    Processor.data_stores.include?(processor)
   end
 
   def verify_table(table_name)

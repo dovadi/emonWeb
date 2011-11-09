@@ -1,5 +1,9 @@
 class PowerToKwhProcessor < LogToFeedProcessor
 
+  def self.description
+    'Power to kWh'
+  end
+
   def perform
     @value = calculate!
     super

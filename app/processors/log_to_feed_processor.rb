@@ -4,6 +4,10 @@ class LogToFeedProcessor < Processor
     true
   end
 
+  def self.description
+    'Log to Feed'
+  end
+
   def perform
     DataStore.create(:value => @value,:identified_by => @argument)
   end
