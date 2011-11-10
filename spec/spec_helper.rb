@@ -2,7 +2,7 @@ require 'rubygems'
 require 'spork'
 
 def drop_table(name)
-  sql = "DROP TABLE IF EXISTS `#{name}`"
+  sql = "DROP TABLE IF EXISTS #{name}"
   ActiveRecord::Base.connection.execute(sql)
 end
 
