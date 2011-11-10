@@ -12,7 +12,7 @@ class PowerToKwhProcessor < LogToFeedProcessor
   private
 
   def calculate!
-    last_kwh = feed.last_value
+    last_kwh = feed.last_value || 0
     time_elapsed = Time.now - feed.updated_at
     kwh_inc = (time_elapsed * @value) / 3600000
     last_kwh + kwh_inc

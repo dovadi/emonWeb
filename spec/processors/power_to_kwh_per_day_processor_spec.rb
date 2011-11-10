@@ -10,7 +10,7 @@ describe PowerToKwhPerDayProcessor do
 
   describe 'Calculate value for the first time' do
     before(:each) do
-      @feed = Feed.create(:last_value => 1, :user_id => 1, :input_id => 1)
+      @feed = Feed.create(:last_value => nil, :user_id => 1, :input_id => 1)
     end
 
     it 'should store the data in the corresponding DataStore table' do
@@ -27,12 +27,12 @@ describe PowerToKwhPerDayProcessor do
 
   describe 'Calculate value during the day' do
     before(:each) do
-      @feed = Feed.create(:last_value => 1, :user_id => 1, :input_id => 1)
+      @feed = Feed.create(:last_value => nil, :user_id => 1, :input_id => 1)
     end
 
     it 'should store the data in the corresponding DataStore table' do
       data_store   = mock
-      data_store.expects(:update_attributes).with(:value => 1.1, :identified_by => @feed.id, :created_at => Date.today)
+      data_store.expects(:update_attributes).with(:value => 0.1, :identified_by => @feed.id, :created_at => Date.today)
 
       scope_object = mock
       scope_object.expects(:where).with(:created_at => Date.today).returns(data_store)
@@ -43,7 +43,7 @@ describe PowerToKwhPerDayProcessor do
       Feed.any_instance.stubs(:updated_at).returns(Time.now - 100.seconds)
 
       processor = PowerToKwhPerDayProcessor.new(3600, @feed.id)
-      processor.perform.should == 1.1
+      processor.perform.should == 0.1
     end
   end
 
