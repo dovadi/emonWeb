@@ -133,7 +133,12 @@ class Input < ActiveRecord::Base
         NO MAXVALUE
         CACHE 1;
     
-    ALTER SEQUENCE #{table_name}_id_seq OWNED BY #{table_name}.id;"
+    ALTER SEQUENCE #{table_name}_id_seq OWNED BY #{table_name}.id;
+    
+    ALTER TABLE #{table_name} ALTER COLUMN id SET DEFAULT nextval('#{table_name}_id_seq'::regclass);
+
+    ALTER TABLE ONLY #{table_name}
+        ADD CONSTRAINT #{table_name}_pkey PRIMARY KEY (id);"
 
     database = ActiveRecord::Base.connection.adapter_name
     case database
