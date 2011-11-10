@@ -8,6 +8,25 @@
 #
 # And be sure to use new-style password hashing:
 #   http://dev.mysql.com/doc/refman/5.0/en/old-client.html
+
+# See https://willj.net/2011/05/31/setting-up-postgresql-for-ruby-on-rails-development-on-os-x/
+# Start with createuser emonweb
+# Shall the new role be a superuser? (y/n) y
+
+# development:
+#   adapter: postgresql
+#   encoding: utf8
+#   database: emonweb_development
+#   username: emonweb
+#   password:
+
+# test:
+#   adapter: postgresql
+#   encoding: utf8
+#   database: emonweb_test
+#   username: emonweb
+#   password:
+
 development:
   adapter: mysql2
   encoding: utf8
