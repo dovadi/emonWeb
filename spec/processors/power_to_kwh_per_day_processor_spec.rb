@@ -14,8 +14,11 @@ describe PowerToKwhPerDayProcessor do
     end
 
     it 'should store the data in the corresponding DataStore table' do
+      arel_object  = mock
+      arel_object.expects(:first).returns(nil)
+
       scope_object = mock
-      scope_object.expects(:where).with(:created_at => Date.today).returns(nil)
+      scope_object.expects(:where).with(:created_at => Date.today).returns(arel_object)
 
       DataStore.stubs(:from).with('data_store_' + @feed.id.to_s).returns(scope_object)
       DataStore.expects(:create).with(:value => 0, :identified_by => @feed.id, :created_at => Date.today)
@@ -34,8 +37,11 @@ describe PowerToKwhPerDayProcessor do
       data_store   = mock
       data_store.expects(:update_attributes).with(:value => 0.1, :identified_by => @feed.id, :created_at => Date.today)
 
+      arel_object  = mock
+      arel_object.expects(:first).returns(data_store)
+
       scope_object = mock
-      scope_object.expects(:where).with(:created_at => Date.today).returns(data_store)
+      scope_object.expects(:where).with(:created_at => Date.today).returns(arel_object)
 
       DataStore.stubs(:from).with('data_store_' + @feed.id.to_s).returns(scope_object)
 

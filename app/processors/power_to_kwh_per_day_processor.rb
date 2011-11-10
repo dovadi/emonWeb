@@ -5,7 +5,7 @@ class PowerToKwhPerDayProcessor < PowerToKwhProcessor
   end
 
   def perform
-    data_store = DataStore.from('data_store_' + @argument.to_s).where(:created_at => Date.today)
+    data_store = DataStore.from('data_store_' + @argument.to_s).where(:created_at => Date.today).first
     if data_store
       @value = calculate!
       data_store.update_attributes(attributes)
