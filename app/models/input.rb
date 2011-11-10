@@ -109,14 +109,43 @@ class Input < ActiveRecord::Base
   end
 
   def create_data_store_table(table_name)
-    sql = "CREATE TABLE `#{table_name}` (
-      `id` int(11) NOT NULL AUTO_INCREMENT,
-      `value` float NOT NULL,
-      `created_at` datetime NOT NULL,
-      PRIMARY KEY (`id`)
-    ) ENGINE=InnoDB"
+     sql = 
 
-    ActiveRecord::Base.connection.execute(sql)
+     "CREATE TABLE `#{table_name}` (
+        `id` int(11) NOT NULL AUTO_INCREMENT,
+        `value` float NOT NULL,
+        `created_at` datetime NOT NULL,
+        PRIMARY KEY (`id`)
+     ) ENGINE=InnoDB"
+    
+    postgresql = 
+
+    "CREATE TABLE #{table_name} (
+        id integer NOT NULL,
+        value double precision,
+        created_at timestamp without time zone
+    );
+
+    CREATE SEQUENCE #{table_name}_id_seq
+        START WITH 1
+        INCREMENT BY 1
+        NO MINVALUE
+        NO MAXVALUE
+        CACHE 1;
+    
+    ALTER SEQUENCE #{table_name}_id_seq OWNED BY #{table_name}.id;"
+
+    database = ActiveRecord::Base.connection.adapter_name
+    case database
+    when 'PostgreSQL'
+       ActiveRecord::Base.connection.execute('ROLLBACK')
+       ActiveRecord::Base.connection.execute postgresql
+    when 'Mysql2'
+       ActiveRecord::Base.connection.execute sql
+    else
+      raise 'Database statement not implemented for #{database} adapter'
+    end
+
     logger.info "Created a new DateStore table: #{table_name}"
   end
 
