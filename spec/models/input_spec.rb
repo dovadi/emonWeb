@@ -99,14 +99,53 @@ describe Input do
       DataStore.from('data_store_' + (@last_feed.id - 0).to_s).count.should == 0
     end
 
-    describe 'Updating corresponding feeds' do
+    it 'should update the last value of the corresponding feeds' do
+      Feed.expects(:update).with(@last_feed.id - 2, any_parameters)
+      Feed.expects(:update).with(@last_feed.id - 1, any_parameters)
+      Feed.expects(:update).with(@last_feed.id    , any_parameters)
+      Input.create_or_update(:water => 255.12, :user_id => 3)
+    end
 
-      it 'should update the last value of the corresponding feeds' do
-        processors = [[:log_to_feed, @last_feed.id - 2],[:scale, 1.23], [:offset, 2.5],[:power_to_kwh, @last_feed.id - 1], [:power_to_kwh_per_day, @last_feed.id]]
-        Feed.any_instance.expects(:update_attributes).times(3).with(:last_value => 255.12, :processors => processors)
-        Input.create_or_update(:water => 255.12, :user_id => 3)
+    describe 'Process of data with an undefined processor' do
+      before(:each) do
+          @attr = {
+          :last_value => 252.55,
+          :name       => 'heat',
+          :user_id    => 100,
+          :processors => [[:unknown, 3.5]]
+        }
+        Input.create!(@attr)
+      end
+      it 'should raise an UndefinedProcessor expection' do
+        expect do
+          Input.create_or_update(:heat => 252.55, :user_id => 100)
+        end.to raise_error UndefinedProcessorException
+      end
+    end
+
+    describe 'Processing of data' do
+
+      before(:each) do
+        @attr = {
+          :last_value => 252.55,
+          :name       => 'heat',
+          :user_id    => 100,
+          :processors => [[:scale, 1.23], [:offset, 3.5]]
+        }
+        Input.create!(@attr)
+        @processor_klass = mock
+        String.any_instance.expects(:constantize).twice.returns(@processor_klass)
       end
 
+      it 'should perform the given processors' do
+        scale_processor = mock
+        scale_processor.stubs(:perform).returns(500)
+        offset_processor = mock
+        offset_processor.stubs(:perform).returns(1546.34)
+        @processor_klass.expects(:new).with(252.55, 1.23).returns(scale_processor)
+        @processor_klass.expects(:new).with(500, 3.5).returns(offset_processor)
+        Input.create_or_update(:heat => 252.55, :user_id => 100)
+      end
     end
 
     after(:each) do

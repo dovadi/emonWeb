@@ -1,4 +1,5 @@
 class NoUserIdGiven < Exception; end
+class UndefinedProcessorException < Exception; end
 
 class Input < ActiveRecord::Base
   belongs_to :user
@@ -87,7 +88,18 @@ class Input < ActiveRecord::Base
   end
 
   def store_data
-    feeds.each { |feed| feed.update_attributes(:last_value => last_value, :processors => processors ) }
+    if processors.present?
+      processed_value = last_value
+      processors.each do |processor|
+        begin
+          processor_name = (processor[0].to_s.camelize + 'Processor')
+          processor_instance = processor_name.constantize.new(processed_value, processor[1])
+        rescue NameError => e
+          raise UndefinedProcessorException, "Undefined processor #{processor_name}"
+        end
+        processed_value = processor_instance.perform
+      end
+    end
   end
 
   def check_data_store_tables

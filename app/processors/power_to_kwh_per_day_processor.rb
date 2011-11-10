@@ -13,6 +13,7 @@ class PowerToKwhPerDayProcessor < PowerToKwhProcessor
       @value = 0
       DataStore.create(attributes)
     end
+    Feed.update(@argument, :last_value => @value)
     @value
   end
 

@@ -13,7 +13,7 @@ class Api::V1::InputsController < ApplicationController
     if @input.save
       redirect_to api_v1_inputs_path, notice: 'Input was successfully created.'
     else
-      render action: "new" 
+      render action: 'new'
     end
   end
 
