@@ -58,7 +58,7 @@ class Input < ActiveRecord::Base
   end
 
   ##################################
-  # Private object methods         #
+  # Private instance methods       #
   ##################################
 
   # Because of serialize we use a double save when adding a new processor
@@ -121,7 +121,7 @@ class Input < ActiveRecord::Base
   end
 
   def create_data_store_table(table_name)
-     sql = 
+     mysql = 
 
      "CREATE TABLE `#{table_name}` (
         `id` int(11) NOT NULL AUTO_INCREMENT,
@@ -129,7 +129,7 @@ class Input < ActiveRecord::Base
         `created_at` datetime NOT NULL,
         PRIMARY KEY (`id`)
      ) ENGINE=InnoDB"
-    
+
     postgresql = 
 
     "CREATE TABLE #{table_name} (
@@ -144,9 +144,8 @@ class Input < ActiveRecord::Base
         NO MINVALUE
         NO MAXVALUE
         CACHE 1;
-    
     ALTER SEQUENCE #{table_name}_id_seq OWNED BY #{table_name}.id;
-    
+
     ALTER TABLE #{table_name} ALTER COLUMN id SET DEFAULT nextval('#{table_name}_id_seq'::regclass);
 
     ALTER TABLE ONLY #{table_name}
@@ -158,7 +157,7 @@ class Input < ActiveRecord::Base
        ActiveRecord::Base.connection.execute('ROLLBACK')
        ActiveRecord::Base.connection.execute postgresql
     when 'Mysql2'
-       ActiveRecord::Base.connection.execute sql
+       ActiveRecord::Base.connection.execute mysql
     else
       raise 'Database statement not implemented for #{database} adapter'
     end
