@@ -85,6 +85,10 @@ describe Input do
       @input.feeds.count.should == 3
     end
 
+    it 'should assign correct user to the feed' do
+      @last_feed.user_id.should == @input.user_id
+    end
+
     it 'should define the processors' do
       @input.processors.should == [[:log_to_feed, @last_feed.id - 2],[:scale, 1.23], [:offset, 2.5],[:power_to_kwh, @last_feed.id - 1], [:power_to_kwh_per_day, @last_feed.id]]
     end

@@ -22,7 +22,7 @@ class Input < ActiveRecord::Base
 
   def define_processor!(processor, argument)
     if storing_data_needed?(processor.to_sym)
-      feed = feeds.create!(:name => argument)
+      feed = feeds.create!(:name => argument, :user_id => user_id)
       add_processor(processor, feed.id)
     else
       add_processor(processor, argument)
@@ -87,7 +87,7 @@ class Input < ActiveRecord::Base
   end
 
   def store_data
-    feeds.each { |feed| feed.update_attributes(:last_value => last_value, :processors => processors) }
+    feeds.each { |feed| feed.update_attributes(:last_value => last_value, :processors => processors ) }
   end
 
   def check_data_store_tables
