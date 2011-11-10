@@ -19,4 +19,16 @@ describe DataStore do
     end
   end
 
+  describe 'from' do
+    it 'should force assign table_name' do
+      DataStore.expects(:table_name=).with('data_store_2')
+      DataStore.from('data_store_2')
+    end
+
+    it 'should force assign table_name with the use of a shorcut of the integer only' do
+      DataStore.expects(:table_name=).with('data_store_2')
+      DataStore.from(2)
+    end
+  end
+
 end

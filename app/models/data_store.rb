@@ -4,9 +4,10 @@ class DataStore < ActiveRecord::Base
 
   #Force assigning table_name because with sanitizing it will add by default 'data_stores'
   #Like for example: SELECT `datastores`.* FROM data_store_236
-  def self.from table_name
-    self.table_name = table_name
-    super table_name
+  def self.from name
+    name = 'data_store_' + name.to_s if name.is_a?(Integer)
+    self.table_name = name
+    super name
   end
 
   attr_accessor :identified_by
