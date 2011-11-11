@@ -1,2 +1,5 @@
+- content_for :meta do
+  %meta{:name=>'viewport', :content=>'user-scalable=no, width=device-width'}
+
 - content_for :javascripts do
- = dial_javascript(@id)
+  = dial_javascript(@id)

@@ -6,7 +6,7 @@ module WidgetsHelper
     {
       an += 0.01;
       value2 = curveValue(value2,parseFloat(value),0.02);
-      draw_gauge(ctx, 360/2,200,120,value2,1000,'W');
+      draw_gauge(ctx, 320/2,200,120,value2,1000,'W');
     };
 
     function getvalue(id)
