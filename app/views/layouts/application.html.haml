@@ -2,11 +2,11 @@
 %html
   %head
     %meta{ :content => 'text/html; charset=utf-8', 'http-equiv' => 'Content-Type' }
-    %meta{ :name => 'keywords', :content => '' }
-    %meta{ :name => 'description', :content => '' }
+    %meta{ :name => 'keywords', :content => 'energy monitor open source emonweb openenergymonitor' }
+    %meta{ :name => 'description', :content => 'Open Energy Monitoring is a project to develop and build open-source energy monitoring, control and analysis tools for energy efficiency and distributed renewable generation.' }
 
     %title EmonWeb
-    %link{:rel=>'stylesheet', :href=>'http://twitter.github.com/bootstrap/assets/css/bootstrap-1.2.0.min.css'}
+
     = stylesheet_link_tag    :application
     = javascript_include_tag :application
     = csrf_meta_tag
@@ -16,15 +16,14 @@
 
   %body
     .container
-      = render :partial => 'layouts/user_menu'
-
-      .page-header
-        %h1=link_to 'emonWeb', root_path
+      = render :partial => 'layouts/topbar'
 
       .content
         = render :partial => 'layouts/flashes'
         = yield
 
-      .footer
-        %a{ :href => 'http://openenergymonitor.org' }
-          Open Energy Monitor
+    %footer.footer
+      .container
+        %p
+          = link_to 'Open Energy Monitor', 'http://openenergymonitor.org'
+          is a project to develop and build open-source energy monitoring, control and analysis tools for energy efficiency and distributed renewable generation.

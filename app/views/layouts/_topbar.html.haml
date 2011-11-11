@@ -1,0 +1,24 @@
+.topbar{ "data-dropdown" => "dropdown" }
+  .topbar-inner
+    .container
+      %h3
+        = link_to 'EmonWeb', root_path
+      %ul.nav
+        %li.active
+          = link_to 'Home', root_path
+        %li
+          = link_to 'Dashboard', root_path
+      %ul.nav.secondary-nav
+        - if current_user
+          %li
+            = link_to 'Sign out', destroy_user_session_path, :method=>'delete'
+          %li
+            = link_to 'Edit account', edit_user_registration_path
+          - if current_user.admin?
+            %li
+              = link_to 'Admin', rails_admin_path
+        - else
+          %li
+            = link_to 'Sign in', user_session_path
+          %li
+            = link_to 'Sign up', new_user_registration_path
