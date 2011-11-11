@@ -11,7 +11,7 @@
     http://openenergymonitor.org/emon/forum
     */
 
-  function draw_gauge(x,y,size,position,maxvalue,units)
+  function draw_gauge(ctx,x,y,size,position,maxvalue,units)
   {
     if (position<0) position = 0;
     if (position>maxvalue) position = maxvalue;

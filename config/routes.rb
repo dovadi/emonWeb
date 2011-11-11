@@ -1,5 +1,7 @@
 Emonweb::Application.routes.draw do
 
+  match "widgets/dial/"
+
   namespace :api do
     namespace :v1 do
       resources :inputs do

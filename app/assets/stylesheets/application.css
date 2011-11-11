@@ -12,6 +12,12 @@
   min-height: 600px;
 }
 
+body.widgets{
+  margin: 0;
+  padding: 0;
+  margin-top: -40px;
+}
+
 .footer {
     background-color: #EEEEEE;
     border-top: 1px solid #E5E5E5;

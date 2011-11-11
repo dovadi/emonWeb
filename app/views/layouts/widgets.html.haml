@@ -1,0 +1,11 @@
+<!DOCTYPE html>
+%html
+
+  = render :partial => 'layouts/head'
+
+  %body.widgets
+
+    %canvas#canvas{:width=>'360px', :height=>'400px', :style=>'background-color:#ddd;'}
+
+    = javascript_tag do
+      = yield :javascripts

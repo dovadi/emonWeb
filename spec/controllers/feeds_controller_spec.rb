@@ -31,4 +31,29 @@ describe FeedsController do
     it { should respond_with :success}
   end
 
+  describe "user GET 'show'" do
+    before do
+      sign_in @user
+
+      @feed = mock
+      @feed.expects(:to_json)
+
+      feeds = mock
+      feeds.expects(:find).with('1').returns(@feed)
+
+      subject.current_user.expects(:feeds).returns(feeds)
+
+      get 'show', :id => 1, :format => 'js'
+    end
+
+    it "should have a current_user" do
+      subject.current_user.should_not be_nil
+    end
+
+    it 'should assign the correct feed' do
+      assigns(:feed).should == @feed
+    end
+    it { should respond_with :success}
+  end
+
 end
