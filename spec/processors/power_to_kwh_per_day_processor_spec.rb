@@ -25,7 +25,8 @@ describe PowerToKwhPerDayProcessor do
       Feed.expects(:update).with(@feed.id, :last_value => 0)
 
       processor = PowerToKwhPerDayProcessor.new(3600, @feed.id)
-      processor.perform.should == 0
+      processor.perform.should == 3600
+      processor.value.should == 0
     end
   end
 
@@ -51,7 +52,8 @@ describe PowerToKwhPerDayProcessor do
       Feed.any_instance.stubs(:updated_at).returns(Time.now - 100.seconds)
 
       processor = PowerToKwhPerDayProcessor.new(3600, @feed.id)
-      processor.perform.should == 0.1
+      processor.perform.should == 3600
+      processor.value.should == 0.1
     end
   end
 

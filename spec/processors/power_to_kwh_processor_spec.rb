@@ -17,6 +17,8 @@ describe PowerToKwhProcessor do
     Feed.any_instance.stubs(:updated_at).returns(Time.now - 100.seconds)
     DataStore.expects(:create).with(:value => 0.1, :identified_by => @feed.id)
     processor = PowerToKwhProcessor.new(3600, @feed.id)
-    processor.perform.should == 0.1
+
+    processor.perform.should == 3600
+    processor.value.should == 0.1
   end
 end

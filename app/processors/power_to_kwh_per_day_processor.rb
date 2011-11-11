@@ -5,6 +5,7 @@ class PowerToKwhPerDayProcessor < PowerToKwhProcessor
   end
 
   def perform
+    original_value =  @value
     data_store = DataStore.from('data_store_' + @argument.to_s).where(:created_at => Date.today).first
     if data_store
       @value = calculate!
@@ -14,7 +15,7 @@ class PowerToKwhPerDayProcessor < PowerToKwhProcessor
       DataStore.create(attributes)
     end
     Feed.update(@argument, :last_value => @value)
-    @value
+    original_value
   end
 
   private

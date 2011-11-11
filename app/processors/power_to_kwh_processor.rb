@@ -5,8 +5,10 @@ class PowerToKwhProcessor < LogToFeedProcessor
   end
 
   def perform
+    original_value = @value
     @value = calculate!
     super
+    original_value
   end
 
   private
