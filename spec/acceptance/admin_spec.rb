@@ -21,7 +21,7 @@ feature 'Admin', %q{
 
   scenario 'User is not allowed to visit the Rails admin webfrontend' do
     sign_in_as @user
-    within '.right' do
+    within '.topbar' do
       page.should have_no_content('Admin')
     end
     visit rails_admin_path
@@ -31,7 +31,7 @@ feature 'Admin', %q{
 
   scenario 'Visitor is not allowed to visit the Rails admin webfrontend' do
     visit homepage
-    within '.right' do
+    within '.topbar' do
       page.should have_no_content('Admin')
     end
     visit rails_admin_path

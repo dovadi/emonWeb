@@ -37,7 +37,6 @@ feature 'Sign in', %q{
     within '.alert-message.notice' do
       page.should have_content('Signed in successfully.')
     end
-    page.should have_content @user.email
   end
 
 end
