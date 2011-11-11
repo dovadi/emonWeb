@@ -1,0 +1,11 @@
+%h1 Listing Feeds
+
+%table
+  %tr
+    %th Name
+    %th Value
+
+  - @feeds.each do |feed|
+    %tr
+      %td= feed.name
+      %td= feed.last_value

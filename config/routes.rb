@@ -20,5 +20,6 @@ Emonweb::Application.routes.draw do
   devise_for :users
 
   resources :token_authentications, :only => [:create, :destroy]
+  resources :feeds, :only => [:index, :show]
 
 end

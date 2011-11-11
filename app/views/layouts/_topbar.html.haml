@@ -7,6 +7,9 @@
         %li.active
           = link_to 'Home', root_path
         %li
+          = link_to 'Feeds', feeds_path
+
+        %li
           = link_to 'Dashboard', root_path
       %ul.nav.secondary-nav
         - if current_user
