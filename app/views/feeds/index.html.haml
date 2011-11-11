@@ -3,9 +3,11 @@
 %table
   %tr
     %th Name
+    %th Updated at
     %th Value
 
   - @feeds.each do |feed|
     %tr
       %td= feed.name
+      %td{:class => color_time_ago(feed.updated_at)}= time_ago_in_words(feed.updated_at)
       %td= feed.last_value

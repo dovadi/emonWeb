@@ -3,12 +3,14 @@
 %table
   %tr
     %th Name
+    %th Updated at
     %th Value
     %th Actions
 
   - @inputs.each do |input|
     %tr
       %td= input.name
+      %td{:class => color_time_ago(input.updated_at)}= time_ago_in_words(input.updated_at)
       %td= input.last_value
       %td= link_to 'Destroy', api_v1_input_path(input), :confirm => 'Are you sure?', :method => :delete
 
