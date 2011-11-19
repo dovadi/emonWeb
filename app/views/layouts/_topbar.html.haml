@@ -10,6 +10,15 @@
           %li
             = link_to 'Feeds', feeds_path
           %li.dropdown
+            = link_to 'Graphs', '#', {:class => 'dropdown-toggle'}
+            %ul.dropdown-menu
+              %li
+                = link_to 'Raw',  graphs_raw_path
+              %li
+                = link_to 'Realtime',  graphs_realtime_path
+              %li
+                = link_to 'Bar',  graphs_bar_path
+          %li.dropdown
             = link_to 'Widgets', '#', {:class => 'dropdown-toggle'}
             %ul.dropdown-menu
               %li
