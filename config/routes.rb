@@ -1,5 +1,11 @@
 Emonweb::Application.routes.draw do
 
+  get "graphs/realtime"
+
+  get "graphs/raw"
+
+  get "graphs/bar"
+
   match "widgets/dial/"
 
   namespace :api do
@@ -9,6 +15,7 @@ Emonweb::Application.routes.draw do
           post 'api'
         end
       end
+      resources :data_stores, :only => [:index]
     end
   end
 
