@@ -22,7 +22,7 @@ class User < ActiveRecord::Base
   private
 
   def friendly_token
-    ActiveSupport::SecureRandom.base64(15).tr('+/=', '-_ ').strip.delete("\n")
+    SecureRandom.base64(15).tr('+/=', '-_ ').strip.delete("\n")
   end
 
 end
