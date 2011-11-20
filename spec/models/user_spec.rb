@@ -1,7 +1,9 @@
 require File.dirname(__FILE__) + '/../spec_helper'
 
 describe User do
-  
+
+  VALID_TOKEN = '4sAysjRjznRKCmcyxqzj'
+
   before(:each) do
     @attr = { 
       :name => 'Example User',
@@ -114,6 +116,20 @@ describe User do
       @user.admin?.should == true 
     end
 
+  end
+  
+  describe 'Api read token' do
+
+    before(:each) do
+      @user = User.create!(@attr)
+    end
+
+    it 'should create a new API read token' do
+      @user.expects(:friendly_token).returns(VALID_TOKEN)
+      @user.reset_api_read_token!
+      @user.reload
+      @user.api_read_token.should == VALID_TOKEN 
+    end
   end
 
 end

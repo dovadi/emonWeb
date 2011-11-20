@@ -9,4 +9,20 @@ class User < ActiveRecord::Base
 
   has_many :inputs, :dependent => :destroy
   has_many :feeds,  :dependent => :destroy
+
+  def reset_api_read_token
+    self.api_read_token = friendly_token
+  end
+
+  def reset_api_read_token!
+    reset_api_read_token
+    save
+  end
+
+  private
+
+  def friendly_token
+    ActiveSupport::SecureRandom.base64(15).tr('+/=', '-_ ').strip.delete("\n")
+  end
+
 end

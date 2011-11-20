@@ -18,6 +18,7 @@ feature 'Create and destroy authentication token', %q{
     @user.reload
     page.should have_content(@user.authentication_token)
     page.should have_content('You can use this url to login')
+    page.should have_content(@user.api_read_token)
     page.should have_content(root_path(:auth_token => @user.authentication_token))
   end
 

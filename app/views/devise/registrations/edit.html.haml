@@ -25,6 +25,10 @@
       = resource.authentication_token.blank? ? 'Token Empty' : resource.authentication_token
 
     %p
+      = f.label :api_read_token
+      = resource.api_read_token.blank? ? 'Token Empty' : resource.api_read_token
+
+    %p
       = link_to 'Generate Token', token_authentications_path(:user_id => resource.id), :method => :post, :confirm => 'Are you sure?'
       %br/
       = link_to 'Delete Token', token_authentication_path(resource), :method => :delete, :confirm => 'Are you sure?'
