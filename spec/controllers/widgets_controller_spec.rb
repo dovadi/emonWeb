@@ -31,9 +31,14 @@ describe WidgetsController do
       @feed = mock
       @feed.expects(:id).returns(3)
 
+      ordered_feeds = mock
+      ordered_feeds.expects(:first).returns(@feed)
+
+      order = mock
+
       feeds = mock
       feeds.expects(:find).with(nil).raises(ActiveRecord::RecordNotFound)
-      feeds.expects(:first).returns(@feed)
+      feeds.expects(:order).with(:id).returns(ordered_feeds)
 
       subject.current_user.expects(:feeds).twice.returns(feeds)
       get 'dial'
@@ -50,9 +55,14 @@ describe WidgetsController do
       @feed = mock
       @feed.expects(:id).returns(3)
 
+      ordered_feeds = mock
+      ordered_feeds.expects(:first).returns(@feed)
+
+      order = mock
+
       feeds = mock
       feeds.expects(:find).with('99').raises(ActiveRecord::RecordNotFound)
-      feeds.expects(:first).returns(@feed)
+      feeds.expects(:order).with(:id).returns(ordered_feeds)
 
       subject.current_user.expects(:feeds).twice.returns(feeds)
       get 'dial', {:id => 99}
@@ -63,5 +73,6 @@ describe WidgetsController do
   end
 
 
+ # feed = current_user.feeds.order(:id).first
 
 end
