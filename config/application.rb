@@ -23,6 +23,8 @@ module Emonweb
 
     # Custom directories with classes and modules you want to be autoloadable.
     config.autoload_paths += %W(#{config.root}/processors)
+    config.autoload_paths << Rails.root.join('lib', 'emonweb')
+
     config.assets.paths << Rails.root.join('app', 'assets', 'bootstrap')
     config.assets.paths << Rails.root.join('app', 'assets', 'flot')
     config.assets.paths << Rails.root.join('app', 'assets', 'widgets')

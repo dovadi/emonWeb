@@ -2,6 +2,9 @@ class NoUserIdGiven < Exception; end
 class UndefinedProcessorException < Exception; end
 
 class Input < ActiveRecord::Base
+
+  include DataStoreSql
+
   belongs_to :user
   has_many :feeds
 
@@ -116,53 +119,8 @@ class Input < ActiveRecord::Base
     begin
       DataStore.from(table_name).count
     rescue ActiveRecord::StatementInvalid
-      create_data_store_table(table_name)
+      create_data_store_tables(table_name)
     end
-  end
-
-  def create_data_store_table(table_name)
-     mysql = 
-
-     "CREATE TABLE `#{table_name}` (
-        `id` int(11) NOT NULL AUTO_INCREMENT,
-        `value` float NOT NULL,
-        `created_at` datetime NOT NULL,
-        PRIMARY KEY (`id`)
-     ) ENGINE=InnoDB"
-
-    postgresql = 
-
-    "CREATE TABLE #{table_name} (
-        id integer NOT NULL,
-        value double precision,
-        created_at timestamp without time zone
-    );
-
-    CREATE SEQUENCE #{table_name}_id_seq
-        START WITH 1
-        INCREMENT BY 1
-        NO MINVALUE
-        NO MAXVALUE
-        CACHE 1;
-    ALTER SEQUENCE #{table_name}_id_seq OWNED BY #{table_name}.id;
-
-    ALTER TABLE #{table_name} ALTER COLUMN id SET DEFAULT nextval('#{table_name}_id_seq'::regclass);
-
-    ALTER TABLE ONLY #{table_name}
-        ADD CONSTRAINT #{table_name}_pkey PRIMARY KEY (id);"
-
-    database = ActiveRecord::Base.connection.adapter_name
-    case database
-    when 'PostgreSQL'
-       ActiveRecord::Base.connection.execute('ROLLBACK')
-       ActiveRecord::Base.connection.execute postgresql
-    when 'Mysql2'
-       ActiveRecord::Base.connection.execute mysql
-    else
-      raise 'Database statement not implemented for #{database} adapter'
-    end
-
-    logger.info "Created a new DateStore table: #{table_name}"
   end
 
 end

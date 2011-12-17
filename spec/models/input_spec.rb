@@ -71,7 +71,22 @@ describe Input do
   end
 
   describe 'With processors' do
+
+    def drop_data_stores
+      ActiveRecord::Base.connection.tables.each do |table_name|
+        drop_table(table_name) if table_name =~/data_store_/
+      end
+    end
+
+    def verify_table(table_name)
+      DataStore.from(table_name).count.should == 0
+      DataStoreSql::TIMESLOTS.each do |timeslot|
+        DataStore.from(table_name + '_' + timeslot.to_s).count.should == 0
+      end
+    end
+
     before(:each) do
+      drop_data_stores
       @input = Input.create!(@attr.merge(:user_id => 3))
       @input.define_processor!(:log_to_feed, 'kWh')
       @input.define_processor!(:scale, 1.23) 
@@ -93,10 +108,10 @@ describe Input do
       @input.processors.should == [[:log_to_feed, @last_feed.id - 2],[:scale, 1.23], [:offset, 2.5],[:power_to_kwh, @last_feed.id - 1], [:power_to_kwh_per_day, @last_feed.id]]
     end
 
-    it 'should have created the corresponding data stores' do
-      DataStore.from('data_store_' + (@last_feed.id - 2).to_s).count.should == 0
-      DataStore.from('data_store_' + (@last_feed.id - 1).to_s).count.should == 0
-      DataStore.from('data_store_' + (@last_feed.id - 0).to_s).count.should == 0
+    it 'should have created the corresponding data stores with corresponding timeslots' do
+      verify_table('data_store_' + (@last_feed.id - 2).to_s)
+      verify_table('data_store_' + (@last_feed.id - 1).to_s)
+      verify_table('data_store_' + (@last_feed.id - 0).to_s)
     end
 
     it 'should update the last value of the corresponding feeds' do
@@ -148,9 +163,6 @@ describe Input do
       end
     end
 
-    after(:each) do
-      (@last_feed.id - 2).upto(@last_feed.id) { |id| drop_table('data_store_' + id.to_s) }
-    end
   end
 
 end
