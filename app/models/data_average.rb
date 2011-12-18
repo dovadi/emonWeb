@@ -14,7 +14,7 @@ class DataAverage
 
   private
 
-  def calculate_next_average(identified_by, timeslot)
+  def self.calculate_next_average(identified_by, timeslot)
     case timeslot
     when :one_min
       self.calculate!(identified_by, :five_mins)    if last.created_at.min % 5   == 0
