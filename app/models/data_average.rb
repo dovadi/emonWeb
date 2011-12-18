@@ -19,9 +19,9 @@ class DataAverage
     when :one_min
       self.calculate!(identified_by, :five_mins)    if last.created_at.min % 5   == 0
     when :five_mins
-      self.calculate!(identified_by, :fifteen_mins) if last.created_at.min % 15  == 0
+      self.calculate!(identified_by, :fifteen_mins) if last.created_at.min % 15   < 5
     when :fifteen_mins
-      self.calculate!(identified_by, :one_hour)     if last.created_at.min       == 0
+      self.calculate!(identified_by, :one_hour)     if last.created_at.min        < 15
     when :one_hour
       self.calculate!(identified_by, :four_hours)   if last.created_at.hour % 4  == 0
     when :four_hour
