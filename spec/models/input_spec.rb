@@ -72,12 +72,6 @@ describe Input do
 
   describe 'With processors' do
 
-    def drop_data_stores
-      ActiveRecord::Base.connection.tables.each do |table_name|
-        drop_table(table_name) if table_name =~/data_store_/
-      end
-    end
-
     def verify_table(table_name)
       DataStore.from(table_name).count.should == 0
       DataStoreSql::TIMESLOTS.each do |timeslot|

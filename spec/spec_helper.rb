@@ -6,6 +6,12 @@ def drop_table(name)
   ActiveRecord::Base.connection.execute(sql)
 end
 
+def drop_data_stores
+  ActiveRecord::Base.connection.tables.each do |table_name|
+    drop_table(table_name) if table_name =~/data_store_/
+  end
+end
+
 Spork.prefork do
   # Loading more in this block will cause your tests to run faster. However,
   # if you change any configuration or code from libraries loaded here, you'll
