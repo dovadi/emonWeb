@@ -3,7 +3,11 @@ class DataAverage
 
   def self.calculate!(identified_by, timeslot)
     last  = DataStore.from(identified_by, timeslot).last
-    value = DataStore.from(identified_by).where('created_at >= ? ',last.created_at).average(:value)
+    if last
+      value = DataStore.from(identified_by).where('created_at >= ? ',last.created_at).average(:value)
+    else
+      value = DataStore.from(identified_by).average(:value)
+    end
     DataStore.create(:value => value, :identified_by => identified_by, :time_slot => timeslot)
     calculate_next_average(identified_by, timeslot)
   end
