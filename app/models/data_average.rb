@@ -8,7 +8,7 @@ class DataAverage
     else
       value = DataStore.from(identified_by).average(:value)
     end
-    DataStore.create(:value => value, :identified_by => identified_by, :time_slot => timeslot)
+    DataStore.create(:value => value, :identified_by => identified_by, :timeslot => timeslot)
     calculate_next_average(identified_by, timeslot)
   end
 
