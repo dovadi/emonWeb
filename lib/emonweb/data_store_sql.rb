@@ -3,13 +3,18 @@ module DataStoreSql
   TIMESLOTS = [:one_min, :five_mins, :fifteen_mins, :one_hour, :four_hours, :twelve_hours]
 
   def create_data_store_tables(table_name)
-    create_table(table_name)
+    create_table(table_name) unless table_exist?(table_name)
     TIMESLOTS.each do |timeslot|
-      create_table(table_name + '_' + timeslot.to_s)
+      name = table_name + '_' + timeslot.to_s
+      create_table(name) unless table_exist?(name)
     end
   end
 
   private
+
+  def table_exist?(name)
+    ActiveRecord::Base.connection.tables.include?(name)
+  end
 
   def create_table(table_name)
     execute(:mysql2 => mysql2_statement(table_name), :postgresql => postgresql_statement(table_name))
@@ -33,7 +38,7 @@ module DataStoreSql
   end
 
   def mysql2_statement(table_name)
-    "CREATE TABLE `#{table_name}` (
+    "CREATE TABLE IF NOT EXISTS `#{table_name}` (
     `id` int(11) NOT NULL AUTO_INCREMENT,
     `value` float NOT NULL,
     `created_at` datetime NOT NULL,

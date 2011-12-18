@@ -86,6 +86,7 @@ describe Input do
     end
 
     before(:each) do
+      DataAverage.stubs(:calculate!).with(any_parameters)
       drop_data_stores
       @input = Input.create!(@attr.merge(:user_id => 3))
       @input.define_processor!(:log_to_feed, 'kWh')
