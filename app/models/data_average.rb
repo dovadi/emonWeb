@@ -1,6 +1,5 @@
 class DataAverage
 
-
   def self.calculate!(identified_by, timeslot)
     last  = DataStore.from(identified_by, timeslot).last
     if last
@@ -24,7 +23,7 @@ class DataAverage
       self.calculate!(identified_by, :one_hour)     if last.created_at.min        < 15
     when :one_hour
       self.calculate!(identified_by, :four_hours)   if last.created_at.hour % 4  == 0
-    when :four_hour
+    when :four_hours
       self.calculate!(identified_by, :twelve_hours) if last.created_at.hour % 12 == 0
     end
   end
