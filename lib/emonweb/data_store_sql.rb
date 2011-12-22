@@ -13,6 +13,7 @@ module DataStoreSql
   private
 
   def table_exist?(name)
+    ActiveRecord::Base.connection.execute('ROLLBACK')
     ActiveRecord::Base.connection.tables.include?(name)
   end
 
@@ -38,7 +39,7 @@ module DataStoreSql
   end
 
   def mysql2_statement(table_name)
-    "CREATE TABLE IF NOT EXISTS `#{table_name}` (
+    "CREATE TABLE `#{table_name}` (
     `id` int(11) NOT NULL AUTO_INCREMENT,
     `value` float NOT NULL,
     `created_at` datetime NOT NULL,
