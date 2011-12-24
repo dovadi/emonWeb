@@ -19,6 +19,7 @@ gem 'haml-rails'
 gem 'devise'
 gem 'rails_admin', :git => 'git://github.com/sferik/rails_admin.git'
 gem 'thin'
+gem 'airbrake'
 
 #heroku
 group :production do
