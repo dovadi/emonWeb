@@ -25,6 +25,10 @@ Spork.prefork do
   require 'rspec/rails'
   require 'shoulda/matchers/integrations/rspec'
 
+  #See http://blog.plataformatec.com.br/2011/12/three-tips-to-improve-the-performance-of-your-test-suite/
+  Devise.stretches = 1
+  Rails.logger.level = 4
+
   # Requires supporting ruby files with custom matchers and macros, etc,
   # in spec/support/ and its subdirectories.
   Dir[Rails.root.join("spec/support/**/*.rb")].each {|f| require f}
