@@ -16,7 +16,6 @@ ActiveRecord::Schema.define(:version => 20111120180932) do
   create_table "data_stores", :force => true do |t|
     t.float    "value"
     t.datetime "created_at"
-    t.datetime "updated_at"
   end
 
   create_table "feeds", :force => true do |t|
