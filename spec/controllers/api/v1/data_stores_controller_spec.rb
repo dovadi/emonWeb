@@ -12,17 +12,16 @@ describe Api::V1::DataStoresController do
     before(:each) do
       get :index, :format => :js
     end
-
-    it { should respond_with :success}
+    it { should respond_with :success }
   end
 
   describe 'GET index with the correct params' do
     it 'should respond with a json object' do
-      params = {:start => 1321813064, :end => 1321816647, :feed_id => 1, :api_read_token => @user.api_read_token}
+      params  = {:from => 1321813064, :till => 1321816647, :feed_id => 1}
       data = mock
       data.expects(:to_json)
       DataStore.expects(:fetch).with(params).returns(data)
-      get :index, {:format => :js}.merge(params)
+      get :index, {:format => :js}.merge(params.merge(:api_read_token => @user.api_read_token))
     end
   end
 
