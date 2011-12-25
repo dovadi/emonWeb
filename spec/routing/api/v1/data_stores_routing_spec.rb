@@ -7,4 +7,10 @@ describe Api::V1::DataStoresController do
       get('/api/v1/data_stores').should route_to('api/v1/data_stores#index')
     end
   end
+
+  describe 'Named routing' do
+    it 'routes to #index' do
+      get('/api').should route_to('api/v1/data_stores#index')
+    end
+  end
 end
