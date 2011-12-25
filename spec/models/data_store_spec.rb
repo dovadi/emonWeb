@@ -8,6 +8,7 @@ describe DataStore do
 
   describe 'DataStore assigned to table with a suffix based on a identifier' do
     before(:each) do
+      drop_data_stores
       DataStore.table_name = 'data_stores'
       @attr = {:value => 252.55, :identified_by => '236'}
     end
@@ -39,16 +40,55 @@ describe DataStore do
   end
 
   describe 'DataStore assigned to table with a suffix based on a identifier and a timeslot' do
-     before(:each) do
-       DataStore.table_name = 'data_stores'
-       @attr = {:value => 252.55, :identified_by => '236', :timeslot => 'one_min'}
-     end
+    before(:each) do
+      DataStore.table_name = 'data_stores'
+      @attr = {:value => 252.55, :identified_by => '236', :timeslot => 'one_min'}
+    end
 
-     it 'should set the correct table_name' do
-       DataStore.expects(:table_name=).with('data_store_236_one_min')
-       DataStore.expects(:table_name=).with('data_stores')
-       DataStore.create(@attr)
-     end
-   end
+    it 'should set the correct table_name' do
+      DataStore.expects(:table_name=).with('data_store_236_one_min')
+      DataStore.expects(:table_name=).with('data_stores')
+      DataStore.create(@attr)
+    end
+  end
+
+  describe 'fetch' do
+
+    before(:each) do
+      drop_data_stores
+      @user = Factory(:user)
+      @user.reset_api_read_token!
+      @from = (Time.now - 1.hour).utc.to_i
+      @till =  Time.now.utc.to_i
+
+    end
+    
+    it 'should return an empty array if no correct options are given' do
+      DataStore.fetch(:from => @from, :till => @till).should == []
+    end
+
+    it 'should perform the correct query' do
+      select  = mock
+      select.expects(:select).with([:value, :created_at]).returns([])
+      order   = mock
+      order.expects(:order).with('created_at DESC').returns(select)
+      records = mock
+      records.expects(:where)
+             .with('created_at >= ? AND created_at <= ?', Time.at(@from).to_s, Time.at(@till).to_s)
+             .returns(order)
+      DataStore.expects(:from).with(1, nil).returns(records)
+      DataStore.fetch(:from => @from.to_i, :till => @till.to_i, :feed_id => 1)
+    end
+  
+    it 'should return the correct data' do
+      @input = Input.new
+      @input.create_data_store_tables('data_store_1')
+      ds1 = DataStore.create!(:value => 100, :identified_by => 1)
+      ds2 = DataStore.create!(:value => 200, :identified_by => 1)
+      data = DataStore.fetch(:from => @from.to_i, :till => @till.to_i, :feed_id => 1)
+      data.should == [[ds2.created_at.utc.to_i, ds2.value], [ds1.created_at.utc.to_i, ds1.value]]
+    end
+  end
+
 
 end
