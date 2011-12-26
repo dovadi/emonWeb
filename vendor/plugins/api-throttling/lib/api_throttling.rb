@@ -2,6 +2,8 @@ require 'rubygems'
 require 'rack'
 require File.expand_path(File.dirname(__FILE__) + '/handlers/handlers')
 
+class RateLimitExceeded < Exception; end
+
 class ApiThrottling
 
   def initialize(app, options={})
@@ -27,7 +29,6 @@ class ApiThrottling
       return auth_required unless auth.provided?
       return bad_request unless auth.basic?
     end
-
     min_interval_allowed?(env, auth, req) ? @app.call(env) : over_rate_limit
   end
 
@@ -89,6 +90,7 @@ class ApiThrottling
       t1    = request_start_time(req)
 
       allowed = !t0 || (dt = t1 - t0.to_f) >= minimum_interval
+      raise RateLimitExceeded, "Rate limit exceeded for #{client_identifier(req)}" unless allowed
     begin
       cache.set(key, t1)
       allowed
