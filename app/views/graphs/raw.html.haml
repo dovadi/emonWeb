@@ -1,2 +1,6 @@
-%h1 Graphs#raw
-%p Find me in app/views/graphs/raw.html.haml
+%h1 Graph raw data
+
+= render 'graph'
+
+- content_for :javascripts do
+  = draw_graph_raw_data(current_user.api_read_token, current_user.feeds.first.id)

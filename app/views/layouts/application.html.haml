@@ -10,6 +10,9 @@
         = render :partial => 'layouts/flashes'
         = yield
 
+        = javascript_tag do
+          = yield :javascripts
+
     %footer.footer
       .container
         %p
