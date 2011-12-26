@@ -25,6 +25,13 @@ describe "Api::V1::Inputs" do
       response.body.should == ' '
       Input.last.user_id.should be(@user.id)
     end
+
+    #It will throttle because the post requests follows directly after 'create new inputs'
+    it 'should throttle with too many requests' do
+      post api_path(:water => 12.35, :solar => 48.23) 
+      response.body.should == 'Over Rate Limit'
+      response.status.should be(503)
+    end
   end
 
 end

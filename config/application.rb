@@ -6,7 +6,7 @@ require 'action_controller/railtie'
 require 'action_mailer/railtie'
 require 'active_resource/railtie'
 require 'sprockets/railtie'
-# require 'rails/test_unit/railtie'
+require File.expand_path(File.dirname(__FILE__) + '/../vendor/gems/api-throttling/lib/api_throttling')
 
 if defined?(Bundler)
   # If you precompile assets before deploying to production, use this line
@@ -24,6 +24,8 @@ module Emonweb
     # Custom directories with classes and modules you want to be autoloadable.
     config.autoload_paths += %W(#{config.root}/processors)
     config.autoload_paths << Rails.root.join('lib', 'emonweb')
+    # config.autoload_paths << Rails.root.join('vendor', 'gems', 'rack-throttle', 'lib')
+
 
     config.assets.paths << Rails.root.join('app', 'assets', 'bootstrap')
     config.assets.paths << Rails.root.join('app', 'assets', 'flot')
@@ -51,5 +53,9 @@ module Emonweb
 
     # Enable the asset pipeline
     config.assets.enabled = true
+
+    #API throttle: enforcing a minimum 10-second interval between requests
+    cache = ActiveSupport::Cache::MemoryStore.new
+    config.middleware.use ApiThrottling, :min => 9.9, :auth=>false, :cache => cache, :urls => ['POST /api']
   end
 end
