@@ -58,7 +58,7 @@ module Emonweb
     #API throttle: enforcing a minimum 8-second interval between requests
     if Rails.env == 'production'
       # url   = YAML.load(File.read("#{Rails.root}/config/redis.yml"))['url']
-      uri   = URI.parse(REDIS_TO_GO_URL) #see http://devcenter.heroku.com/articles/config-vars
+      uri   = URI.parse(ENV['REDIS_TO_GO_URL']) #see http://devcenter.heroku.com/articles/config-vars
       cache = Redis.new(:host => uri.host, :port => uri.port, :password => uri.password)
     else
       cache = ActiveSupport::Cache::MemoryStore.new
