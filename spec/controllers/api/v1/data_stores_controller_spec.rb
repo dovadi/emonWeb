@@ -5,7 +5,7 @@ describe Api::V1::DataStoresController do
   before(:each) do
     @user = Factory(:user)
     @user.reset_api_read_token!
-    sign_in @user
+      sign_in @user
   end
 
   describe 'GET index' do
@@ -17,7 +17,8 @@ describe Api::V1::DataStoresController do
 
   describe 'GET index with the correct params' do
     it 'should respond with a json object' do
-      params  = {:from => 1321813064, :till => 1321816647, :feed_id => 1}
+      feed = Feed.create!(:last_value => 252.55, :name => 'electra', :input_id => 3, :user_id => @user.id)
+      params  = {:from => 1321813064, :till => 1321816647, :feed_id => feed.id}
       data = mock
       data.expects(:to_json)
       DataStore.expects(:fetch).with(params).returns(data)
