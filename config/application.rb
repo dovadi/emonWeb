@@ -54,8 +54,8 @@ module Emonweb
     # Enable the asset pipeline
     config.assets.enabled = true
 
-    #API throttle: enforcing a minimum 10-second interval between requests
+    #API throttle: enforcing a minimum 8-second interval between requests
     cache = ActiveSupport::Cache::MemoryStore.new
-    config.middleware.use ApiThrottling, :min => 9.0, :auth=>false, :cache => cache, :urls => ['POST /api']
+    config.middleware.use ApiThrottling, :min => 8.0, :auth=>false, :cache => cache, :urls => ['POST /api']
   end
 end
