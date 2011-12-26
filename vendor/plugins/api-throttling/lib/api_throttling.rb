@@ -116,7 +116,9 @@ class ApiThrottling
 
   def notify_via_airbrake(req)
     begin
-      Airbrake.notify :error_class => 'API Rate limited exceeded', :error_message => "Rate limit exceeded for #{client_identifier(req)}"
+      Airbrake.notify :error_class   => 'API Rate limited exceeded', 
+                      :error_message => "Rate limit exceeded for #{client_identifier(req)}",
+                      :parameters    => { :time_at => Time.now.to_s }
     rescue
       p 'No Airbrake gem installed!'
     end

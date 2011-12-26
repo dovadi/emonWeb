@@ -56,6 +56,6 @@ module Emonweb
 
     #API throttle: enforcing a minimum 10-second interval between requests
     cache = ActiveSupport::Cache::MemoryStore.new
-    config.middleware.use ApiThrottling, :min => 9.9, :auth=>false, :cache => cache, :urls => ['/api']
+    config.middleware.use ApiThrottling, :min => 9.0, :auth=>false, :cache => cache, :urls => ['POST /api']
   end
 end
