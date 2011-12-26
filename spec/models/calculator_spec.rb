@@ -2,8 +2,6 @@ require File.dirname(__FILE__) + '/../spec_helper'
 
 describe Calculator do
 
-  it { Calculator }
-
   describe 'calculate next timeslot with :one_min' do
     it 'should return nil if the minutes cannot be dived by 5' do
       time = mock

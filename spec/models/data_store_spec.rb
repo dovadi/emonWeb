@@ -2,10 +2,6 @@ require File.dirname(__FILE__) + '/../spec_helper'
 
 describe DataStore do
 
-  it 'should be defined' do
-    DataStore
-  end
-
   describe 'DataStore assigned to table with a suffix based on a identifier' do
     before(:each) do
       drop_data_stores
