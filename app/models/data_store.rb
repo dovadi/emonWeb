@@ -19,7 +19,7 @@ class DataStore < ActiveRecord::Base
 
   def self.fetch( options = {} )
     result = []
-    get_data(options).each { |data_point| result << [data_point.created_at.utc.to_i, data_point.value] }
+    get_data(options).each { |data_point| result << [data_point.created_at.utc.to_i * 1000, data_point.value] }
     result
   end
 
@@ -45,7 +45,11 @@ class DataStore < ActiveRecord::Base
   end
 
   def self.get_time(time)
-    Time.at(time).to_s
+    if Time.at(time).year > 40000
+      Time.at(time / 1000).to_s #time is given in milliseconds
+    else
+      Time.at(time).to_s
+    end
   end
 
   def set_corresponding_table_name
