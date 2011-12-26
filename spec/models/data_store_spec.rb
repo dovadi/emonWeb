@@ -82,7 +82,7 @@ describe DataStore do
       ds1 = DataStore.create!(:value => 100, :identified_by => 1)
       ds2 = DataStore.create!(:value => 200, :identified_by => 1)
       data = DataStore.fetch(:from => @from.to_i, :till => @till.to_i, :feed_id => 1)
-      data.should == [[ds2.created_at.utc.to_i, ds2.value], [ds1.created_at.utc.to_i, ds1.value]]
+      data.should == [[ds2.created_at.utc.to_i * 1000, ds2.value], [ds1.created_at.utc.to_i * 1000, ds1.value]]
     end
   end
 
