@@ -23,7 +23,7 @@ class Api::V1::DataStoresController < ApplicationController
 
   def extract(params)
     if correct_parameters? 
-      {:from => params[:from].to_i, :till => params[:till].to_i, :feed_id => params[:feed_id].to_i}
+      {:from => params[:from].to_i / 1000, :till => params[:till].to_i / 1000, :feed_id => params[:feed_id].to_i}
     end
   end
 

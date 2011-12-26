@@ -45,11 +45,7 @@ class DataStore < ActiveRecord::Base
   end
 
   def self.get_time(time)
-    if Time.at(time).year > 40000
-      Time.at(time / 1000).to_s #time is given in milliseconds
-    else
-      Time.at(time).to_s
-    end
+    Time.at(time).to_s
   end
 
   def set_corresponding_table_name
