@@ -20,11 +20,12 @@ gem 'devise'
 gem 'rails_admin', :git => 'git://github.com/sferik/rails_admin.git'
 gem 'thin'
 gem 'airbrake'
-gem 'newrelic_rpm'
+gem 'redis'
 
 #heroku
 group :production do
   gem 'pg'
+  gem 'newrelic_rpm'
 end
 
 group :test, :development do

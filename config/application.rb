@@ -7,6 +7,7 @@ require 'action_mailer/railtie'
 require 'active_resource/railtie'
 require 'sprockets/railtie'
 require File.expand_path(File.dirname(__FILE__) + '/../vendor/plugins/api-throttling/lib/api_throttling')
+require 'redis'
 
 if defined?(Bundler)
   # If you precompile assets before deploying to production, use this line
@@ -55,7 +56,13 @@ module Emonweb
     config.assets.enabled = true
 
     #API throttle: enforcing a minimum 8-second interval between requests
-    cache = ActiveSupport::Cache::MemoryStore.new
+    if Rails.env == 'production'
+      url   = YAML.load(File.read("#{Rails.root}/config/redis.yml"))['url']
+      uri   = URI.parse(url)
+      cache = Redis.new(:host => uri.host, :port => uri.port, :password => uri.password)
+    else
+      cache = ActiveSupport::Cache::MemoryStore.new
+    end
     config.middleware.use ApiThrottling, :min => 8.0, :auth=>false, :cache => cache, :urls => ['POST /api']
   end
 end

@@ -4,3 +4,10 @@ API THROTTLING
 # Merged the api-throttling gem with minimal interval methods from the rack-throttle gem.
 # And vendorized in the plugins directory.
 # Added an dependency to Airbrake by adding a Airbrake notifier if rate limit is exceeded.
+
+REDIS
+------
+
+# In production on Heroku we use Redis (add-on RedisToGo) as cache for the api-throttling
+# Add a redis.yml config file with the url to redistogo
+# See https://redistogo.com/documentation/heroku
