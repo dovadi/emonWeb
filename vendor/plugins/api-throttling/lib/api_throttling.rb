@@ -2,8 +2,6 @@ require 'rubygems'
 require 'rack'
 require File.expand_path(File.dirname(__FILE__) + '/handlers/handlers')
 
-class RateLimitExceeded < Exception; end
-
 class ApiThrottling
 
   def initialize(app, options={})
@@ -90,7 +88,7 @@ class ApiThrottling
       t1    = request_start_time(req)
 
       allowed = !t0 || (dt = t1 - t0.to_f) >= minimum_interval
-      raise RateLimitExceeded, "Rate limit exceeded for #{client_identifier(req)}" unless allowed
+      notify_via_airbrake(req) unless allowed
     begin
       cache.set(key, t1)
       allowed
@@ -114,6 +112,14 @@ class ApiThrottling
 
   def minimum_interval
     @min ||= (@options[:min] || 1.0).to_f
+  end
+
+  def notify_via_airbrake(req)
+    begin
+      Airbrake.notify :error_class => 'API Rate limited exceeded', :error_message => "Rate limit exceeded for #{client_identifier(req)}"
+    rescue
+      p 'No Airbrake gem installed!'
+    end
   end
 
 end
