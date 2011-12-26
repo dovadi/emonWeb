@@ -6,7 +6,7 @@ require 'action_controller/railtie'
 require 'action_mailer/railtie'
 require 'active_resource/railtie'
 require 'sprockets/railtie'
-require File.expand_path(File.dirname(__FILE__) + '/../vendor/gems/api-throttling/lib/api_throttling')
+require File.expand_path(File.dirname(__FILE__) + '/../vendor/plugins/api-throttling/lib/api_throttling')
 
 if defined?(Bundler)
   # If you precompile assets before deploying to production, use this line
@@ -56,6 +56,6 @@ module Emonweb
 
     #API throttle: enforcing a minimum 10-second interval between requests
     cache = ActiveSupport::Cache::MemoryStore.new
-    config.middleware.use ApiThrottling, :min => 9.9, :auth=>false, :cache => cache, :urls => ['POST /api']
+    config.middleware.use ApiThrottling, :min => 9.9, :auth=>false, :cache => cache, :urls => ['/api']
   end
 end
