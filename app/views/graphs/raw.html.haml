@@ -1,6 +1,49 @@
-%h1 Graph raw data
+%h1= "Graph raw data"
 
 = render 'graph'
 
-- content_for :javascripts do
-  = draw_graph_raw_data(current_user.api_read_token, current_user.feeds.first.id)
+= hidden_field_tag 'api_key', current_user.api_read_token
+= hidden_field_tag 'feed_id', current_user.feeds.first.id
+
+:javascript
+
+  $(function () {
+
+    //Global variables
+    var placeholder = $('#graph');
+    var apiKey      = $('#api_key').val();
+    var feedId      = $('#feed_id').val();
+
+    var from        = new Date().getTime();
+    var till        = from - (3600000 * 24.0);
+
+    var pAverage;
+    var nPoints;
+    var graphData = [];
+
+    $('#graph').width($('#graph_bound').width());
+    $('#graph').height($('#graph_bound').height());
+
+    $('#zoomout').bind('click', function(){
+      zoomGraph(placeholder, apiKey, feedId, 2);
+    });
+    $('#zoomin').bind('click', function(){
+      zoomGraph(placeholder, apiKey, feedId, 0.5);
+    });
+    $('#left').bind('click', function(){
+      shiftGraph(placeholder, apiKey, feedId, 'left');
+    });
+    $('#right').bind('click', function(){
+      shiftGraph(placeholder, apiKey, feedId, 'right');
+    });
+    $('.time').bind('click', function(e){
+      setTimeGraph(e.currentTarget, placeholder, apiKey, feedId);
+    });
+    placeholder.bind('plotselected', function (event, ranges) 
+    {
+      plotSelectedGraph(placeholder, apiKey, feedId, ranges);
+    });
+  
+    fetchDataGraph(apiKey, feedId, from, till, placeholder);
+
+  });
