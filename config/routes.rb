@@ -1,6 +1,6 @@
 Emonweb::Application.routes.draw do
 
-  get "graphs/realtime"
+  get "graphs/real_time"
 
   get "graphs/raw"
 

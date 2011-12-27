@@ -1,25 +1,25 @@
 %h1= "Graph raw data"
 
-= render 'graph'
+= render 'raw_data_graph'
 
 = hidden_field_tag 'api_key', current_user.api_read_token
 = hidden_field_tag 'feed_id', current_user.feeds.first.id
 
 :javascript
 
+  //Global variables
+  var placeholder = $('#graph');
+  var apiKey      = $('#api_key').val();
+  var feedId      = $('#feed_id').val();
+
+  var from        = new Date().getTime();
+  var till        = from - (3600000 * 24.0);
+
+  var pAverage;
+  var nPoints;
+  var graphData = [];
+
   $(function () {
-
-    //Global variables
-    var placeholder = $('#graph');
-    var apiKey      = $('#api_key').val();
-    var feedId      = $('#feed_id').val();
-
-    var from        = new Date().getTime();
-    var till        = from - (3600000 * 24.0);
-
-    var pAverage;
-    var nPoints;
-    var graphData = [];
 
     $('#graph').width($('#graph_bound').width());
     $('#graph').height($('#graph_bound').height());

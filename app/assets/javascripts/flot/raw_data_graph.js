@@ -1,6 +1,6 @@
 function plotGraph(from, till, placeholder)
 {
-  $.plot(placeholder,[                    
+  $.plot(placeholder,[
     {
       data: graphData,
       lines: { show: true, fill: true }
@@ -16,7 +16,7 @@ function fetchDataGraph(apiKey, feedID, from, till, placeholder)
  $('#loading').show();
  $('#stat').html('Loading...  please wait about 5s');
  $.ajax({ 
-   url: '/api',                         
+   url: '/api',
    data: 'api_read_token=' + apiKey + '&feed_id=' + feedID + '&from=' + from + '&till=' + till,
    dataType: 'json',
    success: function(data) 
@@ -38,11 +38,11 @@ function fetchDataGraph(apiKey, feedID, from, till, placeholder)
 
         pAverage = pAverage / nPoints;
         $('#stat').html((pAverage).toFixed(1)+' W | '+(kwhWindow).toFixed(1)+' kWh');
-     
+
       } else {
         $('#stat').html('No data');
       }
-      graphData = [];   
+      graphData = [];
       graphData = data;
 
       plotGraph(from, till, placeholder);
@@ -56,7 +56,7 @@ function zoomGraph(placeholder, apiKey, feedID, factor) {
   timeWindow     = timeWindow * factor;
   from           = middle - (timeWindow / 2);
   till           = middle + (timeWindow / 2);
-  fetchDataGraph(apiKey, feedID, from, till, placeholder); 
+  fetchDataGraph(apiKey, feedID, from, till, placeholder);
 };
 
 function shiftGraph(placeholder, apiKey, feedID, direction) {
@@ -69,14 +69,14 @@ function shiftGraph(placeholder, apiKey, feedID, direction) {
     from -= shiftsize;
     till -= shiftsize;
   };
-  fetchDataGraph(apiKey, feedID, from, till, placeholder); 
+  fetchDataGraph(apiKey, feedID, from, till, placeholder);
 };
- 
+
 function setTimeGraph(element, placeholder, apiKey, feedID) {
   var time = $(element).attr('time');
   till     = new Date().getTime();
   from     = till - (3600000 *24 * time);
-  fetchDataGraph(apiKey, feedID, from, till, placeholder); 
+  fetchDataGraph(apiKey, feedID, from, till, placeholder);
 };
 
 function plotSelectedGraph(placeholder, apiKey, feedID, ranges) {
@@ -84,5 +84,5 @@ function plotSelectedGraph(placeholder, apiKey, feedID, ranges) {
   if (ranges.yaxis.to - ranges.yaxis.from < 0.00001) ranges.yaxis.to = ranges.yaxis.from + 0.00001;
   from = ranges.xaxis.from - 3600000;
   till = ranges.xaxis.to - 3600000; 
-  fetchDataGraph(apiKey, feedID, from, till, placeholder);  
+  fetchDataGraph(apiKey, feedID, from, till, placeholder);
 };

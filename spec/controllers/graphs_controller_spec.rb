@@ -8,7 +8,7 @@ describe GraphsController do
 
   describe 'GET realtime' do
     it 'should be successful' do
-      get 'realtime'
+      get 'real_time'
       response.should be_success
     end
   end

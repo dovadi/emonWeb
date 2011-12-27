@@ -1,5 +1,5 @@
 class GraphsController < ApplicationController
-  def realtime
+  def real_time
   end
 
   def raw

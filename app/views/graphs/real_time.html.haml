@@ -1,0 +1,30 @@
+%h1= "Realtime graph"
+
+= render 'real_time_graph'
+
+= hidden_field_tag 'api_key', current_user.api_read_token
+= hidden_field_tag 'feed_id', current_user.feeds.first.id
+
+:javascript
+  //Global variables
+  var placeholder = $('#graph');
+  var apiKey      = $('#api_key').val();
+  var feedId      = $('#feed_id').val();
+
+  var timeWindow  = 360000;
+  var till        = new Date().getTime();
+  var from        = till - timeWindow;
+
+  var graphData = [];
+
+  $(function () {
+    $('#graph').width($('#graph_bound').width());
+    $('#graph').height($('#graph_bound').height());
+    
+    $('.viewWindow').bind('click', function(e){
+      setTimeWindow(e.currenTarget)
+    });
+
+    refreshGraph();
+    setInterval ( refreshGraph, 5000 );
+  });

@@ -8,8 +8,8 @@ describe GraphsController do
       get('/graphs/bar').should route_to(:controller => 'graphs', :action => 'bar')
     end
 
-    it 'routes to #realtime' do
-      get('/graphs/realtime').should route_to(:controller => 'graphs', :action => 'realtime')
+    it 'routes to #real_time' do
+      get('/graphs/real_time').should route_to(:controller => 'graphs', :action => 'real_time')
     end
 
     it 'routes to #raw' do
