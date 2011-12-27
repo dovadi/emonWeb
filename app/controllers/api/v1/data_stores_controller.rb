@@ -1,9 +1,11 @@
 class Api::V1::DataStoresController < ApplicationController
 
+  skip_before_filter :authenticate_user!
+
   def index
     if correct_parameters? && allowed?(params[:api_read_token], params[:feed_id])
       respond_to do |type|
-        type.js { render :json => DataStore.fetch(extract(params)).to_json}
+        type.js { render :json => DataStore.fetch(extract(params)).to_json }
       end
     else
       render :nothing => true
@@ -28,6 +30,6 @@ class Api::V1::DataStoresController < ApplicationController
   end
 
   def correct_parameters?
-    params[:from] && params[:till] && params[:feed_id]
+    params[:from] && params[:till] && params[:feed_id] && params[:api_read_token]
   end
 end

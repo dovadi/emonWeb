@@ -5,7 +5,7 @@ describe Api::V1::DataStoresController do
   before(:each) do
     @user = Factory(:user)
     @user.reset_api_read_token!
-      sign_in @user
+      # sign_in @user
   end
 
   describe 'GET index' do
