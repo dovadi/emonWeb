@@ -43,6 +43,7 @@ module DataStoreSql
     `id` int(11) NOT NULL AUTO_INCREMENT,
     `value` float NOT NULL,
     `created_at` datetime NOT NULL,
+    `updated_at` datetime NOT NULL,
     PRIMARY KEY (`id`)
     ) ENGINE=InnoDB"
   end

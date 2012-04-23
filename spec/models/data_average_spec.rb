@@ -1,6 +1,7 @@
 require File.dirname(__FILE__) + '/../spec_helper'
 
 describe DataAverage do
+
   describe 'DataAverage calculate! average' do
     before(:each) do
       drop_data_stores
