@@ -7,7 +7,7 @@ require File.expand_path('../boot', __FILE__)
 # require 'active_resource/railtie'
 # require 'sprockets/railtie'
 require 'rails/all'
-require File.expand_path(File.dirname(__FILE__) + '/../vendor/plugins/api-throttling/lib/api_throttling')
+require File.expand_path(File.dirname(__FILE__) + '/../lib/api-throttling/lib/api_throttling')
 require 'redis'
 
 if defined?(Bundler)
@@ -24,7 +24,6 @@ module Emonweb
     # -- all .rb files in that directory are automatically loaded.
 
     # Custom directories with classes and modules you want to be autoloadable.
-    p  %W(#{config.root}/processors)
     config.autoload_paths += %W(#{config.root}/processors)
     config.autoload_paths << Rails.root.join('lib', 'emonweb')
     # config.autoload_paths += %W(#{config.root}/extras)
