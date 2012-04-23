@@ -45,7 +45,7 @@ class DataStore < ActiveRecord::Base
   end
 
   def self.get_time(time)
-    Time.at(time).to_s
+    Time.at(time).utc.to_s
   end
 
   def set_corresponding_table_name

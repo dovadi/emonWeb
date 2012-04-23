@@ -70,7 +70,7 @@ describe DataStore do
       order.expects(:order).with('created_at DESC').returns(select)
       records = mock
       records.expects(:where)
-             .with('created_at >= ? AND created_at <= ?', Time.at(@from).to_s, Time.at(@till).to_s)
+             .with('created_at >= ? AND created_at <= ?', Time.at(@from).utc.to_s, Time.at(@till).utc.to_s)
              .returns(order)
       DataStore.expects(:from).with(1, nil).returns(records)
       DataStore.fetch(:from => @from.to_i, :till => @till.to_i, :feed_id => 1)
@@ -81,7 +81,7 @@ describe DataStore do
       @input.create_data_store_tables('data_store_1')
       ds1 = DataStore.create!(:value => 100, :identified_by => 1)
       ds2 = DataStore.create!(:value => 200, :identified_by => 1)
-      data = DataStore.fetch(:from => @from.to_i, :till => @till.to_i, :feed_id => 1)
+      data = DataStore.fetch(:from => @from.to_i, :till => @till.to_i + 1, :feed_id => 1)
       data.should == [[ds2.created_at.utc.to_i * 1000, ds2.value], [ds1.created_at.utc.to_i * 1000, ds1.value]]
     end
   end
