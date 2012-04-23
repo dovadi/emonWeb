@@ -7,14 +7,14 @@ feature 'Admin', %q{
 } do
 
   background do
-    @user = Factory(:user)
+    @user = FactoryGirl.create(:user)
   end
 
   scenario 'Admin visits the Rails admin webfrontend' do
     @user.update_attribute(:admin, true)
     sign_in_as @user
     click_link 'Admin'
-    within 'h1.title' do
+    within 'a.brand' do
       page.should have_content('Emonweb Admin')
     end
   end

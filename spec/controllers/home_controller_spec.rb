@@ -11,7 +11,7 @@ describe HomeController do
 
   describe "user GET 'index'" do
     before do
-      @user = Factory(:user)
+      @user = FactoryGirl.create(:user)
       sign_in @user
       get 'index'
     end

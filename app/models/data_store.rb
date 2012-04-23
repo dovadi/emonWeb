@@ -6,6 +6,8 @@ class DataStore < ActiveRecord::Base
  
   attr_accessor :identified_by, :timeslot
 
+  attr_accessible :value, :identified_by, :created_at, :timeslot
+
   #Force assigning table_name because with sanitizing it will add by default 'data_stores'
   #Like for example: SELECT `datastores`.* FROM data_store_236
   def self.from name, extension = nil

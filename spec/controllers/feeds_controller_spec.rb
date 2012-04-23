@@ -3,7 +3,7 @@ require File.dirname(__FILE__) + '/../spec_helper'
 describe FeedsController do
 
   before(:each) do
-    @user = Factory(:user)
+    @user = FactoryGirl.create(:user)
   end
 
   describe "visitor GET 'index'" do

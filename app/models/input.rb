@@ -17,6 +17,8 @@ class Input < ActiveRecord::Base
 
   before_save :store_and_process_data
 
+  attr_accessible :name, :last_value, :user_id, :processors
+
   def self.create_or_update(attributes)
     self.input_attributes = attributes.symbolize_keys!
     cleanup_input_attributes!

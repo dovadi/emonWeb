@@ -3,7 +3,7 @@ require File.dirname(__FILE__) + '/../spec_helper'
 describe TokenAuthenticationsController  do
 
   before(:each) do
-    @user = Factory(:user)
+    @user = FactoryGirl.create(:user)
     sign_in @user
   end
 

@@ -7,7 +7,7 @@ feature 'Sign in', %q{
 } do
 
   background do
-    @user = Factory(:user)
+    @user = FactoryGirl.create(:user)
     visit homepage
     click_link 'Sign in'
   end

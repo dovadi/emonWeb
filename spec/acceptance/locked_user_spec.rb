@@ -8,7 +8,7 @@ feature 'Locked user', %q{
 
   background do
     reset_mailer
-    @user = Factory(:user)
+    @user = FactoryGirl.create(:user)
     visit homepage
     click_link 'Sign in'
   end

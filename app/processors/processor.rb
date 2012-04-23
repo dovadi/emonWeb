@@ -14,7 +14,7 @@ class Processor
 
   def self.descriptions
     array = []
-    processors.each { |processor| array << processor_class(processor).description }
+    processors.each {|processor| array << processor_class(processor).description}
     array.sort
   end
 
@@ -26,7 +26,7 @@ class Processor
   private
 
   def self.processor_class(processor)
-    (processor + 'Processor').camelize.constantize
+    (processor + '_processor').camelize.constantize
   end
 
   def self.processors

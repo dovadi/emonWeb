@@ -7,7 +7,7 @@ feature 'Sign out', %q{
 } do
 
   background do
-    @user = Factory(:user)
+    @user = FactoryGirl.create(:user)
     sign_in_as @user
   end
 

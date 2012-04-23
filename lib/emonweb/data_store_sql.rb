@@ -51,7 +51,8 @@ module DataStoreSql
     "CREATE TABLE #{table_name} (
     id integer NOT NULL,
     value double precision,
-    created_at timestamp without time zone
+    created_at timestamp without time zone,
+    updated_at timestamp without time zone
     );
 
     CREATE SEQUENCE #{table_name}_id_seq

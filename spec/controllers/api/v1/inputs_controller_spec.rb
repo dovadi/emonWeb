@@ -10,7 +10,7 @@ describe Api::V1::InputsController do
   end
 
   before(:each) do
-    @user = Factory(:user)
+    @user = FactoryGirl.create(:user)
     sign_in @user
   end
 

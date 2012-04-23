@@ -3,7 +3,7 @@ require File.dirname(__FILE__) + '/../spec_helper'
 describe WidgetsController do
 
   before(:each) do
-    @user = Factory(:user)
+    @user = FactoryGirl.create(:user)
   end
 
   describe "GET 'dial' with an id" do

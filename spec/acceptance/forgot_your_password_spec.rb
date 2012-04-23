@@ -8,7 +8,7 @@ feature 'Forgot your password', %q{
 
   background do
     reset_mailer
-    @user = Factory(:user)
+    @user = FactoryGirl.create(:user)
     visit forgot_your_password
   end
 

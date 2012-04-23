@@ -7,7 +7,7 @@ feature 'Access with authentication token', %q{
 } do
   
   background do
-    @user = Factory(:user)
+    @user = FactoryGirl.create(:user)
     @user.reset_authentication_token!
     @user.reload
   end

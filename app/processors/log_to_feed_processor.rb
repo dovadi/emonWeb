@@ -1,5 +1,5 @@
 class LogToFeedProcessor < Processor
-
+  
   def self.store?
     true
   end
