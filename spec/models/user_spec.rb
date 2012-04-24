@@ -16,8 +16,8 @@ describe User do
     User.create!(@attr)
   end
 
-  it { should have_many :inputs }
-  it { should have_many :feeds }
+  it { should have_many(:inputs).dependent(:destroy) }
+  it { should have_many(:feeds).dependent(:destroy) }
 
   it 'should require an email address' do
     no_email_user = User.new(@attr.merge(:email => ''))

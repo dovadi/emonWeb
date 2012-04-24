@@ -10,7 +10,7 @@ describe Input do
   it { should validate_presence_of :name }
   it { should validate_presence_of :last_value }
   it { should belong_to :user }
-  it { should have_many :feeds }
+  it { should have_many(:feeds).dependent(:destroy) }
 
   it 'should only accept an unique name' do
     Input.create!(@attr)

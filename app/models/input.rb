@@ -6,7 +6,7 @@ class Input < ActiveRecord::Base
   include DataStoreSql
 
   belongs_to :user
-  has_many :feeds
+  has_many :feeds, :dependent => :destroy
 
   serialize :processors
 
@@ -114,7 +114,7 @@ class Input < ActiveRecord::Base
   end
 
   def storing_data_needed?(processor)
-    Processor.data_stores.include?(processor)
+    Processor.data_stores.include?(processor.to_sym)
   end
 
   def verify_table(table_name)
