@@ -18,6 +18,8 @@ gem 'rails_admin', '~>0.0.1'
 gem 'thin', '~>1.3.1'
 gem 'airbrake', '~>3.0.9'
 gem 'redis', '~>2.2.2'
+gem 'formtastic', '~> 2.1.1'
+gem 'formtastic-bootstrap', '~>1.1.1'
 
 #heroku
 group :production do

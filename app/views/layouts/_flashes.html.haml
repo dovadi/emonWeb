@@ -1,4 +1,4 @@
 - flash.each do |key, value|
-  %div{:class=>"alert-message #{key}"}
-    %a{:class => 'close', :href => '#'} x
+  %div{:class=>'alert ' + bootstrap_alert(key)}
+    %a{:class => 'close', 'data-dismiss'=>'alert', :href => '#'} x
     %p= html_escape(value)

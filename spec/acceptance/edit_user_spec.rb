@@ -17,7 +17,7 @@ feature 'Edit user', %q{
     fill_in 'Password confirmation', :with => 'dovadi'
     fill_in 'Current password', :with => @user.password
     click_button 'Update'
-    within '.alert-message.notice' do
+    within '.alert-success' do
       page.should have_content('You updated your account successfully.')
     end
   end

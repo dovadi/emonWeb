@@ -13,7 +13,7 @@ feature 'Sign out', %q{
 
   scenario 'Users signs out' do
     click_link 'Sign out'
-    within '.alert-message.alert' do
+    within '.alert' do
       page.should have_content('You need to sign in or sign up before continuing.')
     end
   end

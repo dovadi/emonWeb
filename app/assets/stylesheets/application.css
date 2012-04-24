@@ -3,13 +3,28 @@
  * and any sub-directories. You're free to add application-wide styles to this file and they'll appear at
  * the top of the compiled file, but it's generally better to create a new file per style scope.
  *= require_self
+ *= require formtastic-bootstrap
  *= require_tree . 
 */
 
 /* Menu links top right screen */
 
 .content {
+  margin-top: 60px;
   min-height: 600px;
+}
+
+.navbar a.brand {
+  color: #FFF;
+}
+
+.navbar a.brand strong{
+  color: #9D261D;
+  font-weight: bold;
+}
+
+h1.title {
+  padding-bottom: 14px;
 }
 
 body.widgets{

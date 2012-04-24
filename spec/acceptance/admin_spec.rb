@@ -21,7 +21,7 @@ feature 'Admin', %q{
 
   scenario 'User is not allowed to visit the Rails admin webfrontend' do
     sign_in_as @user
-    within '.topbar' do
+    within '.navbar' do
       page.should have_no_content('Admin')
     end
     visit rails_admin_path
@@ -31,12 +31,12 @@ feature 'Admin', %q{
 
   scenario 'Visitor is not allowed to visit the Rails admin webfrontend' do
     visit homepage
-    within '.topbar' do
+    within '.navbar' do
       page.should have_no_content('Admin')
     end
     visit rails_admin_path
     page.should have_no_content('Emonweb Admin')
-    within '.alert-message.alert' do
+    within '.alert' do
       page.should have_content('You need to sign in or sign up before continuing.')
     end
   end

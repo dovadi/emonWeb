@@ -11,4 +11,15 @@ module ApplicationHelper
     end
   end
 
+  def bootstrap_alert(key)
+    case key
+    when :alert
+      ''
+    when :notice
+      'alert-success'
+    else
+      'alert-' + key.to_s
+    end
+  end
+
 end

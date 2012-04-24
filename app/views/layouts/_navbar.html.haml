@@ -1,8 +1,10 @@
-.topbar{ "data-dropdown" => "dropdown" }
-  .topbar-inner
+.navbar.navbar-fixed-top{ 'data-dropdown' => 'dropdown' }
+  .navbar-inner
     .container
       %h3
-        = link_to 'EmonWeb', root_path
+        = link_to root_path, :class=>'brand' do
+          Emon
+          %strong Web
       %ul.nav
         %li.active
           = link_to 'Home', root_path
@@ -10,7 +12,9 @@
           %li
             = link_to 'Feeds', feeds_path
           %li.dropdown
-            = link_to 'Graphs', '#', {:class => 'dropdown-toggle'}
+            %a{:href => '#',:class => 'dropdown-toggle', 'data-toggle' => 'dropdown'}
+              Graphs
+              %b.caret
             %ul.dropdown-menu
               %li
                 = link_to 'Raw',  graphs_raw_path
@@ -19,11 +23,13 @@
               %li
                 = link_to 'Bar',  graphs_bar_path
           %li.dropdown
-            = link_to 'Widgets', '#', {:class => 'dropdown-toggle'}
+            %a{:href => '#',:class => 'dropdown-toggle', 'data-toggle' => 'dropdown'}
+              Widgets
+              %b.caret
             %ul.dropdown-menu
               %li
                 = link_to 'Dial',  widgets_dial_path
-      %ul.nav.secondary-nav
+      %ul.nav.pull-right
         - if current_user
           %li
             = link_to 'Sign out', destroy_user_session_path, :method=>'delete'

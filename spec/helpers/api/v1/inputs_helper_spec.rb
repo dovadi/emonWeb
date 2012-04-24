@@ -1,12 +1,30 @@
 require File.dirname(__FILE__) + '/../../../spec_helper'
 
-# Specs in this file have access to a helper object that includes
-# the Api::V1::InputsHelper. For example:
-#
-# describe Api::V1::InputsHelper do
-#   describe "string concat" do
-#     it "concats two strings with spaces" do
-#       helper.concat_strings("this","that").should == "this that"
-#     end
-#   end
-# end
+
+describe Api::V1::InputsHelper do
+  describe "Name of processor" do
+    it "should show the name of the corresponding feed" do
+      feed = Feed.create!(:last_value => 252.55, :name => 'electra', :input_id => 3, :user_id => 1)
+      processor = [:log_to_feed, feed.id]
+      helper.name_of_processor(processor).should == 'electra'
+    end
+
+    it "should show the description of a processor if no data_store is associated" do
+      processor = [:scale, 1.0005]
+      helper.name_of_processor(processor).should == 'Scale'
+    end
+  end
+
+  describe "Argument of processor" do
+    it "should show nothing if there is a corresponding feed" do
+      feed = Feed.create!(:last_value => 252.55, :name => 'electra', :input_id => 3, :user_id => 1)
+      processor = [:log_to_feed, feed.id]
+      helper.argument_of_processor(processor).should == nil
+    end
+
+    it "should show the argument of a processor if no data_store is associated" do
+      processor = [:scale, 1.0005]
+      helper.argument_of_processor(processor).should == 1.0005
+    end
+  end
+end

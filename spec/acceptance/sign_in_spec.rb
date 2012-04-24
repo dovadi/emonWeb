@@ -16,7 +16,7 @@ feature 'Sign in', %q{
     fill_in 'Email', :with => 'frank@dovadi.nl'
     fill_in 'Password', :with => 'password'
     click_button 'Sign in'
-    within '.alert-message.alert' do
+    within '.alert' do
       page.should have_content('Invalid email or password.')
     end
   end
@@ -25,7 +25,7 @@ feature 'Sign in', %q{
     fill_in 'Email', :with => @user.email
     fill_in 'Password', :with => 'wrong_password'
     click_button 'Sign in'
-    within '.alert-message' do
+    within '.alert' do
       page.should have_content('Invalid email or password.')
     end
   end
@@ -34,7 +34,7 @@ feature 'Sign in', %q{
     fill_in 'Email', :with => @user.email
     fill_in 'Password', :with => @user.password
     click_button 'Sign in'
-    within '.alert-message.notice' do
+    within '.alert-success' do
       page.should have_content('Signed in successfully.')
     end
   end

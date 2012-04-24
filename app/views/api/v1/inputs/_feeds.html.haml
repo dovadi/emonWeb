@@ -1,0 +1,13 @@
+%table.processors.table.table-bordered.table-condensed.table-striped
+  %tr
+    %th Order
+    %th Name
+    %th Argument
+
+  - input.processors.each_with_index do |processor, idx|
+    %tr
+      %td= idx + 1
+      %td= name_of_processor(processor)
+      %td= argument_of_processor(processor)
+      
+      

@@ -20,7 +20,7 @@ feature 'Locked user', %q{
       click_button 'Sign in'
     end
 
-    within '.alert-message.alert' do
+    within '.alert' do
       page.should have_content('Your account is locked.')
     end
 
@@ -29,7 +29,7 @@ feature 'Locked user', %q{
     current_email.default_part_body.to_s.should have_content 'Your account has been locked due to an excessive amount of unsuccessful sign in attempts.'
     click_first_link_in_email
 
-    within '.alert-message.notice' do
+    within '.alert-success' do
       page.should have_content('Your account was successfully unlocked. You are now signed in.')
     end
   end

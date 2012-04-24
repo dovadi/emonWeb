@@ -6,5 +6,5 @@
 //
 //= require jquery
 //= require jquery_ujs
-//= require bootstrap/bootstrap-twipsy
+//= require bootstrap.min
 //= require_tree .

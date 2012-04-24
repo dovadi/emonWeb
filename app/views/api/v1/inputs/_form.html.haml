@@ -1,4 +1,4 @@
-= form_for @input, :url => api_v1_inputs_path do |f|
+= form_for @input, :url => api_v1_inputs_path, :html => {:class => 'well'} do |f|
   -if @input.errors.any?
     #error_explanation
       %h2= "#{pluralize(@input.errors.count, "error")} prohibited this input from being saved:"
@@ -6,14 +6,12 @@
         - @input.errors.full_messages.each do |msg|
           %li= msg
   %fieldset
-    %legend Create input
     %p
       = f.label :name
       = f.text_field :name
     %p
       = f.label :last_value
       = f.text_field :last_value
-      
-
+     
   .actions
-    = f.submit 'Save'
+    = f.submit 'Save', :class=>'btn commit create'

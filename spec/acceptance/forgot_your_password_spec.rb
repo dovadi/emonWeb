@@ -15,7 +15,7 @@ feature 'Forgot your password', %q{
   scenario 'Request a new password with a correct users email' do
     fill_in 'Email', :with => @user.email
     click_button 'Send me reset password instructions'
-    within '.alert-message.notice' do
+    within '.alert-success' do
       page.should have_content('You will receive an email with instructions about how to reset your password in a few minutes.')
     end
 
@@ -30,7 +30,7 @@ feature 'Forgot your password', %q{
     fill_in 'Confirm new password', :with=>'password'
     click_button "Change my password"
 
-    within '.alert-message.notice' do
+    within '.alert-success' do
       page.should have_content('Your password was changed successfully. You are now signed in.')
     end
   end

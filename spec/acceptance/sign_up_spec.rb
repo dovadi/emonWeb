@@ -16,7 +16,7 @@ feature 'Sign up', %q{
     fill_in 'Password', :with => 'please'
     fill_in 'Password confirmation', :with => 'please'
     click_button 'Sign up'
-    within '.alert-message.notice' do
+    within '.alert' do
       page.should have_content('Welcome! You have signed up successfully.')
     end
   end
