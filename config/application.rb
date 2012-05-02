@@ -76,6 +76,6 @@ module Emonweb
     else
       cache = ActiveSupport::Cache::MemoryStore.new
     end
-    config.middleware.use ApiThrottling, :min => 8.0, :auth=>false, :cache => cache, :urls => ['POST /api']
+    #config.middleware.use ApiThrottling, :min => 8.0, :auth=>false, :cache => cache, :urls => ['POST /api']
   end
 end
