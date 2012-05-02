@@ -4,10 +4,14 @@
     %th Name
     %th Argument
 
-  - input.processors.each_with_index do |processor, idx|
+  - if input.processors.nil? || input.processors.empty?
     %tr
-      %td= idx + 1
-      %td= name_of_processor(processor)
-      %td= argument_of_processor(processor)
-      
+      %td{:colspan=>3} No processors defined yet!
+  - else
+    - input.processors.each_with_index do |processor, idx|
+      %tr
+        %td= idx + 1
+        %td= name_of_processor(processor)
+        %td= argument_of_processor(processor)
+        
       

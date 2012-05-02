@@ -3,14 +3,13 @@
 
 %h1.title Listing inputs
 
-%table.table.table-bordered.table-striped
-  %tr
-    %th Name
-    %th Updated at
-    %th Value
-    %th Actions
-
-  - @inputs.each do |input|
+- @inputs.each do |input|
+  %table.table.table-bordered.table-striped
+    %tr
+      %th Name
+      %th Updated at
+      %th Value
+      %th Actions
     %tr
       %td= input.name
       %td{:class => color_time_ago(input.updated_at)}= time_ago_in_words(input.updated_at, true)

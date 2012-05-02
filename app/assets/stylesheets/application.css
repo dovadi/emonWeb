@@ -46,3 +46,15 @@ body.widgets{
     color: #555555;
 }
 
+/* Coloring updated_at field in feeds table */
+td.red{
+  color:red;
+}
+
+td.green{
+  color:green;
+}
+
+td.orange{
+  color: orange;
+}
