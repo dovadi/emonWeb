@@ -1,5 +1,7 @@
 class Api::V1::InputsController < ApplicationController
 
+  protect_from_forgery :except => [:api]
+
   def index
     @inputs = current_user.inputs
   end
