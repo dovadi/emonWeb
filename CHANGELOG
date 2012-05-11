@@ -1,0 +1,15 @@
+* 0.4
+  Update to latest version of Rails and Twitter bootstrap
+  Parsing P1 companion data for Dutch smart meters
+
+* 0.3
+  Data store with processing
+
+* 0.2.1
+  Lockable and authentication token included
+
+* 0.2
+  Bootstrap version with devise, rails admin and deployement to heroku
+
+* 0.1
+   Bootstrap version with fully functional devise, using Twitter bootstrap for styling
