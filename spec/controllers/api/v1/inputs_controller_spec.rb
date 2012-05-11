@@ -9,6 +9,12 @@ describe Api::V1::InputsController do
     }
   end
 
+  def p1_attributes
+    {
+      :P1 => "\r\n/ABc1\\1AB123-4567\r\n\r\n0-0:96.1.1(1A123456789012345678901234567890)\r\n1-0:1.8.1(00136.787*kWh)\r\n1-0:1.8.2(00131.849*kWh)\r\n1-0:2.8.1(00002.345*kWh)\r\n1-0:2.8.2(00054.976*kWh)\r\n0-0:96.14.0(0002)\r\n1-0:1.7.0(0003.20*kW)\r\n1-0:2.7.0(0000.12*kW)\r\n0-0:17.0.0(0999.00*kW)\r\n0-0:96.3.10(1)\r\n0-0:96.13.1()\r\n0-0:96.13.0()\r\n0-1:24.1.0(3)\r\n0-1:96.1.0(1234567890123456789012345678901234)\r\n0-1:24.3.0(120502150000)(00)(60)(1)(0-1:24.2.1)(m3)\r\n(00092.112)\r\n0-1:24.4.0(1)\r\n!"
+    }
+  end
+
   before(:each) do
     @user = FactoryGirl.create(:user)
     sign_in @user
@@ -70,6 +76,39 @@ describe Api::V1::InputsController do
       expect do
         post :api, { :water => 20.45, :solar => 12.34 }
       end.to change(Input, :count).by(2)
+    end
+
+    it 'creates a new inputs with P1 data' do
+      expect do
+        post :api, p1_attributes
+      end.to change(Input, :count).by(7)
+    end
+
+    describe 'Creating seven inputs with P1 attributes' do
+      before do
+        post :api, p1_attributes
+      end
+      it 'should create an input for actual electra' do
+        Input.find_by_name('actual_electra').should be_present
+      end
+      it 'should create an input for imported electra with a normal tariff' do
+        Input.find_by_name('electra_import_normal_tariff').should be_present
+      end
+      it 'should create an input for imported electra with a low tariff' do
+        Input.find_by_name('electra_import_low_tariff').should be_present
+      end
+      it 'should create an input for exported electra with a normal tariff' do
+        Input.find_by_name('electra_export_normal_tariff').should be_present
+      end
+      it 'should create an input for exported electra with a low tariff' do
+        Input.find_by_name('electra_export_low_tariff').should be_present
+      end
+      it 'should create an input for gas usage' do
+        Input.find_by_name('gas_usage').should be_present
+      end
+      it 'should create an input for gas last reading' do
+        Input.find_by_name('gast_last_reading').should be_present
+      end
     end
   end
 
