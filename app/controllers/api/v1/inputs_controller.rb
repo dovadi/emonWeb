@@ -43,7 +43,7 @@ class Api::V1::InputsController < ApplicationController
                   :electra_import_low_tariff    => p1.electricity(:type => :import, :tariff => :low),
                   :electra_export_normal_tariff => p1.electricity(:type => :export, :tariff => :normal),
                   :electra_export_low_tariff    => p1.electricity(:type => :export, :tariff => :low),
-                  :gas_usage                    => p1.gas_usage,
+                  :gas_usage                    => p1.gas_usage, #Gas usage needs allways be stored before gas_last_reading
                   :gast_last_reading            => p1.last_hourly_reading_gas.to_f)
 
   end

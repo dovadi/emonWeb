@@ -9,7 +9,7 @@ class LogToFeedProcessor < Processor
   end
 
   def perform
-    DataStore.create(:value => @value,:identified_by => @argument)
+    DataStore.create(:value => @value, :identified_by => @argument)
     Feed.update(@argument, :last_value => @value)
     @value
   end
