@@ -107,7 +107,7 @@ describe Api::V1::InputsController do
         Input.find_by_name('gas_usage').should be_present
       end
       it 'should create an input for gas last reading' do
-        Input.find_by_name('gast_last_reading').should be_present
+        Input.find_by_name('gas_last_reading').should be_present
       end
     end
   end
