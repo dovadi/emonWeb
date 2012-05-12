@@ -16,7 +16,7 @@ class GasStorageProcessor < Processor
       last_time = user.inputs.find_by_name('gas_last_reading')
       gas_usage = user.inputs.find_by_name('gas_usage')
       if gas_usage && (last_time.nil? || last_time.last_value + 3600 < @value)
-        DataStore.create(:value => gas_usage.last_value, :identified_by => gas_usage.id)
+        DataStore.create(:value => gas_usage.last_value, :identified_by => @argument)
       end
     end
     Feed.update(@argument, :last_value => @value)
