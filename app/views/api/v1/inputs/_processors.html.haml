@@ -1,0 +1,35 @@
+.processor_table{:id => 'processor_' + dom_id(input)}
+
+  = form_for input, :url => api_v1_input_path(input), :html => {:class => 'well'}, :remote => true do |f|
+
+    %h4.processor_table_title= "Processors for #{input.name}"
+    %h4.edit_processor_table_title= "Edit processors for #{input.name}"
+
+    %br
+
+    %table.processors.table.table-bordered.table-condensed.table-striped
+      %tbody{:id => 'processor_' + dom_id(input)}
+        %tr
+          %th.order &nbsp;
+          %th.name Name
+          %th.argument Argument
+          %th &nbsp;
+
+        - if input.processors.nil? || input.processors.empty?
+          %tr.processor_row{:id => 1}
+            %td=  '1'
+            %td= select_tag( 'processor_1', options_for_select(Processor.descriptions))
+            %td= text_field_tag('argument_1')
+            %td= link_to 'add', '#', {:class => 'addProcessorRow', :rel => 'nofollow'}
+        - else
+          - input.processors.each_with_index do |processor, idx|
+            %tr{:id=>'processor_' + idx.to_s}
+              %td= idx + 1
+              %td= name_of_processor(processor)
+              %td= argument_of_processor(processor)    
+          %tr
+            %td= 'New'
+            %td= select(:processor, :id, Processor.descriptions)
+            %td= 'Nog invullen' 
+
+    %p= f.button 'Save', {:class => 'btn-primary'}

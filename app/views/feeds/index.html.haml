@@ -1,16 +1,16 @@
 - content_for :meta do
-  %meta{ 'http-equiv'=>'refresh', :content=>'10' } 
+  /  %meta{ 'http-equiv'=>'refresh', :content=>'10' } 
 
 %h1.title Listing Feeds
 
-%table.table.table-bordered.table-striped
+%table.table.table-bordered.table-striped.feeds
   %tr
-    %th Name
-    %th Updated at
-    %th Value
+    %th.name Name
+    %th.date Updated at
+    %th.value Value
 
   - @feeds.each do |feed|
-    %tr
+    %tr{:id => dom_id(feed)}
       %td= feed.name
       %td{:class => color_time_ago(feed.updated_at)}= time_ago_in_words(feed.updated_at, true)
       %td= feed.last_value

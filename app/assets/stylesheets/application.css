@@ -42,19 +42,7 @@ body.widgets{
     padding: 30px 0;
     text-shadow: 0 1px 0 #FFFFFF;
 }
+
 .footer p {
     color: #555555;
-}
-
-/* Coloring updated_at field in feeds table */
-td.red{
-  color:red;
-}
-
-td.green{
-  color:green;
-}
-
-td.orange{
-  color: orange;
 }

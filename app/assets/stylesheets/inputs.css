@@ -1,0 +1,56 @@
+/*Table inputs*/
+table.inputs{
+  margin-left: 0px;
+}
+
+table.inputs th.name{
+  width: 40%;
+}
+
+table.inputs th.date,
+table.inputs th.value{
+  width: 20%;
+}
+
+table.inputs  th.action{
+  width: 20%;
+}
+
+.edited{
+  color: blue;
+  font-style: italic;
+  font-weight: 600;
+  border-width: 2px;
+}
+
+/*Table processors*/
+table.processors{
+  margin-left: 0px;
+  min-width: 418px;
+}
+
+table.processors input{
+  /*width: 120px;*/
+}
+
+div.processor_table{
+  display: none;
+}
+
+h4.edit_processor_table_title{
+  display: none;
+}
+
+/* Coloring updated_at field in feeds table */
+td.red{
+  color:red;
+}
+
+td.green{
+  color:green;
+}
+
+td.orange{
+  color: orange;
+}
+

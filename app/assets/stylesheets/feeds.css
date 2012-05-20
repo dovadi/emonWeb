@@ -1,9 +1,8 @@
-/*
-  Place all the styles related to the matching controller here.
-  They will automatically be included in application.css.
-*/
+table.feeds th.name{
+  width: 300px;
+}
 
-table.processors{
-  margin-left: 40px;
-  width: 80%;
+table.feeds th.date,
+table.feeds th.value{
+  width: 200px;
 }
