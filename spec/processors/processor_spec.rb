@@ -6,7 +6,7 @@ describe 'Processor' do
 
   it 'should return an array of all descriptions' do
     Processor.descriptions.should == ['Log to Feed', 'Offset', 'Power to kWh', 'Power to kWh/d', 'Scale',
-                                      'Store gas usage once an hour', 'x Input']
+                                      'Store gas usage', 'x Input']
   end
 
 end

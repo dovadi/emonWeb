@@ -5,7 +5,7 @@ describe GasStorageProcessor do
   end
 
   it 'should tell its description' do
-    GasStorageProcessor.description.should == 'Store gas usage once an hour'
+    GasStorageProcessor.description.should == 'Store gas usage'
   end
   
   #Gas usage is allways stored before gas_last_reading
