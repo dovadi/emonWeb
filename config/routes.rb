@@ -14,6 +14,9 @@ Emonweb::Application.routes.draw do
         collection do
           post 'api'
         end
+        member do
+          put 'update'
+        end
       end
       resources :data_stores, :only => [:index]
     end

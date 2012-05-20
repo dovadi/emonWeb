@@ -28,6 +28,14 @@ class Api::V1::InputsController < ApplicationController
     render :nothing => true 
   end
 
+  def update
+    respond_to do |type|
+      type.js do
+      end
+      
+    end
+  end
+
   def destroy
     @input = current_user.inputs.find(params[:id])
     @input.destroy
