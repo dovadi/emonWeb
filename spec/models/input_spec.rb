@@ -158,6 +158,19 @@ describe Input do
       end
     end
 
+    describe 'Assigning processors in one go' do
+      it 'should define them in the correct order' do
+        params = {'processor_1' => 'log_to_feed', 'argument_1' => 'Ruwe data',
+                  'processor_2' => 'scale', 'argument_2' => 'Calibrated',
+                  'processor_3' => 'power_to_kwh_per_day', 'argument_3' => 'kWh/day'
+                 }
+        @input.expects(:define_processor!).with(:power_to_kwh_per_day, 'kWh/day')
+        @input.expects(:define_processor!).with(:scale, 'Calibrated')
+        @input.expects(:define_processor!).with(:log_to_feed, 'Ruwe data')
+        @input.define_processors(params)
+      end
+    end
+
   end
 
 end

@@ -35,6 +35,14 @@ class Input < ActiveRecord::Base
     end
   end
 
+  def define_processors(parameters)
+    (1..(parameters.size/2)).each do |nr|
+      processor = parameters['processor_' + nr.to_s]
+      argument  = parameters['argument_' + nr.to_s]
+      define_processor!(processor.to_sym, argument) if processor && argument
+    end
+  end
+
   private
 
   ##################################
