@@ -9,4 +9,15 @@ describe 'Processor' do
                                       'Store gas usage', 'x Input']
   end
 
+  it 'should return an selection_options' do
+    Processor.selection_options.should == [['Log to Feed', 'log_to_feed'],
+                                           ['Offset','offset'],
+                                           ['Power to kWh', 'power_to_kwh'],
+                                           ['Power to kWh/d','power_to_kwh_per_day'],
+                                           ['Scale', 'scale'],
+                                           ['Store gas usage', 'gas_storage'],
+                                           ['x Input', 'times_input']
+                                          ]
+  end
+
 end

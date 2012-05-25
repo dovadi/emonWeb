@@ -13,9 +13,11 @@ class Processor
   end
 
   def self.descriptions
-    array = []
-    processors.each {|processor| array << processor_class(processor).description}
-    array.sort
+    hash.keys.sort
+  end
+
+  def self.selection_options  
+    hash.to_a.sort
   end
 
   def initialize(value, argument)
@@ -24,6 +26,12 @@ class Processor
   end
 
   private
+
+  def self.hash
+    options = {}
+    processors.each {|processor| options[processor_class(processor).description] = processor }
+    options
+  end
 
   def self.processor_class(processor)
     (processor + '_processor').camelize.constantize
