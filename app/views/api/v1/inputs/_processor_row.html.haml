@@ -1,0 +1,4 @@
+%td= id
+%td= select_tag( 'processor_' + id, options_for_select(Processor.selection_options))
+%td= text_field_tag('argument_' + id)
+%td= link_to 'add', '#', {:class => 'addProcessorRow', :rel => 'nofollow'}

@@ -21,6 +21,7 @@ table.inputs  th.action{
   font-style: italic;
   font-weight: 600;
   border-width: 2px;
+  background-color: #F5F5F5;
 }
 
 /*Table processors*/

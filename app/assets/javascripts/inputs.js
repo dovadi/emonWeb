@@ -41,10 +41,11 @@ function addProcessorRow(element) {
   $(clone.children()[0]).html(id);
   $(clone.children()[1]).contents().attr('name', 'processor_' + id);
   $(clone.children()[2]).contents().attr('name', 'argument_' + id);
+  $(clone.children()[2]).contents().val('')
   $(clone.children()[3]).contents().bind('click', function() { addProcessorRow(this) });
+
   $(row.children()[3]).html('');
   $(clone).insertAfter(row);
-
 };
 
 $(function() {

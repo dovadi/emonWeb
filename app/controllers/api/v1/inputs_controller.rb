@@ -29,10 +29,11 @@ class Api::V1::InputsController < ApplicationController
   end
 
   def update
+    input = current_user.inputs.find(params[:id])
     respond_to do |type|
       type.js do
-      end
-      
+        input.define_processors(params) if input
+      end    
     end
   end
 
