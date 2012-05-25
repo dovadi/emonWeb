@@ -30,9 +30,30 @@ table.processors{
   min-width: 418px;
 }
 
-table.processors input{
+/*table.processors input{
   /*width: 120px;*/
 }
+*/
+/*table tr.processor_row{
+  display: none;
+}
+
+table.edited tr.processor_row{
+  display: table-row;
+}
+*/
+button.control{
+  float: left;
+  margin-right: 10px;
+}
+/*
+.form_controls.enable{
+  display: block;
+}
+
+.form_controls{
+  display: none;
+}*/
 
 div.processor_table{
   display: none;

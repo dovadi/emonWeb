@@ -2,14 +2,18 @@ module Api::V1::InputsHelper
 
   def name_of_processor(processor)
     if data_store?(processor[0])
-      begin Feed.find(processor[1]).name rescue ActiveRecord::RecordNotFound end
+      'Feed'
     else
       (processor[0].to_s+ '_processor').camelcase.constantize.description
     end
   end
 
   def argument_of_processor(processor)
-    data_store?(processor[0]) ? nil : processor[1]
+    if data_store?(processor[0]) 
+      begin Feed.find(processor[1]).name rescue ActiveRecord::RecordNotFound end
+    else
+      processor[1]
+    end
   end
 
   private

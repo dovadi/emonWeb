@@ -39,7 +39,7 @@ class Input < ActiveRecord::Base
     (1..(parameters.size/2)).each do |nr|
       processor = parameters['processor_' + nr.to_s]
       argument  = parameters['argument_' + nr.to_s]
-      define_processor!(processor.to_sym, argument) if processor && argument
+      define_processor!(processor.to_sym, argument) if processor.present? && argument.present?
     end
   end
 

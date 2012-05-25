@@ -12,24 +12,33 @@ function showProcessor(element, show) {
 
 function toggleEditProcessor(element){
   if(editInput != undefined){
-    setEditState(editInput, false)
+    setEditState(editInput, false);
     editInput = undefined;
   } else {  
-    setEditState(element, true)
+    setEditState(element, true);
     editInput = element;
   };
 }
 
 function setEditState(element, edit){
   if(edit){
-    $(element).addClass('edited')
-    $($('#processor_' + element.id + ' table')[0]).addClass('edited')
+    $(element).addClass('edited');
+    $($('#processor_' + element.id + ' table')[0]).addClass('edited');
+    $($('#processor_' + element.id +' h4.processor_table_title')).hide();
+    $($('#processor_' + element.id +' h4.edit_processor_table_title')).show();
   } else {
-    $(element).removeClass('edited')
-    $($('#processor_' + element.id + ' table')[0]).removeClass('edited')
-  }
-  $($('#processor_' + element.id +' h4.processor_table_title')).toggle();
-  $($('#processor_' + element.id +' h4.edit_processor_table_title')).toggle();
+    $(element).removeClass('edited');
+
+    $.each($('input.argument'),function(index, element) {$(element).val('')});
+    rows = $('#processor_' + element.id + ' table .processor_row');
+    if (rows.length > 1){
+      rows.slice(1, rows.length).remove();
+    };
+
+    $($('#processor_' + element.id + ' table')[0]).removeClass('edited');
+    $($('#processor_' + element.id +' h4.processor_table_title')).show();
+    $($('#processor_' + element.id +' h4.edit_processor_table_title')).hide();
+  };
 };
 
 function addProcessorRow(element) {
@@ -53,4 +62,5 @@ $(function() {
   $('tr.input').bind('mouseenter', function(){showProcessor(this, true)});
   $('tr.input').bind('mouseleave', function(){showProcessor(this, false)});
   $('tr.input').bind('click', function(){toggleEditProcessor(this)});
+  $('a.cancel').bind('click', function(){toggleEditProcessor(this)});
 });

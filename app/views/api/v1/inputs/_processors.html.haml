@@ -16,8 +16,7 @@
           %th &nbsp;
 
         - if input.processors.nil? || input.processors.empty?
-          %tr.processor_row{:id => 1}
-            = render :partial => 'processor_row', :locals => {:id => '1'}
+          = render :partial => 'processor_row', :locals => {:id => '1'}
         - else
           - input.processors.each_with_index do |processor, idx|
             %tr{:id=>'processor_' + idx.to_s}
@@ -25,8 +24,8 @@
               %td= name_of_processor(processor)
               %td= argument_of_processor(processor)
               %td &nbsp;
-          %tr
-            = render :partial => 'processor_row', :locals => {:id => (input.processors.size + 1).to_s}
-           
+          = render :partial => 'processor_row', :locals => {:id => (input.processors.size + 1).to_s}
 
-    %p= f.button 'Save', {:class => 'btn-primary'}
+    .form_controls
+      = f.button 'Save', {:class => 'btn-primary control'}
+      = link_to 'cancel', '#', {:class => 'cancel', :rel => 'nofollow'}
