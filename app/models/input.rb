@@ -39,7 +39,9 @@ class Input < ActiveRecord::Base
     (1..(parameters.size/2)).each do |nr|
       processor = parameters['processor_' + nr.to_s]
       argument  = parameters['argument_' + nr.to_s]
-      define_processor!(processor.to_sym, argument) if processor.present? && argument.present?
+      if processor.present? && argument.present?
+        define_processor!(processor.to_sym, type_cast(argument)) if processor_not_yet_defined?(nr, processor)
+      end
     end
   end
 
@@ -74,22 +76,38 @@ class Input < ActiveRecord::Base
   # Private instance methods       #
   ##################################
 
+  def processor_not_yet_defined?(nr, processor_name)
+    processor = processors.nil? ? nil : processors[nr - 1]
+    processor.present? ? processor_name.to_sym != processor[0] : true
+  end
+
   # Because of serialize we use a double save when adding a new processor
   # AR doesn't set the record as changed if using
   # self.processors << [processor, argument] 
   # and it won't trigger callback store_and_process_data
   def add_processor(processor, argument)
     if self.processors.nil?
-      self.processors = [[processor, argument]]
+      self.processors = [[processor, type_cast(argument)]]
       save!
     else
       new_processors = self.processors
-      new_processors << [processor, argument]
+      new_processors << [processor, type_cast(argument)]
       self.processors = nil
       save!
       self.processors = new_processors
       save!
     end
+  end
+
+  def type_cast(value)
+    if value.is_a?(String)
+      if value.match(/\d+\.\d+/)
+        value = value.to_f 
+      elsif value.match(/\d+/)
+        value = value.to_i
+      end
+    end
+    value
   end
 
   def store_and_process_data

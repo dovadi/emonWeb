@@ -158,18 +158,28 @@ describe Input do
       end
     end
 
-    describe 'Assigning processors in one go' do
-      it 'should define them in the correct order' do
-        params = {'processor_1' => 'log_to_feed', 'argument_1' => 'Ruwe data',
-                  'processor_2' => 'scale', 'argument_2' => 'Calibrated',
-                  'processor_3' => 'power_to_kwh_per_day', 'argument_3' => 'kWh/day'
-                 }
-        @input.expects(:define_processor!).with(:power_to_kwh_per_day, 'kWh/day')
-        @input.expects(:define_processor!).with(:scale, 'Calibrated')
-        @input.expects(:define_processor!).with(:log_to_feed, 'Ruwe data')
-        @input.define_processors(params)
-      end
+  describe 'Assigning processors in one go' do
+    before(:each) do
+      @params = {'processor_1' => 'log_to_feed', 'argument_1' => 'Ruwe data',
+                 'processor_2' => 'scale', 'argument_2' => '1.2',
+                 'processor_3' => 'power_to_kwh_per_day', 'argument_3' => 'kWh/day'
+                }
+      @input = Input.create!(:last_value => 252.55, :name => 'electra', :user_id => 100)
+      @last_feed_id = Feed.last.id
     end
+
+    it 'should define them in the correct order' do
+      @input.define_processors(@params)
+      @input.processors.should == [[:log_to_feed, @last_feed_id + 1], [:scale, 1.2], [:power_to_kwh_per_day, @last_feed_id + 2]]
+    end
+
+    it 'should define only the extra added processors' do
+      @input.processors = [[:log_to_feed, 1], [:scale, 1.2], [:power_to_kwh_per_day, 2]] 
+      @input.save
+      @input.define_processors(@params.merge({'processor_4' => 'offset', 'argument_4' => '1.045', 'processor_5' => 'log_to_feed', 'argument_5' => 'Ruwe data'}))
+      @input.processors.should == [[:log_to_feed, 1], [:scale, 1.2], [:power_to_kwh_per_day, 2], [:offset, 1.045], [:log_to_feed, @last_feed_id + 1]]
+    end
+  end
 
   end
 
