@@ -3,7 +3,7 @@ var editInput;
 function showProcessor(element, show) {
   if(editInput == undefined){
     if(show){
-      $('#processor_' + element.id).show();
+      $('#processor_table_' + element.id).show();
     } else {
       $('.processor_table').hide();
     };
@@ -23,9 +23,9 @@ function toggleEditProcessor(element){
 function setEditState(element, edit){
   if(edit){
     $(element).addClass('edited');
-    $($('#processor_' + element.id + ' table')[0]).addClass('edited');
-    $($('#processor_' + element.id +' h4.processor_table_title')).hide();
-    $($('#processor_' + element.id +' h4.edit_processor_table_title')).show();
+    $($('#processor_table_' + element.id + ' table')[0]).addClass('edited');
+    $($('#processor_table_' + element.id +' h4.processor_table_title')).hide();
+    $($('#processor_table_' + element.id +' h4.edit_processor_table_title')).show();
   } else {
     $(element).removeClass('edited');
 
@@ -35,9 +35,9 @@ function setEditState(element, edit){
       rows.slice(1, rows.length).remove();
     };
 
-    $($('#processor_' + element.id + ' table')[0]).removeClass('edited');
-    $($('#processor_' + element.id +' h4.processor_table_title')).show();
-    $($('#processor_' + element.id +' h4.edit_processor_table_title')).hide();
+    $($('#processor_table_' + element.id + ' table')[0]).removeClass('edited');
+    $($('#processor_table_' + element.id +' h4.processor_table_title')).show();
+    $($('#processor_table_' + element.id +' h4.edit_processor_table_title')).hide();
   };
 };
 
@@ -57,10 +57,33 @@ function addProcessorRow(element) {
   $(clone).insertAfter(row);
 };
 
+function postProcessorData(event, element){
+  id = element.id.match(/\d+$/)[0];
+  form = $('#processor_form_input_' + id);
+  $.ajax({
+    url: '/api/v1/inputs/' + id,
+    type: 'POST',
+    data: form.serialize(),
+    success: function(response) {
+      $('tr#input_' + id).click()
+      $('#processor_table_input_' + id).hide(500);
+    },
+    datatype: 'js'
+  });
+};
+
+function disableEnterKey(e)
+{
+  var key = (window.event) ? event.keyCode : e.which;
+  return (key != 13);
+}
+
 $(function() {
   $('.addProcessorRow').bind('click', function() { addProcessorRow(this) });
   $('tr.input').bind('mouseenter', function(){showProcessor(this, true)});
   $('tr.input').bind('mouseleave', function(){showProcessor(this, false)});
   $('tr.input').bind('click', function(){toggleEditProcessor(this)});
   $('a.cancel').bind('click', function(){toggleEditProcessor(this)});
+  $('a.control').bind('click', function(e) {postProcessorData(e, this)});
+  $('input').bind('keypress', function(e) {return disableEnterKey(e)});
 });

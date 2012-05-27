@@ -1,6 +1,6 @@
-.processor_table{:id => 'processor_' + dom_id(input)}
+.processor_table{:id => 'processor_table_' + dom_id(input)}
 
-  = form_for input, :url => api_v1_input_path(input), :html => {:class => 'well'}, :remote => true do |f|
+  = form_for input, :url => api_v1_input_path(input), :html => {:class => 'well', :id => 'processor_form_' + dom_id(input)}, :remote => true do |f|
 
     %h4.processor_table_title= "Processors for #{input.name}"
     %h4.edit_processor_table_title= "Edit processors for #{input.name}"
@@ -27,5 +27,5 @@
           = render :partial => 'processor_row', :locals => {:id => (input.processors.size + 1).to_s}
 
     .form_controls
-      = f.button 'Save', {:class => 'btn-primary control'}
+      = link_to 'Save', '#', {:class => 'btn btn-primary control', :id=>'processor_table_button_' + dom_id(input), :rel => 'nofollow'}
       = link_to 'cancel', '#', {:class => 'cancel', :rel => 'nofollow'}
