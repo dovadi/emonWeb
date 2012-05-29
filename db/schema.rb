@@ -11,19 +11,19 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20111120180932) do
+ActiveRecord::Schema.define(:version => 20111225174916) do
 
   create_table "data_stores", :force => true do |t|
     t.float    "value"
-    t.datetime "created_at"
+    t.datetime "created_at", :null => false
   end
 
   create_table "feeds", :force => true do |t|
     t.float    "last_value"
     t.integer  "user_id"
     t.integer  "input_id"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
     t.string   "name"
   end
 
@@ -34,8 +34,8 @@ ActiveRecord::Schema.define(:version => 20111120180932) do
     t.string   "name"
     t.float    "last_value"
     t.integer  "user_id"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
     t.string   "processors"
   end
 
@@ -48,8 +48,8 @@ ActiveRecord::Schema.define(:version => 20111120180932) do
     t.string   "table"
     t.integer  "month",      :limit => 2
     t.integer  "year",       :limit => 8
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at",              :null => false
+    t.datetime "updated_at",              :null => false
   end
 
   add_index "rails_admin_histories", ["item", "table", "month", "year"], :name => "index_rails_admin_histories"
@@ -69,8 +69,8 @@ ActiveRecord::Schema.define(:version => 20111120180932) do
     t.string   "unlock_token"
     t.datetime "locked_at"
     t.string   "authentication_token"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at",                                               :null => false
+    t.datetime "updated_at",                                               :null => false
     t.boolean  "admin",                                 :default => false
     t.string   "api_read_token"
   end
