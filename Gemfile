@@ -20,7 +20,7 @@ gem 'airbrake', '~>3.0.9'
 gem 'redis', '~>2.2.2'
 gem 'formtastic', '~> 2.1.1'
 gem 'formtastic-bootstrap', '~>1.1.1'
-gem 'parse_p1', '0.0.4'
+gem 'parse_p1', '0.0.5'
 
 #heroku
 group :production do
