@@ -1,4 +1,4 @@
-%h1.title= "Raw data #{h(@feed.name)}"
+%h1.title= "Raw data: #{h(@feed.name.downcase)}"
 
 = render 'raw_data_graph'
 
