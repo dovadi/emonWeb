@@ -56,4 +56,55 @@ describe FeedsController do
     it { should respond_with :success}
   end
 
+
+  describe "user GET 'graph'" do
+    before do
+      sign_in @user
+
+      @feed = mock
+      
+      feeds = mock
+      feeds.expects(:find).with('1').returns(@feed)
+
+      subject.current_user.expects(:feeds).returns(feeds) 
+    end
+
+    describe 'raw data' do
+      before do
+        get 'graph', :id => 1
+      end
+
+      it 'should assign the correct feed' do
+        assigns(:feed).should == @feed
+      end
+      it { should respond_with :success}
+      it { should render_template 'raw'}
+    end
+
+    describe 'real time' do
+      before do
+        get 'graph', :id => 1, :type => 'real_time'
+      end
+
+      it 'should assign the correct feed' do
+        assigns(:feed).should == @feed
+      end
+      it { should respond_with :success}
+      it { should render_template 'real_time'}
+    end
+
+    describe 'bar' do
+      before do
+        get 'graph', :id => 1, :type => 'bar'
+      end
+
+      it 'should assign the correct feed' do
+        assigns(:feed).should == @feed
+      end
+      it { should respond_with :success}
+      it { should render_template 'bar'}
+    end
+
+  end
+
 end

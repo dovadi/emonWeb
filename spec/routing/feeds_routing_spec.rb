@@ -12,6 +12,10 @@ describe FeedsController do
       get('/feeds/1').should route_to(:controller => 'feeds', :action => 'show', :id => '1')
     end
 
+    it 'routes to #graph' do
+      get('/feeds/1/graph').should route_to(:controller => 'feeds', :action => 'graph', :id => '1')
+    end
+
   end
 
 end

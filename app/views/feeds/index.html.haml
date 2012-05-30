@@ -8,9 +8,16 @@
     %th.name Name
     %th.date Updated at
     %th.value Value
+    %th.graph Graphs
 
   - @feeds.each do |feed|
     %tr{:id => dom_id(feed)}
       %td= feed.name
       %td{:class => color_time_ago(feed.updated_at)}= time_ago_in_words(feed.updated_at, true)
       %td= feed.last_value
+      %td
+        = link_to 'Raw data', graph_feed_path(feed)
+        = ' - '
+        = link_to 'Real time', graph_feed_path(feed, :type => 'real_time')
+        = ' - '
+        = link_to 'Bar', graph_feed_path(feed, :type => 'bar')

@@ -1,9 +1,9 @@
-%h1.title= "Graph raw data"
+%h1.title= "Raw data #{h(@feed.name)}"
 
 = render 'raw_data_graph'
 
 = hidden_field_tag 'api_key', current_user.api_read_token
-= hidden_field_tag 'feed_id', current_user.feeds.first.id
+= hidden_field_tag 'feed_id', @feed.id
 
 :javascript
 

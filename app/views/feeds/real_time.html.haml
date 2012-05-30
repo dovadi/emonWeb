@@ -1,9 +1,9 @@
-%h1= "Realtime graph"
+%h1.title= "Realtime #{h(@feed.name)}"
 
 = render 'real_time_graph'
 
 = hidden_field_tag 'api_key', current_user.api_read_token
-= hidden_field_tag 'feed_id', current_user.feeds.first.id
+= hidden_field_tag 'feed_id', @feed.id
 
 :javascript
   //Global variables

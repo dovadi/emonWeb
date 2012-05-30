@@ -1,10 +1,12 @@
 Emonweb::Application.routes.draw do
 
-  get "graphs/real_time"
+  resources :feeds, :only => [:index, :show]
 
-  get "graphs/raw"
-
-  get "graphs/bar"
+  resources :feeds do
+    member do
+      get :graph
+    end
+  end
 
   match "widgets/dial/"
 
@@ -33,6 +35,5 @@ Emonweb::Application.routes.draw do
   devise_for :users
 
   resources :token_authentications, :only => [:create, :destroy]
-  resources :feeds, :only => [:index, :show]
 
 end
