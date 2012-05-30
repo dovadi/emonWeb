@@ -2,8 +2,6 @@ source 'http://rubygems.org'
 
 gem 'rails', '3.2.3'
 
-#gem 'mysql2'
-
 # Gems used only for assets and not required
 # in production environments by default.
 group :assets do
@@ -42,5 +40,8 @@ group :test, :development do
   gem 'guard-spork', '~>0.7.0'
   gem 'database_cleaner', '~>0.7.2'
   gem 'pg', '~>0.13.2'
+  gem 'taps', '~>0.3.24'
+  gem 'sqlite3', '~>1.3.6' #Specificly needed for taps
+  #gem 'mysql2'
 end
 
