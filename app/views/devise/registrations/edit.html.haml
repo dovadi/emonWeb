@@ -20,6 +20,10 @@
       = f.password_field :current_password
 
     %p
+      = f.label :time_zone
+      = f.time_zone_select :time_zone, ActiveSupport::TimeZone.all
+
+    %p
       = f.label :token_authentication_key
       = resource.authentication_token.blank? ? 'Token Empty' : resource.authentication_token
 

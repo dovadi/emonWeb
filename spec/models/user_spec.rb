@@ -8,7 +8,8 @@ describe User do
     @attr = { 
       :email => 'user@example.com',
       :password => 'foobar',
-      :password_confirmation => 'foobar'
+      :password_confirmation => 'foobar',
+      :time_zone => 'Amsterdam'
     }
   end
 

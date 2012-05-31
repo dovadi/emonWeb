@@ -3,17 +3,17 @@ require File.dirname(__FILE__) + '/../spec_helper'
 describe FeedsController do
 
   before(:each) do
-    @user = FactoryGirl.create(:user)
+    @user = FactoryGirl.create(:user, :time_zone => 'Lisbon')
   end
 
-  describe "visitor GET 'index'" do
+  describe 'visitor GET index' do
     before do
       get 'index'
     end
     it { should redirect_to new_user_session_path }
   end
 
-  describe "user GET 'index'" do
+  describe 'user GET index' do
     before do
       sign_in @user
       @feeds = mock
@@ -21,8 +21,12 @@ describe FeedsController do
       get 'index'
     end
 
-    it "should have a current_user" do
+    it 'should have a current_user' do
       subject.current_user.should_not be_nil
+    end
+
+    it 'should set the correct time zone' do
+      Time.zone.to_s.should == '(GMT+00:00) Lisbon'
     end
 
     it 'should assign the correct feeds' do
@@ -31,7 +35,7 @@ describe FeedsController do
     it { should respond_with :success}
   end
 
-  describe "user GET 'show'" do
+  describe 'user GET show' do
     before do
       sign_in @user
 
@@ -46,7 +50,7 @@ describe FeedsController do
       get 'show', :id => 1, :format => 'js'
     end
 
-    it "should have a current_user" do
+    it 'should have a current_user' do
       subject.current_user.should_not be_nil
     end
 
@@ -57,7 +61,7 @@ describe FeedsController do
   end
 
 
-  describe "user GET 'graph'" do
+  describe 'user GET graph' do
     before do
       sign_in @user
 

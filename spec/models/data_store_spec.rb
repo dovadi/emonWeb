@@ -56,7 +56,6 @@ describe DataStore do
       @user.reset_api_read_token!
       @from = (Time.now - 1.hour).utc.to_i
       @till =  Time.now.utc.to_i
-
     end
     
     it 'should return an empty array if no correct options are given' do

@@ -72,7 +72,8 @@ ActiveRecord::Schema.define(:version => 20111225174916) do
     t.datetime "created_at",                                               :null => false
     t.datetime "updated_at",                                               :null => false
     t.boolean  "admin",                                 :default => false
-    t.string   "api_read_token"
+    t.string   "api_read_token",
+    t.string   "time_zone"
   end
 
   add_index "users", ["api_read_token"], :name => "index_users_on_api_read_token", :unique => true
