@@ -1,3 +1,9 @@
+* 0.5
+  Definition of processors
+  Added Time zone functionality
+  Coversion of javascript to coffeescript
+  Update to Rails 3.2.5 and update of other gems
+
 * 0.4
   Update to latest version of Rails and Twitter bootstrap
   Parsing P1 companion data for Dutch smart meters
