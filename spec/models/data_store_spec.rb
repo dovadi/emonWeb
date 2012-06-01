@@ -52,10 +52,11 @@ describe DataStore do
 
     before(:each) do
       drop_data_stores
+      Time.zone = 'Lisbon'
       @user = FactoryGirl.create(:user)
       @user.reset_api_read_token!
-      @from = (Time.now - 1.hour).utc.to_i
-      @till =  Time.now.utc.to_i
+      @from = (Time.zone.now - 1.hour).to_i
+      @till =  Time.zone.now.to_i
     end
     
     it 'should return an empty array if no correct options are given' do
@@ -74,7 +75,7 @@ describe DataStore do
       DataStore.expects(:from).with(1, nil).returns(records)
       DataStore.fetch(:from => @from.to_i, :till => @till.to_i, :feed_id => 1)
     end
-  
+
     it 'should return the correct data' do
       @input = Input.new
       @input.create_data_store_tables('data_store_1')
@@ -82,8 +83,8 @@ describe DataStore do
       ds2 = DataStore.create!(:value => 200, :identified_by => 1)
       data = DataStore.fetch(:from => @from.to_i, :till => @till.to_i + 10, :feed_id => 1)
       data.size.should == 2
-      data.include?([ds1.created_at.utc.to_i * 1000, ds1.value]).should == true
-      data.include?([ds2.created_at.utc.to_i * 1000, ds2.value]).should == true
+      data.include?([ds1.created_at.to_i * 1000 + 3600000, ds1.value]).should == true
+      data.include?([ds2.created_at.to_i * 1000 + 3600000, ds2.value]).should == true
     end
   end
 

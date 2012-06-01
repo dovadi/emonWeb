@@ -21,7 +21,7 @@ class DataStore < ActiveRecord::Base
 
   def self.fetch( options = {} )
     result = []
-    get_data(options).each { |data_point| result << [data_point.created_at.utc.to_i * 1000, data_point.value] }
+    get_data(options).each { |data_point| result << [data_point.created_at.to_i * 1000 + utc_offset, data_point.value] }
     result
   end
 
@@ -30,6 +30,10 @@ class DataStore < ActiveRecord::Base
   end
 
   private
+
+  def self.utc_offset
+    Time.zone.now.utc_offset * 1000
+  end
 
   def self.get_data(options)
     if options[:from] && options[:till] && options[:feed_id]
