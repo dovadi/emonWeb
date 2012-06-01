@@ -83,8 +83,8 @@ describe DataStore do
       ds2 = DataStore.create!(:value => 200, :identified_by => 1)
       data = DataStore.fetch(:from => @from.to_i, :till => @till.to_i + 10, :feed_id => 1)
       data.size.should == 2
-      data.include?([ds1.created_at.to_i * 1000 - 3600000, ds1.value]).should == true
-      data.include?([ds2.created_at.to_i * 1000 - 3600000, ds2.value]).should == true
+      data.include?([ds1.created_at.to_i * 1000 + 3600000, ds1.value]).should == true
+      data.include?([ds2.created_at.to_i * 1000 + 3600000, ds2.value]).should == true
     end
   end
 
