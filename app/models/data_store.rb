@@ -21,7 +21,7 @@ class DataStore < ActiveRecord::Base
 
   def self.fetch( options = {} )
     result = []
-    get_data(options).each { |data_point| result << [data_point.created_at.to_i * 1000 + utc_offset, data_point.value] }
+    get_data(options).each { |data_point| result << [data_point.created_at.to_i * 1000 - utc_offset, data_point.value] }
     result
   end
 
