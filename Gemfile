@@ -16,12 +16,11 @@ gem 'rails_admin', '~>0.0.1'
 gem 'thin', '~>1.3.1'
 gem 'airbrake', '~>3.0.9'
 gem 'redis', '~>3.0.0'
+gem 'parse_p1', '0.0.5'
 
 #TODO Formtastic not yet able to update because of Rails '~>3.1.0' dependency
 gem 'formtastic', '~> 2.1.1'
 gem 'formtastic-bootstrap', '~>1.1.1'
-
-gem 'parse_p1', '0.0.5'
 
 #heroku
 group :production do
@@ -33,14 +32,14 @@ group :test, :development do
   gem 'steak', '~>2.0.0'
   gem 'email_spec', '~>1.2.1'
   gem 'shoulda-matchers', '~>1.1.0'
-  gem 'mocha', '~>0.11.1'
-  gem 'guard', '~>1.0.1'
-  gem 'guard-rspec', '~>0.7.0'
-  gem 'factory_girl', '~>3.1.1'
-  gem 'factory_girl_rails', '~>3.1.0'
+  gem 'mocha', '~>0.11.4'
+  gem 'guard', '~>1.0.3'
+  gem 'guard-rspec', '~>0.7.3'
+  gem 'factory_girl', '~>3.3.0'
+  gem 'factory_girl_rails', '~>3.3.0'
   gem 'spork', '~>1.0.0rc2'
   gem 'spork-rails', '~>3.2.0'
-  gem 'guard-spork', '~>0.7.0'
+  gem 'guard-spork', '~>0.8.0'
   gem 'database_cleaner', '~>0.7.2'
   gem 'pg', '~>0.13.2'
   gem 'taps', '~>0.3.24'
