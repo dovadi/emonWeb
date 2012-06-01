@@ -27,11 +27,9 @@ module Emonweb
     config.autoload_paths += %W(#{config.root}/processors)
     config.autoload_paths << Rails.root.join('lib', 'emonweb')
     # config.autoload_paths += %W(#{config.root}/extras)
-    # config.autoload_paths << Rails.root.join('vendor', 'gems', 'rack-throttle', 'lib')
 
-
-    config.assets.paths << Rails.root.join('app', 'assets', 'bootstrap')
-    config.assets.paths << Rails.root.join('app', 'assets', 'flot')
+    config.assets.paths << Rails.root.join('lib', 'assets', 'javascripts')
+    config.assets.paths << Rails.root.join('lib', 'assets', 'javascripts', 'flot')
     config.assets.paths << Rails.root.join('app', 'assets', 'widgets')
     # Only load the plugins named here, in the order given (default is alphabetical).
     # :all can be used as a placeholder for all plugins not explicitly named.

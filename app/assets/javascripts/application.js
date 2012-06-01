@@ -8,4 +8,6 @@
 //= require jquery-ui
 //= require jquery_ujs
 //= require bootstrap.min
+//= require jquery.flot.min
+//= require jquery.flot.selection.min
 //= require_tree .
