@@ -11,19 +11,22 @@ end
 
 gem 'jquery-rails', '~>2.0.2'
 gem 'haml-rails', '~>0.3.4'
-gem 'devise', '~>2.0.4'
+gem 'devise', '~>2.1.0'
 gem 'rails_admin', '~>0.0.1'
 gem 'thin', '~>1.3.1'
 gem 'airbrake', '~>3.0.9'
-gem 'redis', '~>2.2.2'
+gem 'redis', '~>3.0.0'
+
+#TODO Formtastic not yet able to update because of Rails '~>3.1.0' dependency
 gem 'formtastic', '~> 2.1.1'
 gem 'formtastic-bootstrap', '~>1.1.1'
+
 gem 'parse_p1', '0.0.5'
 
 #heroku
 group :production do
   gem 'pg', '~>0.13.2'
-  gem 'newrelic_rpm', '~>3.3.4'
+  gem 'newrelic_rpm', '~>3.3.5'
 end
 
 group :test, :development do
