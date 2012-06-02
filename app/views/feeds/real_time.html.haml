@@ -4,19 +4,3 @@
 
 = hidden_field_tag 'api_key', current_user.api_read_token
 = hidden_field_tag 'feed_id', @feed.id
-
-:javascript
-
-  $(function () {
-    $('#graph').width($('#graph_bound').width());
-    $('#graph').height($('#graph_bound').height());
-
-    realTimeGraph = new RealTimeGraph;
-    
-    $('.viewWindow').bind('click', function(e){
-      realTimeGraph.setTimeWindow(e.currentTarget)
-    });
-
-    realTimeGraph.refreshGraph();
-    setInterval('realTimeGraph.refreshGraph()', 5000 );
-  });
