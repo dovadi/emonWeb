@@ -82,8 +82,8 @@ window.rawDataGraph = class rawDataGraph
  
   setTime: (element) ->
     time  = $(element).attr('time')
-    @till     = new Date().getTime()
-    @from     = @till - (3600000 *24 * time);
+    @till = new Date().getTime()
+    @from = @till - (3600000 *24 * time);
     @fetchData()
 
   zoom: (factor) ->
