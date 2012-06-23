@@ -68,6 +68,13 @@ describe Input do
       Input.any_instance.expects(:touch).with(:updated_at)
       Input.create_or_update(:water => 252.55, :user_id => 100)
     end
+
+    it 'should not raise errors of value is nil (due to problems with the serial input)' do
+      expect do
+        Input.create_or_update(:water => '', :user_id => 100)
+      end.not_to raise_error ActiveRecord::RecordInvalid
+    end
+
   end
 
   describe 'With processors' do
