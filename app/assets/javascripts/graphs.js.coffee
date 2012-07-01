@@ -33,8 +33,9 @@ class RealTimeGraph
 class RawDataGraph extends RealTimeGraph
   constructor: (graph, width, height, apiKey, feedId) ->
     super
-    @from = new Date().getTime()
-    @till = @from - (3600000 * 24.0)
+    @state = 'year'
+    @till  = new Date().getTime()
+    @from  = @till - (3600000 * 24.0 * 365)
 
   plotGraph: (data) ->
     calculateAverage(data)
@@ -93,26 +94,22 @@ class RawDataGraph extends RealTimeGraph
 class BarGraph extends RawDataGraph
   constructor: (graph, width, height, apiKey, feedId) ->
     super
-    @till = new Date().getTime()
-    @from = @till - (3600000 * 24.0 * 30)
-    @data   = []
-    @days   = []
-    @months = []
-    @years  = []
-    @view      = 0     
     @pAverage  = 0
     @kwhWindow = 0
     @price     = 0.14
     @botKwhdText = ''
     $('#loading').hide()
+    @fetchData()
 
   plotGraph: (data) ->
+    @data = data
     tKwh  = 0
     nDays = data.length
     tKwh += parseFloat(z[1]) for z in data
+    @renderWeekView(data)  if @state == 'week'
+    @renderMonthView(data) if @state == 'month'
+    @renderYearView(data)  if @state == 'year'
     @botKwhdText = kWhText(tKwh, nDays, @price)
-    days = getLast30Days(data)
-    @setLast30daysView(days)
 
   kWhText= (tKwh, nDays, price) ->
     text  = 'Total: ' + (tKwh).toFixed(0)
@@ -124,34 +121,40 @@ class BarGraph extends RawDataGraph
     text += ' a year | Unit price: €' + price
     text
 
-  setLast30daysView: (data) ->
+  renderMonthView: (data) ->
     $("#out").html('')
     data = getDays(data)
-    @plotBarGraph(data, 3600 * 22)
-    view = 2
-    $("#return").val("View: monthly view")
-    $("#out2").html("Last 30 days")
-    $('#axislabely').html("Energy<br/ >(kWh)")
+    @renderBarGraph(data, 3600 * data.length)
+    ($ '#out2').html('Month overview')
     $("#bot_out").html(@botKwhdText)
 
-  getLast30Days = (data) ->
-    end  = new Date()
-    start = end - (3600000 * 24 * 30)
-    getRange(data, start, end)
+  renderYearView: (data) ->
+    $("#out").html('')
+    data = getMonths(data)
+    @renderBarGraph(data, 3600 * 650)
+    ($ '#out2').html('Year overview')
+    $("#bot_out").html(@botKwhdText)
 
-  getRange = (data, start, end) ->
-    gdata = []
-    for z in data
-      do (z) ->
-        gdata.push(z) if (z[0] > start && z[0] < end)
-    gdata
-
-  plotBarGraph: (data, width) ->
+  renderBarGraph: (data, width) ->
+    $('#axislabely').html("Energy<br/ >(kWh)")
     $.plot @graph,
      [ data: data, color: "#0096ff"]
-     bars: { show: true, align: 'center', barWidth: (width * 1000), fill: true }
-     grid: { show: true, hoverable: true, clickable: true }
+     bars: { show: true, align: 'center', barWidth: width * 1000 , fill: true }
+     valueLabels: { show: false }
+     grid: { show: true }
      xaxis: { mode: 'time' }
+
+  setTime: (element) ->
+    time  = $(element).attr('time')
+    ($ '.time').removeAttr('disabled')
+    @state = 'day'   if time == '1'
+    @state = 'week'  if time == '7'
+    @state = 'month' if time == '30'
+    @state = 'year'  if time == '365'
+    $(element).attr('disabled', 'disabled')
+    @till = new Date().getTime()
+    @from = @till - (3600000 * 24 * time);
+    @fetchData()
 
   getDays = (data) ->
     hash  = {}
@@ -168,9 +171,42 @@ class BarGraph extends RawDataGraph
     array.push [k, (v[0] / v[1]) * 24] for k,v of hash
     array
 
+  getMonths = (data) ->
+    hash  = hashWithMonthTimestamps(data)
+    array = []
+    self = @
+    for z in data
+      do (z) ->
+        timeStamp = getMonthTimestamp(z[0])
+        if hash[timeStamp] == undefined
+        else
+          hash[timeStamp][0] += z[1]
+          hash[timeStamp][1]++
+    array.push [k, (v[0] / v[1]) * 24] for k,v of hash
+    array
+
   cleanDate = (timeStamp) ->
     date = new Date(timeStamp)
     new Date(date.getFullYear(), date.getMonth(), date.getDate())
+
+  hashWithMonthTimestamps = (data) ->
+    hash  = {}
+    array = []
+    array.push(z[0]) for z in data
+    last = Math.max.apply(null, array)
+    for num in [1..12]
+      do (num) ->
+        date  = new Date(last)
+        month = (date.getMonth() + 1 - num)
+        year  = date.getFullYear()
+        hash[new Date(year, month, 1).getTime()] = [0,0]
+    hash
+
+  getMonthTimestamp = (time) ->
+    date  = new Date(time)
+    month = date.getMonth() + 1
+    year  = date.getFullYear()
+    new Date(year, month, 1).getTime()
 
 jQuery ->
   if $('#real_time_graph').length > 0
@@ -203,8 +239,6 @@ jQuery ->
       ($ '#graph_bound').height()
       ($ '#api_key').val()
       ($ '#feed_id').val()
-
-    graph.fetchData()
 
   ($ '#zoomout').bind 'click',     -> graph.zoom 2
   ($ '#zoomin').bind  'click',     -> graph.zoom 0.5
