@@ -10,4 +10,5 @@
 //= require bootstrap.min
 //= require jquery.flot.min
 //= require jquery.flot.selection.min
+//= require jquery.flot.valuelabels
 //= require_tree .
