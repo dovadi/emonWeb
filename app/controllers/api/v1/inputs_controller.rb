@@ -1,6 +1,6 @@
 class Api::V1::InputsController < ApplicationController
 
-  protect_from_forgery :except => [:api]
+  protect_from_forgery :except => [:api, :p1]
 
   def index
     @inputs = current_user.inputs
@@ -20,11 +20,24 @@ class Api::V1::InputsController < ApplicationController
   end
 
   def api
+    #TODO: deprecate P1 records on /api
     if params['P1'].present?
       p1 = ParseP1::Base.new(params['P1'])
       extract_p1_attributes!(p1) if p1.valid?
     end
     Input.create_or_update(params.merge!(:user_id => current_user.id).to_hash)
+    render :nothing => true 
+  end
+
+  def p1
+    current_user.resets.create!(:reason => params['REA']) if params['RST']
+    if params['P1'].present?
+      p1 = ParseP1::Base.new(params['P1'])
+      if p1.valid?
+        extract_p1_attributes!(p1) 
+        Input.create_or_update(params.slice(*valid_p1_keys).merge!(:user_id => current_user.id).to_hash)
+      end
+    end
     render :nothing => true 
   end
 
@@ -45,6 +58,7 @@ class Api::V1::InputsController < ApplicationController
 
   private
 
+  #TODO: push this to input model
   def extract_p1_attributes!(p1)
     params.delete('P1')
     params.merge!(:actual_electra               => p1.electricity(:type => :import, :actual => true),
@@ -57,4 +71,8 @@ class Api::V1::InputsController < ApplicationController
 
   end
 
+  def valid_p1_keys
+    [:actual_electra, :electra_export_low_tariff, :electra_export_normal_tariff, :electra_import_low_tariff,
+     :electra_import_normal_tariff, :gas_usage, :gas_last_reading]
+  end
 end

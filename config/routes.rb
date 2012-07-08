@@ -25,6 +25,7 @@ Emonweb::Application.routes.draw do
   end
 
   match 'api'  => 'api/v1/inputs#api', :via => :post
+  match 'p1'  => 'api/v1/inputs#p1', :via => :post
   match 'api'  => 'api/v1/data_stores#index', :via => :get
   match 'home' => 'home#index'
 

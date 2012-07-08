@@ -44,4 +44,10 @@ describe Api::V1::InputsController do
       post('/api').should route_to('api/v1/inputs#api')
     end
   end
+
+  describe 'Named routing for P1 data' do
+    it 'routes to #create' do
+      post('/p1').should route_to('api/v1/inputs#p1')
+    end
+  end
 end

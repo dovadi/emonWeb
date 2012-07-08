@@ -78,13 +78,7 @@ describe Api::V1::InputsController do
       end.to change(Input, :count).by(2)
     end
 
-    it 'creates a new inputs with P1 data' do
-      expect do
-        post :api, p1_attributes
-      end.to change(Input, :count).by(7)
-    end
-
-    describe 'Creating seven inputs with P1 attributes' do
+    describe 'Creating seven inputs with P1 attributes (Legacy)' do
       before do
         post :api, p1_attributes
       end
@@ -111,6 +105,44 @@ describe Api::V1::InputsController do
       end
     end
   end
+
+  describe 'POST p1' do
+    describe 'Creating seven inputs with P1 attributes' do
+      before do
+        post :p1, p1_attributes
+      end
+      it 'should create an input for actual electra' do
+        Input.find_by_name('actual_electra').should be_present
+      end
+      it 'should create an input for imported electra with a normal tariff' do
+        Input.find_by_name('electra_import_normal_tariff').should be_present
+      end
+      it 'should create an input for imported electra with a low tariff' do
+        Input.find_by_name('electra_import_low_tariff').should be_present
+      end
+      it 'should create an input for exported electra with a normal tariff' do
+        Input.find_by_name('electra_export_normal_tariff').should be_present
+      end
+      it 'should create an input for exported electra with a low tariff' do
+        Input.find_by_name('electra_export_low_tariff').should be_present
+      end
+      it 'should create an input for gas usage' do
+        Input.find_by_name('gas_usage').should be_present
+      end
+      it 'should create an input for gas last reading' do
+        Input.find_by_name('gas_last_reading').should be_present
+      end
+    end
+    describe 'Reset or start of the p1 shield' do
+      it 'should store the timestamp of the reset' do
+        expect do
+          post :p1, p1_attributes.merge('RST' => 1, 'REA' => 'Memory')
+        end.to change(@user.resets, :count).by(1)
+      end
+    end
+  end
+
+  
 
   describe 'DELETE destroy' do
     it 'destroys the requested input' do

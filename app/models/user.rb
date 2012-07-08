@@ -9,6 +9,7 @@ class User < ActiveRecord::Base
 
   has_many :inputs, :dependent => :destroy
   has_many :feeds,  :dependent => :destroy
+  has_many :resets,  :dependent => :destroy
 
   def reset_api_read_token
     self.api_read_token = friendly_token
