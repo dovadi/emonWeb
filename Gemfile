@@ -24,7 +24,7 @@ gem 'formtastic-bootstrap', '~>1.1.1'
 
 #heroku
 group :production do
-  gem 'pg', '~>0.13.2'
+  gem 'pg', '~>0.14.0'
   gem 'newrelic_rpm', '~>3.3.5'
 end
 
@@ -40,8 +40,8 @@ group :test, :development do
   gem 'spork', '~>1.0.0rc2'
   gem 'spork-rails', '~>3.2.0'
   gem 'guard-spork', '~>0.8.0'
-  gem 'database_cleaner', '~>0.7.2'
-  gem 'pg', '~>0.13.2'
+  gem 'database_cleaner', '~>0.8.0'
+  gem 'pg', '~>0.14.0'
   gem 'taps', '~>0.3.24'
   gem 'sqlite3', '~>1.3.6' #Specificly needed for taps
   #gem 'mysql2'
