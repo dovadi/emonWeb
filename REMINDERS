@@ -15,3 +15,40 @@ Import PG backups from Heroku into local database
 -------------------------------------------------
 # curl -o latest.dump `heroku pgbackups:url` ()
 # pg_restore --verbose --clean --no-acl --no-owner -h localhost -U emonweb -d emonweb_development latest.dump
+
+Simple workflow brew install certain version (for example postgresql)
+---------------------------------------------------------------------
+# Step 1:
+# Navigate to your homebrew base directory (usually this is /usr/local)
+
+# Step 2:
+# Enter brew versions FORMULANAME (FORMULANAME is the formula you want to install).
+
+# You will then get something like:
+
+# 1.0.1 git checkout 1234567 Library/Formula/FORMULANAME.rb
+# 1.0.0 git checkout 0123456 Library/Formula/FORMULANAME.rb
+# ...
+
+# (Had to manually fix url 'http://ftp.postgresql.org/pub/source/v9.0.4/postgresql-9.0.4.tar.bz2')
+
+# Step 3:
+# Choose the desired version and check it out via copy and paste of the desired version line (leave out the version number in the beginning).
+# Example for getting 1.0.0:
+
+# git checkout 0123456 Library/Formula/FORMULANAME.rb
+
+# Step 4:
+
+# brew install FORMULANAME
+
+Truncate performance difference is great between postgresql 9.0.4 and 9.1.4! More than 5 time slower!
+--------------------------------------------------------------------------------------------------
+# So DatabaseCleaner strategy truncation is for 9.1.4 not really an option
+# See http://stackoverflow.com/questions/11419536/postgresql-truncation-speed
+# Strategy transaction results in 10 failures! (Need to fix this)
+
+Prefer brew postgres installation over postgresapp from Heroku
+--------------------------------------------------------------
+# You can control your postgres.conf (/usr/local/var/postgres/)
+# Change client_min_messages = warning (instead of notice)
