@@ -36,9 +36,11 @@ class RawDataGraph extends RealTimeGraph
     @state = 'year'
     @till  = new Date().getTime()
     @from  = @till - (3600000 * 24.0 * 365)
+    @pAverage  = 0
+    @kwhWindow = 0
 
   plotGraph: (data) ->
-    calculateAverage(data)
+    @calculateAverage(data)
     super
 
   plotSelected: (ranges) ->
@@ -64,7 +66,7 @@ class RawDataGraph extends RealTimeGraph
 
   shift: (direction) ->
     timeWindow = @till - @from
-    shiftsize  = timeWindow * 0.2
+    shiftsize  = timeWindow
     if direction == 'right'
        @from += shiftsize
        @till += shiftsize
@@ -73,21 +75,21 @@ class RawDataGraph extends RealTimeGraph
       @till -= shiftsize
     @fetchData()
 
-  calculateAverage = (data) ->
+  calculateAverage: (data) ->
     if data.length > 0
-      pAverage  = 0
+      @pAverage  = 0
       nPoints   = data.length
-      pAverage += parseFloat(z[1]) for z in data
+      @pAverage += parseFloat(z[1]) for z in data
 
       timeB = Number(data[0][0])/1000.0
       timeA = Number(data[data.length-1][0])/1000.0
 
-      timeWindow = (timeB - timeA)
+      timeWindow = timeB - timeA
       timeWidth  = timeWindow / nPoints
-      kwhWindow  = (timeWidth * pAverage) / 3600000
+      @kwhWindow  = (timeWidth * @pAverage) / 3600000
 
-      pAverage = (pAverage / nPoints)
-      ($ '#stat').html((pAverage).toFixed(1)+' W | '+(kwhWindow).toFixed(1)+' kWh')
+      @pAverage = (@pAverage / nPoints)
+      ($ '#stat').html((@pAverage).toFixed(1)+' W | '+(@kwhWindow).toFixed(1)+' kWh')
     else
       ($ '#stat').html('No data')
 
@@ -96,20 +98,18 @@ class BarGraph extends RawDataGraph
     super
     @pAverage  = 0
     @kwhWindow = 0
-    @price     = 0.14
+    @price     = 0.24
     @botKwhdText = ''
     $('#loading').hide()
     @fetchData()
 
   plotGraph: (data) ->
-    @data = data
-    tKwh  = 0
-    nDays = data.length
-    tKwh += parseFloat(z[1]) for z in data
+    @calculateAverage(data); #assign @kwhWindow
     @renderWeekView(data)  if @state == 'week'
     @renderMonthView(data) if @state == 'month'
     @renderYearView(data)  if @state == 'year'
-    @botKwhdText = kWhText(tKwh, nDays, @price)
+    @botKwhdText = kWhText(@kwhWindow, @numberOfDayes(), @price)
+    $("#bot_out").html(@botKwhdText)
 
   kWhText= (tKwh, nDays, price) ->
     text  = 'Total: ' + (tKwh).toFixed(0)
@@ -121,19 +121,20 @@ class BarGraph extends RawDataGraph
     text += ' a year | Unit price: €' + price
     text
 
-  renderMonthView: (data) ->
-    $("#out").html('')
+  renderWeekView: (data) ->   
     data = getDays(data)
-    @renderBarGraph(data, 3600 * data.length)
+    @renderBarGraph(data, 24 * 3600)
+    ($ '#out2').html('Week overview') 
+
+  renderMonthView: (data) ->
+    data = getDays(data)
+    @renderBarGraph(data, 24 * 3600)
     ($ '#out2').html('Month overview')
-    $("#bot_out").html(@botKwhdText)
 
   renderYearView: (data) ->
-    $("#out").html('')
     data = getMonths(data)
-    @renderBarGraph(data, 3600 * 650)
+    @renderBarGraph(data, 24 * 3600 * 366 / 12)
     ($ '#out2').html('Year overview')
-    $("#bot_out").html(@botKwhdText)
 
   renderBarGraph: (data, width) ->
     $('#axislabely').html("Energy<br/ >(kWh)")
@@ -143,6 +144,11 @@ class BarGraph extends RawDataGraph
      valueLabels: { show: false }
      grid: { show: true }
      xaxis: { mode: 'time' }
+
+  numberOfDayes: ->
+    diff = (@till - @from) / 1000
+    days = diff / (3600 * 24)
+    days
 
   setTime: (element) ->
     time  = $(element).attr('time')
