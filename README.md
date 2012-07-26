@@ -1,7 +1,7 @@
 emonWeb
 =======
 
-**emonWeb** is built with Rails 3.1 and is a port from [emonCMS](http://openenergymonitor.org/emon/node/90) (which is built in php).
+**emonWeb** is built with Rails 3.2 and is a port from [emonCMS](http://openenergymonitor.org/emon/node/90) (which is built in php).
 
 **emonCMS** (and therefore **emonWeb** as well) is a powerful open-source web-app for processing, logging and visualising energy, temperature and other environmental data to be used with the [Open Energy Monitor](http://openenergymonitor.org).
 
@@ -16,7 +16,7 @@ The core team of the [Open Energy Monitor](http://openenergymonitor.org) exists 
 Installation
 ============
 
-EmonWeb is tested with ruby 1.9.2 (for installation with RVM see [Install Ruby Version Manager](http://beginrescueend.com/rvm/install/) )
+EmonWeb is tested with ruby 1.9.3 (for installation with RVM see [Install Ruby Version Manager](http://beginrescueend.com/rvm/install/) )
 
 > git clone git@github.com:dovadi/emonWeb.git
 
@@ -45,6 +45,8 @@ See for usage the (.rvmrc instructions)[http://beginrescueend.com/workflow/rvmrc
 
 > cp _rvmrc .rvmrc
 
+See the [Wiki](https://github.com/dovadi/emonWeb/wiki) for more explanation or *try it out on [emonWeb.org](http://emonWeb.org) yourself!*
+
 Running Specs
 =============
 
@@ -64,6 +66,25 @@ With the use of guard (and Spork):
 > gem install libnotify
 
 
+Contributing to emonWeb
+=======================
+ 
+* Check out the latest master to make sure the feature hasn't been implemented or the bug hasn't been fixed yet
+* Check out the issue tracker to make sure someone already hasn't requested it and/or contributed it
+* Fork the project
+* Start a feature/bugfix branch
+* Commit and push until you are happy with your contribution
+* Make sure to add tests for it. This is important so I don't break it in a future version unintentionally.
+* Make a pull request
 
----
-[Open Energy Monitor](http://openenergymonitor.org) 2011
+Credits
+=======
+
+[Open Energy Monitor](http://openenergymonitor.org) 2012
+
+emonWeb is funded and maintained by [Agile Dovadi BV](http://dovadi.com), contact [Frank Oxener](mailto:frank@dovadi.com)
+
+License
+=======
+
+emonWeb is open sourced under the [MIT license](https://github.com/dovadi/emonWeb/blob/master/LICENSE.txt)
