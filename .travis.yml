@@ -12,4 +12,4 @@ before_script:
   - cp config/database.yml.example config/database.yml
   - bundle exec rake db:schema:load RAILS_ENV=test
 
-script: "bundle exec rake spec"
+script: "bundle exec rspec"

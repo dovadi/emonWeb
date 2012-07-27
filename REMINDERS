@@ -52,3 +52,8 @@ Prefer brew postgres installation over postgresapp from Heroku
 --------------------------------------------------------------
 # You can control your postgres.conf (/usr/local/var/postgres/)
 # Change client_min_messages = warning (instead of notice)
+
+Running specs
+--------------
+# acceptance spec fails with running bundle exec rake spec
+# Use bundle exec rspec (used in .travis.yml)
