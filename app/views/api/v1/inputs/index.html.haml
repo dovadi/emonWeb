@@ -16,7 +16,7 @@
           %td{:class => color_time_ago(input.updated_at)}= time_ago_in_words(input.updated_at, true)
           %td= input.last_value
           %td
-            = link_to 'Destroy', api_v1_input_path(input), :confirm => 'Are you sure?', :method => :delete
+            = link_to 'Destroy', api_v1_input_path(input), :data => {:confirm => 'Are you sure?'}, :method => :delete
 
   .span6
     - @inputs.each do |input|

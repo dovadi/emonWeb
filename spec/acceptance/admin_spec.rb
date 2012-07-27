@@ -11,7 +11,7 @@ feature 'Admin', %q{
   end
 
   scenario 'Admin visits the Rails admin webfrontend' do
-    @user.update_attribute(:admin, true)
+    @user.update_column(:admin, true)
     sign_in_as @user
     click_link 'Admin'
     within 'a.brand' do

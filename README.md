@@ -15,6 +15,8 @@ The core team of the [Open Energy Monitor](http://openenergymonitor.org) exists 
 * [Glyn Hudson](https://github.com/glynhudson)
 * [and others](http://openenergymonitor.org/emon/people)
 
+See the [Wiki](https://github.com/dovadi/emonWeb/wiki) for more explanation or *try it out on [emonWeb.org](http://emonWeb.org) yourself!*
+
 Installation
 ============
 
@@ -30,9 +32,9 @@ EmonWeb is tested with ruby 1.9.3 (for installation with RVM see [Install Ruby V
 
 > cp config/database.yml.example config/database.yml
 
-> rake db:create
+> bundle exec rake db:create
 
-> rake db:migrate
+> bundle exec rake db:migrate
 
 > rails server
 
@@ -47,7 +49,7 @@ See for usage the (.rvmrc instructions)[http://beginrescueend.com/workflow/rvmrc
 
 > cp _rvmrc .rvmrc
 
-See the [Wiki](https://github.com/dovadi/emonWeb/wiki) for more explanation or *try it out on [emonWeb.org](http://emonWeb.org) yourself!*
+
 
 Running Specs
 =============
@@ -82,7 +84,7 @@ Contributing to emonWeb
 Credits
 =======
 
-[Open Energy Monitor](http://openenergymonitor.org) 2012
+[Open Energy Monitor](http://openenergymonitor.org)
 
 emonWeb is funded and maintained by [Agile Dovadi BV](http://dovadi.com), contact [Frank Oxener](mailto:frank@dovadi.com)
 

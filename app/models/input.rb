@@ -66,7 +66,7 @@ class Input < ActiveRecord::Base
       if value.present?
         if existing_input
           existing_input.touch(:updated_at) if existing_input.last_value.to_f == value.to_f
-          existing_input.update_attribute(:last_value, value)
+          existing_input.update_attributes(:last_value => value)
         else
           create!(:name => key.to_s, :last_value => value, :user_id => self.user_identifier) 
         end

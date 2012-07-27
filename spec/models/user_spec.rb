@@ -113,7 +113,7 @@ describe User do
     end
 
     it 'should tell if the user is an admin' do
-      @user.update_attribute(:admin, true)
+      @user.update_column(:admin, true)
       @user.admin?.should == true 
     end
 
