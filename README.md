@@ -1,6 +1,8 @@
 emonWeb
 =======
 
+[![Build Status](https://secure.travis-ci.org/dovadi/emonWeb.png?branch=master)](http://travis-ci.org/dovadi/emonWeb)
+
 **emonWeb** is built with Rails 3.2 and is a port from [emonCMS](http://openenergymonitor.org/emon/node/90) (which is built in php).
 
 **emonCMS** (and therefore **emonWeb** as well) is a powerful open-source web-app for processing, logging and visualising energy, temperature and other environmental data to be used with the [Open Energy Monitor](http://openenergymonitor.org).
