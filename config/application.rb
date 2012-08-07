@@ -8,6 +8,7 @@ require File.expand_path('../boot', __FILE__)
 # require 'sprockets/railtie'
 require 'rails/all'
 require File.expand_path(File.dirname(__FILE__) + '/../lib/api-throttling/lib/api_throttling')
+require File.expand_path(File.dirname(__FILE__) + '/../lib/header_filter/p1')
 require 'redis'
 
 if defined?(Bundler)
@@ -75,5 +76,6 @@ module Emonweb
     #  cache = ActiveSupport::Cache::MemoryStore.new
     #end
     #config.middleware.use ApiThrottling, :min => 8.0, :auth=>false, :cache => cache, :urls => ['POST /api']
+    Rails.application.config.middleware.insert_before ::ActionDispatch::Cookies, ::HeaderFilter::P1
   end
 end
