@@ -8,8 +8,8 @@ describe DataAverage do
       @input = Input.new
       @input.create_data_store_tables('data_store_789')
      
-      DataStore.create!(:value => 1, :identified_by => 789, :created_at => '2012-08-07 11:01:58')
-      DataStore.create!(:value => 2, :identified_by => 789, :created_at => '2012-08-07 11:01:59')
+      DataStore.create!(:value => 1, :identified_by => 789, :created_at => Time.parse('2012-08-07 11:01:57').utc)
+      DataStore.create!(:value => 2, :identified_by => 789, :created_at => Time.parse('2012-08-07 11:01:58').utc)
     end
 
     it 'should do nothing if timeslot is nil' do
@@ -31,8 +31,8 @@ describe DataAverage do
     end
 
     it 'should calculate average! (one_min) if there is already another record stored' do
-      DataStore.create(:value => 4.5, :identified_by => 789, :timeslot => :one_min, :created_at => '2012-08-07 11:01:59')
-      DataStore.any_instance.stubs(:created_at).returns(Time.parse('2012-08-07 10:01:59')) #force calculating an average
+      DataStore.create!(:value => 4.5, :identified_by => 789, :timeslot => :one_min, :created_at => Time.parse('2012-08-07 11:01:59').utc)
+      DataStore.any_instance.stubs(:created_at).returns(Time.parse('2012-08-07 10:00:00').utc) #force calculating an average
       Calculator.expects(:next).with(:one_min, anything).returns(nil)
       DataAverage.calculate!(789, :one_min)
       data = DataStore.from(789, :one_min).last
