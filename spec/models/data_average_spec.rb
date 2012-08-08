@@ -31,7 +31,7 @@ describe DataAverage do
     end
 
     it 'should calculate average! (one_min) if there is already another record stored' do
-      DataStore.create(:value => 4.5, :identified_by => 789, :timeslot => :one_min)
+      DataStore.create(:value => 4.5, :identified_by => 789, :timeslot => :one_min, :created_at => '2012-08-07 11:01:59')
       DataStore.any_instance.stubs(:created_at).returns(Time.parse('2012-08-07 10:01:59')) #force calculating an average
       Calculator.expects(:next).with(:one_min, anything).returns(nil)
       DataAverage.calculate!(789, :one_min)
