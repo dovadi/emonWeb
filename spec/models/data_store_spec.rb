@@ -9,13 +9,7 @@ describe DataStore do
       @attr = {:value => 252.55, :identified_by => '236'}
     end
 
-    it 'should set the correct table_name' do
-      DataStore.expects(:table_name=).with('data_store_236')
-      DataStore.expects(:table_name=).with('data_stores')
-      DataStore.create(@attr)
-    end
-
-    it 'should trigger the callback to calculate average values' do
+    it 'should set the correct table_name and trigger the callback to calculate average values' do
       DataStore.expects(:table_name=).with('data_store_236')
       DataStore.expects(:table_name=).with('data_stores')
       DataStore.any_instance.expects(:calculate_one_min_average)
