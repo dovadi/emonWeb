@@ -2,14 +2,14 @@ require File.dirname(__FILE__) + '/../spec_helper'
 
 describe DataAverage do
 
-  describe 'DataAverage calculate! average' do
+  describe 'DataAverage' do
     before(:each) do
       drop_data_stores
       @input = Input.new
       @input.create_data_store_tables('data_store_789')
      
-      DataStore.create(:value => 1, :identified_by => 789)
-      DataStore.create(:value => 2, :identified_by => 789)
+      DataStore.create!(:value => 1, :identified_by => 789, :created_at => '2012-08-07 11:01:58')
+      DataStore.create!(:value => 2, :identified_by => 789, :created_at => '2012-08-07 11:01:59')
     end
 
     it 'should do nothing if timeslot is nil' do
@@ -32,7 +32,7 @@ describe DataAverage do
 
     it 'should calculate average! (one_min) if there is already another record stored' do
       DataStore.create(:value => 4.5, :identified_by => 789, :timeslot => :one_min)
-      DataStore.any_instance.stubs(:created_at).returns(Time.now - 1.hour) #force calculating an average
+      DataStore.any_instance.stubs(:created_at).returns(Time.parse('2012-08-07 10:01:59')) #force calculating an average
       Calculator.expects(:next).with(:one_min, anything).returns(nil)
       DataAverage.calculate!(789, :one_min)
       data = DataStore.from(789, :one_min).last
