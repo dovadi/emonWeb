@@ -10,6 +10,7 @@ group :assets do
 end
 
 gem 'jquery-rails', '~>2.0.2'
+gem "raphael-rails", "~> 2.1.0"
 gem 'haml-rails', '~>0.3.4'
 gem 'devise', '~>2.1.0'
 gem 'rails_admin', '~>0.0.5'

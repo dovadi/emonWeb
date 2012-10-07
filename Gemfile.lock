@@ -168,6 +168,7 @@ GEM
       rdoc (~> 3.4)
       thor (>= 0.14.6, < 2.0)
     rake (0.9.2.2)
+    raphael-rails (2.1.0)
     rb-fchange (0.0.5)
       ffi
     rb-fsevent (0.9.1)
@@ -268,6 +269,7 @@ DEPENDENCIES
   pg (~> 0.14.0)
   rails (= 3.2.8.rc2)
   rails_admin (~> 0.0.5)
+  raphael-rails (~> 2.1.0)
   redis (~> 3.0.0)
   shoulda-matchers (~> 1.2.0)
   spork (~> 1.0.0rc2)
