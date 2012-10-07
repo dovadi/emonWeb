@@ -11,12 +11,12 @@ class DifferenceProcessor < Processor
   def perform
     feed = Feed.find(@argument)
     last_value = feed.last_value
-
-    if @value != last_value
-      DataStore.create(:value => @value, :identified_by => @argument)
-      Feed.update(@argument, :last_value => @value)
+    difference = (@value - last_value).round(3)
+    unless difference == 0
+      DataStore.create(:value => difference, :identified_by => @argument)
+      Feed.update(@argument, :last_value => difference)
     end
-    @value
+    difference
   end
 
 end
