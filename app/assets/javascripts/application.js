@@ -11,4 +11,6 @@
 //= require jquery.flot.min
 //= require jquery.flot.selection.min
 //= require jquery.flot.valuelabels
+//= require raphael
+//= require justgage.1.0.1.min
 //= require_tree .

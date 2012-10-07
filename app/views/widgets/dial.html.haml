@@ -1,5 +1,9 @@
 - content_for :meta do
   %meta{:name=>'viewport', :content=>'user-scalable=no, width=device-width'}
 
+#actual_electra
+
+#gas_usage
+
 - content_for :javascripts do
-  = dial_javascript(@id)
+  = "$(document).ready(function () {var emonG1 = new EmonGauges().autoUpdate(#{@id}) });"

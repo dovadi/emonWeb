@@ -4,7 +4,14 @@ class FeedsController < ApplicationController
 
   def index
     @feeds = current_user.feeds
-  end
+    respond_to do |type|
+      type.js do
+        render :json => FeedExtractor.new(@feeds, [:actual_electra, :gas_usage]).values.to_json 
+      end
+      type.html { render :index }
+    end
+
+   end
 
   def show
     @feed = current_user.feeds.find(params[:id])

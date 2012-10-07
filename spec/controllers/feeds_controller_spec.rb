@@ -35,6 +35,19 @@ describe FeedsController do
     it { should respond_with :success}
   end
 
+  describe 'user GET index json' do
+    before do
+      sign_in @user
+      @feeds = mock
+      subject.current_user.expects(:feeds).returns(@feeds)
+      values = mock(:values => {:actual_electra => 100})
+      FeedExtractor.expects(:new).with(@feeds, [:actual_electra, :gas_usage]).returns(values)
+      xhr :get, :index, :format => :js
+    end
+    it { should respond_with :success}
+    it { response.body.should == {:actual_electra => 100}.to_json }
+  end
+
   describe 'user GET show' do
     before do
       sign_in @user
@@ -47,7 +60,7 @@ describe FeedsController do
 
       subject.current_user.expects(:feeds).returns(feeds)
 
-      get 'show', :id => 1, :format => 'js'
+      xhr :get, :show, :id => 1, :format => 'js'
     end
 
     it 'should have a current_user' do
