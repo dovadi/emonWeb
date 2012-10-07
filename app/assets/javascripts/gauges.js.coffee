@@ -27,5 +27,5 @@ window.EmonGauges = class EmonGauges
       url: '/feeds/'
       dataType: 'json'
       success: (data) ->
-        self.gasUsage.refresh Math.round(data['gas_usage'])
-        self.actualElectra.refresh Math.round(data['actual_electra'])
+        self.gasUsage.refresh Math.round(data['gas_usage'] * 1000) / 1000
+        self.actualElectra.refresh Math.round(data['actual_electra'] * 1000) / 1000
