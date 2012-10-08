@@ -7,6 +7,7 @@ feature 'Admin', %q{
 } do
 
   background do
+    drop_data_stores
     @user = FactoryGirl.create(:user)
   end
 
