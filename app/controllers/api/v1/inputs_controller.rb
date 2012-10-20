@@ -30,8 +30,6 @@ class Api::V1::InputsController < ApplicationController
   end
 
   def p1
-    p request.env['HTTP_USER_AGENT']
-    p request.env['HTTP_ID_TOKEN']
     current_user.resets.create!(:reason => params['REA']) if params['RST']
     if params['P1'].present?
       p1 = ParseP1::Base.new(params['P1'])
