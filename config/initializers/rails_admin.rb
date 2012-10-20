@@ -63,7 +63,7 @@ RailsAdmin.config do |config|
   # config.excluded_models << [User]
   
   # Add models here if you want to go 'whitelist mode':
-  # config.included_models << [User]
+  config.included_models = ['Feed', 'Input', 'User', 'Reset']
   
   # Application wide tried label methods for models' instances
   # config.label_methods << [:description] # Default is [:name, :title]
