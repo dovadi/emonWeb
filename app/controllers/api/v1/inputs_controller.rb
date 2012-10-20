@@ -30,6 +30,8 @@ class Api::V1::InputsController < ApplicationController
   end
 
   def p1
+    p request.env['HTTP_USER_AGENT']
+    p request.env['HTTP_ID_TOKEN']
     current_user.resets.create!(:reason => params['REA']) if params['RST']
     if params['P1'].present?
       p1 = ParseP1::Base.new(params['P1'])
@@ -38,8 +40,8 @@ class Api::V1::InputsController < ApplicationController
         Input.create_or_update(params.slice(*valid_p1_keys).merge!(:user_id => current_user.id).to_hash)
       end
     end
-    render :nothing => true 
-    # WIP head :accepted, :auth => current_user.authentication_token, :time => 1500
+    # render :nothing => true 
+    head :accepted, :auth => current_user.authentication_token, :time => 1500
   end
 
   def update
