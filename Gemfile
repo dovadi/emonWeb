@@ -45,6 +45,6 @@ group :test, :development do
   gem 'pg', '~>0.14.1'
   gem 'taps', '~>0.3.24'
   gem 'sqlite3', '~>1.3.6' #Specificly needed for taps
-  #gem 'mysql2'
+  gem 'mysql2'
 end
 
