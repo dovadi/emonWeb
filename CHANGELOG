@@ -1,3 +1,7 @@
+* 0.5.2 (In progress)
+  Update to Rails 3.2.8
+  Use justgage for gauges
+  Add a DifferenceProcessor
 
 * 0.5.1
   Added /p1 to API in order to read P1 records
