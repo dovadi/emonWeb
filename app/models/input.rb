@@ -3,8 +3,6 @@ class UndefinedProcessorException < Exception; end
 
 class Input < ActiveRecord::Base
 
-  include DataStoreSql
-
   belongs_to :user
   has_many :feeds, :dependent => :destroy
 
@@ -137,7 +135,7 @@ class Input < ActiveRecord::Base
 
   def check_data_store_tables
     if self.processors.present?
-      self.processors.each { |processor| verify_table('data_store_' + processor[1].to_s) if storing_data_needed?(processor[0]) }
+      self.processors.each { |processor| verify_table(processor[1].to_s) if storing_data_needed?(processor[0]) }
     end
   end
 
@@ -145,11 +143,12 @@ class Input < ActiveRecord::Base
     Processor.data_stores.include?(processor.to_sym)
   end
 
-  def verify_table(table_name)
+  def verify_table(identifier)
     begin
-      DataStore.from(table_name).count
+      DataStore.from(identifier).count
     rescue ActiveRecord::StatementInvalid
-      create_data_store_tables(table_name)
+      creator = DataStoreCreator.new({:identifier => identifier, :database => ActiveRecordConnector.new.database})
+      creator.execute!
     end
   end
 
