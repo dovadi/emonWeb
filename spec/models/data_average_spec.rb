@@ -5,9 +5,8 @@ describe DataAverage do
   describe 'DataAverage' do
     before(:each) do
       drop_data_stores
-      @input = Input.new
-      @input.create_data_store_tables('data_store_789')
-     
+      creator = DataStoreCreator.new({:identifier => 789, :database => ActiveRecordConnector.new.database})
+      creator.execute!
       DataStore.create!(:value => 1, :identified_by => 789, :created_at => Time.parse('2012-08-07 11:01:57').utc)
       DataStore.create!(:value => 2, :identified_by => 789, :created_at => Time.parse('2012-08-07 11:01:58').utc)
     end

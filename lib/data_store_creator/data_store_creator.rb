@@ -2,7 +2,7 @@ class DataStoreCreator
 
   attr_reader :table_name, :identifier, :database
 
-  def initialize(options)
+  def initialize(options = {})
     @database   = options[:database] || MysqlDatabase.new
     @identifier = options[:identifier]
     @table_name = base_table_name + '_' + identifier.to_s

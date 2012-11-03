@@ -81,7 +81,7 @@ describe Input do
 
     def verify_table(table_name)
       DataStore.from(table_name).count.should == 0
-      DataStoreSql::TIMESLOTS.each do |timeslot|
+      DataStoreCreator.new.timeslots.each do |timeslot|
         DataStore.from(table_name + '_' + timeslot.to_s).count.should == 0
       end
     end
