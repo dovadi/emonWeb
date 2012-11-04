@@ -13,8 +13,9 @@ describe DifferenceProcessor do
     end
 
     it 'should only store the value is different than last one' do
-      Feed.expects(:update).with(@feed.id, :last_value => 252.76)
       processor = DifferenceProcessor.new(252.76, @feed.id)
+      DataStore.expects(:create).with(:value => 0.21, :identified_by => @feed.id)
+      Feed.expects(:update).with(@feed.id, :last_value => 252.76)
       processor.perform.should == 0.21
     end
 
