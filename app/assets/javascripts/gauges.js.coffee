@@ -13,9 +13,9 @@ window.EmonGauges = class EmonGauges
       id: 'gas_usage'
       value: 0
       min: 0
-      max: 500
+      max: 1000
       title: 'Gas'
-      label: 'm3/h'
+      label: 'liter'
 
   autoUpdate: (actual_electra) ->
     self = @
@@ -27,5 +27,5 @@ window.EmonGauges = class EmonGauges
       url: '/feeds/'
       dataType: 'json'
       success: (data) ->
-        self.gasUsage.refresh Math.round(data['gas_usage'] * 1000) / 1000
+        self.gasUsage.refresh Math.round(data['gas_usage'] * 1000)
         self.actualElectra.refresh Math.round(data['actual_electra'] * 1000) / 1000
