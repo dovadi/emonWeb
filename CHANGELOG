@@ -1,7 +1,8 @@
-* 0.5.2 (In progress)
+* 0.5.2
   Update to Rails 3.2.8
   Use justgage for gauges
   Add a DifferenceProcessor
+  Replace DataStoreSql with DataStoreCreator
 
 * 0.5.1
   Added /p1 to API in order to read P1 records
@@ -29,4 +30,4 @@
   Bootstrap version with devise, rails admin and deployement to heroku
 
 * 0.1
-   Bootstrap version with fully functional devise, using Twitter bootstrap for styling
+  Bootstrap version with fully functional devise, using Twitter bootstrap for styling
