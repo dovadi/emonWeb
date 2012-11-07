@@ -4,30 +4,30 @@
   Add a DifferenceProcessor
   Replace DataStoreSql with DataStoreCreator
 
-* 0.5.1
+* v0.5.1
   Added /p1 to API in order to read P1 records
   Update to Rails 3.2.7
   Store resets from nanode
   Release under open source MIT license
 
-* 0.5
+* v0.5
   Definition of processors
   Added Time zone functionality
   Coversion of javascript to coffeescript
   Update to Rails 3.2.5 and update of other gems
 
-* 0.4
+* v0.4
   Update to latest version of Rails and Twitter bootstrap
   Parsing P1 companion data for Dutch smart meters
 
-* 0.3
+* v0.3
   Data store with processing
 
-* 0.2.1
+* v0.2.1
   Lockable and authentication token included
 
-* 0.2
+* v0.2
   Bootstrap version with devise, rails admin and deployement to heroku
 
-* 0.1
+* v0.1
   Bootstrap version with fully functional devise, using Twitter bootstrap for styling

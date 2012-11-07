@@ -47,7 +47,14 @@ class DataStore < ActiveRecord::Base
   end
 
   def self.get_timeslot(options)
-    TimeslotSelector.determine(options)
+    gas_usage?(options) ? nil : TimeslotSelector.determine(options)
+  end
+
+  #Dirty temporary hack to graph gas_usage from P1
+  def self.gas_usage?(options)
+    processors = Input.find_all_by_name('gas_usage').map(&:processors)
+    ids = processors.compact.map {|data| data[0][1] if data[0][0] == :difference }
+    ids.include?(options[:feed_id])
   end
 
   def self.get_time(time)
