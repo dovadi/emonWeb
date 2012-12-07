@@ -53,6 +53,7 @@ production:
   adapter: postgresql
   encoding: utf8
   database: emonweb_production
-  username: emonweb
+  username: <%= ENV['DB_USER'] %>
+  password: <%= ENV['DB_PASSWORD'] %>
   host: localhost
 
