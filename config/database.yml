@@ -1,0 +1,58 @@
+# MySQL.  Versions 4.1 and 5.0 are recommended.
+# 
+# Install the MYSQL driver
+#   gem install mysql2
+#
+# Ensure the MySQL gem is defined in your Gemfile
+#   gem 'mysql2'
+#
+# And be sure to use new-style password hashing:
+#   http://dev.mysql.com/doc/refman/5.0/en/old-client.html
+# See https://willj.net/2011/05/31/setting-up-postgresql-for-ruby-on-rails-development-on-os-x/
+# Start with createuser emonweb
+# Shall the new role be a superuser? (y/n) y
+
+development:
+  adapter: postgresql
+  encoding: utf8
+  database: emonweb_development
+  username: emonweb
+  host: localhost
+
+# test:
+#   adapter: postgresql
+#   encoding: utf8
+#   database: emonweb_test_2
+#   username: emonweb
+#   host: localhost
+
+# development:
+#   adapter: mysql2
+#   encoding: utf8
+#   reconnect: false
+#   database: emonweb_development
+#   pool: 5
+#   username: root
+#   password:
+#   socket: /tmp/mysql.sock
+
+# Warning: The database defined as "test" will be erased and
+# re-generated from your development database when you run "rake".
+# Do not set this db to the same as development or production.
+test:
+  adapter: mysql2
+  encoding: utf8
+  reconnect: false
+  database: emonweb_test
+  pool: 5
+  username: root
+  password:
+  socket: /tmp/mysql.sock
+
+production:
+  adapter: postgresql
+  encoding: utf8
+  database: emonweb_production
+  username: emonweb
+  host: localhost
+
