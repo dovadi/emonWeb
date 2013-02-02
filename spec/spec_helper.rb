@@ -12,6 +12,28 @@ def drop_data_stores
   end
 end
 
+module ActiveRecord
+  module ConnectionAdapters
+
+    class AbstractAdapter
+
+      #Monkey patch: don't cache database tables. DatabaseCleaner uses the double pipe / or equals (||=) operator
+      #See https://github.com/bmabey/database_cleaner/blob/master/lib/database_cleaner/active_record/truncation.rb r25
+      #With caching it tries to cleanup tables that doesn't exist! And we get errors like:
+
+      #  ActiveRecord::StatementInvalid:
+      #    PG::Error: ERROR:  relation "data_store_14" does not exist
+
+      #This is because we create a lot data store table on the fly during tests
+      def database_cleaner_table_cache
+        @database_cleaner_tables = tables
+      end
+
+    end
+  end
+end
+
+
 Spork.prefork do
   # Loading more in this block will cause your tests to run faster. However,
   # if you change any configuration or code from libraries loaded here, you'll
@@ -41,7 +63,6 @@ Spork.prefork do
     #
     config.before(:suite) do
       DatabaseCleaner.strategy = :truncation
-      DatabaseCleaner.clean_with(:truncation)
     end
 
     config.before(:each) do

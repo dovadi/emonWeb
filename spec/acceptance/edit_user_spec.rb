@@ -12,10 +12,10 @@ feature 'Edit user', %q{
   end
 
   scenario 'I sign in and edit my account' do\
-    click_link 'Edit account'
-    fill_in 'Password', :with => 'dovadi'
-    fill_in 'Password confirmation', :with => 'dovadi'
-    fill_in 'Current password', :with => @user.password
+    first(:link, 'Edit account').click
+    fill_in 'user_password', :with => 'dovadi'
+    fill_in 'user_password_confirmation', :with => 'dovadi'
+    fill_in 'user_current_password', :with => @user.password
     click_button 'Update'
     within '.alert-success' do
       page.should have_content('You updated your account successfully.')

@@ -8,13 +8,13 @@ feature 'Sign up', %q{
 
   background do
     visit homepage
-    click_link 'Sign up'
+    first(:link, 'Sign up').click
   end
 
   scenario 'User signs up with valid data' do
     fill_in 'Email', :with => 'user@test.com'
-    fill_in 'Password', :with => 'please'
-    fill_in 'Password confirmation', :with => 'please'
+    fill_in 'user_password', :with => 'please'
+    fill_in 'user_password_confirmation', :with => 'please'
     click_button 'Sign up'
     within '.alert' do
       page.should have_content('Welcome! You have signed up successfully.')
@@ -23,8 +23,8 @@ feature 'Sign up', %q{
 
   scenario 'User signs up with invalid email' do
     fill_in 'Email', :with => 'usertest.com'
-    fill_in 'Password', :with => 'please'
-    fill_in 'Password confirmation', :with => 'please'
+    fill_in 'user_password', :with => 'please'
+    fill_in 'user_password_confirmation', :with => 'please'
     click_button 'Sign up'
     within '#error_explanation' do
       page.should have_content('Email is invalid')
@@ -33,7 +33,7 @@ feature 'Sign up', %q{
 
   scenario 'User signs up without password' do
     fill_in 'Email', :with => 'user@test.com'
-    fill_in 'Password confirmation', :with => 'please'
+    fill_in 'user_password_confirmation', :with => 'please'
     click_button 'Sign up'
     within '#error_explanation' do
       page.should have_content("Password can't be blank")
@@ -43,7 +43,7 @@ feature 'Sign up', %q{
 
   scenario 'User signs up without password confirmation' do
     fill_in 'Email', :with => 'user@test.com'
-    fill_in 'Password', :with => 'please'
+    fill_in 'user_password', :with => 'please'
     click_button 'Sign up'
     within '#error_explanation' do
       page.should have_content("Password doesn't match confirmation")
@@ -52,8 +52,8 @@ feature 'Sign up', %q{
 
   scenario 'User signs up with mismatched password and confirmation' do
     fill_in 'Email', :with => 'user@test.com'
-    fill_in 'Password', :with => 'please'
-    fill_in 'Password confirmation', :with => 'please1'
+    fill_in 'user_password', :with => 'please'
+    fill_in 'user_password_confirmation', :with => 'please1'
     click_button 'Sign up'
     within '#error_explanation' do
       page.should have_content("Password doesn't match confirmation")
