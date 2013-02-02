@@ -9,13 +9,13 @@ group :assets do
   gem 'uglifier', '~>1.3.0'
 end
 
-gem 'jquery-rails', '~>2.1.3'
-gem "raphael-rails", "~> 2.1.0"
+gem 'jquery-rails', '~>2.2.0'
+gem "raphael-rails", "~>2.1.1"
 gem 'haml-rails', '~>0.3.5'
 gem 'devise', '~>2.2.3'
-gem 'rails_admin', '~>0.1.1'
+gem 'rails_admin', '~>0.4.3'
 gem 'thin', '~>1.5.0'
-gem 'airbrake', '~>3.1.5'
+gem 'airbrake', '~>3.1.7'
 gem 'redis', '~>3.0.2'
 gem 'parse_p1', '0.0.5'
 
@@ -25,7 +25,7 @@ gem 'formtastic-bootstrap', '~>2.0.0'
 #heroku
 group :production do
   gem 'pg', '~>0.14.1'
-  gem 'newrelic_rpm', '~>3.4.2.1'
+  gem 'newrelic_rpm', '~>3.5.6.46'
 end
 
 group :test, :development do
