@@ -42,6 +42,10 @@ Simple workflow brew install certain version (for example postgresql)
 
 # brew install FORMULANAME
 
+Problems with update homebrew
+-----------------------------
+# See http://stackoverflow.com/questions/9370552/brew-update-failure-while-executing-git-checkout
+
 Truncate performance difference is great between postgresql 9.0.4 and 9.1.4! More than 5 time slower!
 --------------------------------------------------------------------------------------------------
 # So DatabaseCleaner strategy truncation is for 9.1.4 not really an option
@@ -52,6 +56,11 @@ Prefer brew postgres installation over postgresapp from Heroku
 --------------------------------------------------------------
 # You can control your postgres.conf (/usr/local/var/postgres/)
 # Change client_min_messages = warning (instead of notice)
+
+Upgrade postgres with homebrew
+------------------------------
+# See https://gist.github.com/rafaelss/3700977 for steps and use of pg_upgrade (attention for stale postmaster.pid file)
+
 
 Running specs
 --------------
