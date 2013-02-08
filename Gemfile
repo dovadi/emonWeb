@@ -47,7 +47,7 @@ group :test, :development do
 
   gem 'database_cleaner'
   gem 'pg', '~>0.14.1'
-  gem 'taps'#, '~>0.3.24'
+  gem 'taps'
   gem 'sqlite3'
   gem 'mysql2'
 end

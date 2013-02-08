@@ -18,12 +18,15 @@ development:
   encoding: utf8
   database: emonweb_development
   username: postgres
+  host: localhost
+
 
 test:
   adapter: postgresql
   encoding: utf8
   database: emonweb_test
   username: postgres
+  host: localhost
 
 #development:
 #  adapter: mysql2
