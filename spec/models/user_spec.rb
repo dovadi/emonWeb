@@ -118,6 +118,24 @@ describe User do
     end
 
   end
+
+  describe 'Extra attributes' do
+
+    before(:each) do
+      @user = User.create!(@attr)
+    end
+
+    it 'should store its ip_address' do
+      @user.ip_address = '127.0.0.1'
+      @user.save.should == true 
+    end
+
+    it 'should store a serial number' do
+      @user.serial_number = 'ABCD01234'
+      @user.save.should == true 
+    end
+
+  end
   
   describe 'Api read token' do
 
