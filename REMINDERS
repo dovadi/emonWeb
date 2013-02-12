@@ -61,8 +61,11 @@ Upgrade postgres with homebrew
 ------------------------------
 # See https://gist.github.com/rafaelss/3700977 for steps and use of pg_upgrade (attention for stale postmaster.pid file)
 
-
 Running specs
 --------------
 # acceptance spec fails with running bundle exec rake spec
 # Use bundle exec rspec (used in .travis.yml)
+
+Secret token
+------------
+# heroku config:set SECRET_TOKEN={{your secret token}}
