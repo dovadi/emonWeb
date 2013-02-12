@@ -39,12 +39,8 @@ group :test, :development do
   gem 'rb-fsevent'
   gem 'factory_girl'
   gem 'factory_girl_rails'
-  gem 'spork'
-  gem 'spork-rails'
-
-  #see https://github.com/guard/guard-spork/issues/107, should be fixed in 1.4.2 (not available yet because of rubygems hack)
-  gem 'guard-spork', github: 'guard/guard-spork' #see https://github.com/guard/guard-spork/issues/107
-
+  gem 'zeus'
+  gem 'guard-zeus'
   gem 'database_cleaner'
   gem 'pg', '~>0.14.1'
   gem 'taps'
