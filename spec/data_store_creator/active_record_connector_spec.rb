@@ -4,7 +4,7 @@ describe ActiveRecordConnector do
 
   def stub_database(db)
     connection = mock(:adapter_name => db)
-    ActiveRecordDatabase.any_instance.stubs(:db_connection).returns(connection)
+    ActiveRecordDatabase.any_instance.stub(:db_connection).and_return(connection)
   end
 
   it 'should raise an exception if database is not implemented' do

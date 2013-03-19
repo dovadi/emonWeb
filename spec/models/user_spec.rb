@@ -144,7 +144,7 @@ describe User do
     end
 
     it 'should create a new API read token' do
-      @user.expects(:friendly_token).returns(VALID_TOKEN)
+      @user.should_receive(:friendly_token).and_return(VALID_TOKEN)
       @user.reset_api_read_token!
       @user.reload
       @user.api_read_token.should == VALID_TOKEN 

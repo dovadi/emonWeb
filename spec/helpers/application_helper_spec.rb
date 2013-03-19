@@ -4,7 +4,7 @@ describe ApplicationHelper do
 
   describe 'color_time_age' do
     before(:each) do
-      Time.zone.stubs(:now).returns(1321012900)
+      Time.zone.stub(:now).and_return(1321012900)
     end
     it 'should return green if time difference is smaller than 30 seconds' do
       helper.color_time_ago(Time.at(1321012885)).should == 'green'

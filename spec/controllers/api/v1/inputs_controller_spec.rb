@@ -58,13 +58,13 @@ describe Api::V1::InputsController do
 
     describe 'with invalid params' do
       it 'assigns a newly created but unsaved input as @input' do
-        Input.any_instance.stubs(:save).returns(false)
+        Input.any_instance.stub(:save).and_return(false)
         post :create, :input => {}
         assigns(:input).should be_a_new(Input)
       end
 
       it 're-renders the new template' do
-        Input.any_instance.stubs(:save).returns(false)
+        Input.any_instance.stub(:save).and_return(false)
         post :create, :input => {}
         response.should render_template('new')
       end

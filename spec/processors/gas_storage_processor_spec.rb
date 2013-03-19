@@ -9,8 +9,8 @@ describe GasStorageProcessor do
   end
 
   it 'should only pass the value during a perform' do
-    DataStore.expects(:create).never
-    Feed.expects(:update).never
+    DataStore.should_receive(:create).never
+    Feed.should_receive(:update).never
     processor = GasStorageProcessor.new(98.76, 12345)
     processor.perform.should == 98.76
   end

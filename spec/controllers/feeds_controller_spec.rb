@@ -17,7 +17,7 @@ describe FeedsController do
     before do
       sign_in @user
       @feeds = mock
-      subject.current_user.expects(:feeds).returns(@feeds)
+      subject.current_user.should_receive(:feeds).and_return(@feeds)
       get 'index'
     end
 
@@ -39,9 +39,9 @@ describe FeedsController do
     before do
       sign_in @user
       @feeds = mock
-      subject.current_user.expects(:feeds).returns(@feeds)
+      subject.current_user.should_receive(:feeds).and_return(@feeds)
       values = mock(:values => {:actual_electra => 100})
-      FeedExtractor.expects(:new).with(@feeds, [:actual_electra, :gas_usage]).returns(values)
+      FeedExtractor.should_receive(:new).with(@feeds, [:actual_electra, :gas_usage]).and_return(values)
       xhr :get, :index, :format => :js
     end
     it { should respond_with :success}
@@ -53,12 +53,12 @@ describe FeedsController do
       sign_in @user
 
       @feed = mock
-      @feed.expects(:to_json)
+      @feed.should_receive(:to_json)
 
       feeds = mock
-      feeds.expects(:find).with('1').returns(@feed)
+      feeds.should_receive(:find).with('1').and_return(@feed)
 
-      subject.current_user.expects(:feeds).returns(feeds)
+      subject.current_user.should_receive(:feeds).and_return(feeds)
 
       xhr :get, :show, :id => 1, :format => 'js'
     end
@@ -81,9 +81,9 @@ describe FeedsController do
       @feed = mock
       
       feeds = mock
-      feeds.expects(:find).with('1').returns(@feed)
+      feeds.should_receive(:find).with('1').and_return(@feed)
 
-      subject.current_user.expects(:feeds).returns(feeds) 
+      subject.current_user.should_receive(:feeds).and_return(feeds) 
     end
 
     describe 'raw data' do

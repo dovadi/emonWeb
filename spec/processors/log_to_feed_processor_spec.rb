@@ -8,8 +8,8 @@ describe LogToFeedProcessor do
   end
 
   it 'should store the data in the corresponding DataStore table' do
-    DataStore.expects(:create).with(:value => 123.45, :identified_by => 3)
-    Feed.expects(:update).with(3, :last_value => 123.45)
+    DataStore.should_receive(:create).with(:value => 123.45, :identified_by => 3)
+    Feed.should_receive(:update).with(3, :last_value => 123.45)
     processor = LogToFeedProcessor.new(123.45, 3)
     processor.perform.should == 123.45
   end

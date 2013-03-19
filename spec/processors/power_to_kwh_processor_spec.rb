@@ -13,9 +13,9 @@ describe PowerToKwhProcessor do
   end
 
   it 'should store the data in the corresponding DataStore table' do
-    Time.stubs(:now).returns(Time.at(1320857865))
-    Feed.any_instance.stubs(:updated_at).returns(Time.now - 100.seconds)
-    DataStore.expects(:create).with(:value => 0.1, :identified_by => @feed.id)
+    Time.stub(:now).and_return(Time.at(1320857865))
+    Feed.any_instance.stub(:updated_at).and_return(Time.now - 100.seconds)
+    DataStore.should_receive(:create).with(:value => 0.1, :identified_by => @feed.id)
     processor = PowerToKwhProcessor.new(3600, @feed.id)
 
     processor.perform.should == 3600

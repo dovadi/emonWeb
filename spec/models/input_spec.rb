@@ -65,7 +65,7 @@ describe Input do
 
     it 'should update the last value if input already exists and the last value is the same' do
       input = Input.create!(@attr.merge(:user_id => 100))
-      Input.any_instance.expects(:touch).with(:updated_at)
+      Input.any_instance.should_receive(:touch).with(:updated_at)
       Input.create_or_update(:water => 252.55, :user_id => 100)
     end
 
@@ -87,7 +87,7 @@ describe Input do
     end
 
     before(:each) do
-      DataAverage.stubs(:calculate!).with(any_parameters)
+      DataAverage.stub(:calculate!).with(any_args())
       drop_data_stores
       @input = Input.create!(@attr.merge(:user_id => 3))
       @input.define_processor!(:log_to_feed, 'kWh')
@@ -117,9 +117,9 @@ describe Input do
     end
 
     it 'should update the last value of the corresponding feeds' do
-      Feed.expects(:update).with(@last_feed.id - 2, any_parameters)
-      Feed.expects(:update).with(@last_feed.id - 1, any_parameters)
-      Feed.expects(:update).with(@last_feed.id    , any_parameters)
+      Feed.should_receive(:update).with(@last_feed.id - 2, anything())
+      Feed.should_receive(:update).with(@last_feed.id - 1, anything())
+      Feed.should_receive(:update).with(@last_feed.id    , anything())
       Input.create_or_update(:water => 255.12, :user_id => 3)
     end
 
@@ -141,7 +141,6 @@ describe Input do
     end
 
     describe 'Processing of data' do
-
       before(:each) do
         @attr = {
           :last_value => 252.55,
@@ -150,17 +149,15 @@ describe Input do
           :processors => [[:scale, 1.23], [:offset, 3.5]]
         }
         Input.create!(@attr)
-        @processor_klass = mock
-        String.any_instance.expects(:constantize).twice.returns(@processor_klass)
       end
 
       it 'should perform the given processors' do
         scale_processor = mock
-        scale_processor.stubs(:perform).returns(500)
+        scale_processor.stub(:perform).and_return(500)
         offset_processor = mock
-        offset_processor.stubs(:perform).returns(1546.34)
-        @processor_klass.expects(:new).with(252.55, 1.23).returns(scale_processor)
-        @processor_klass.expects(:new).with(500, 3.5).returns(offset_processor)
+        offset_processor.stub(:perform).and_return(1546.34)
+        ScaleProcessor.should_receive(:new).with(252.55, 1.23).and_return(scale_processor)
+        OffsetProcessor.should_receive(:new).with(500, 3.5).and_return(offset_processor)
         Input.create_or_update(:heat => 252.55, :user_id => 100)
       end
     end

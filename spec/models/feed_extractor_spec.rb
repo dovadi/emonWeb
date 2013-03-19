@@ -11,7 +11,7 @@ describe FeedExtractor do
   it 'should return the correct values' do
     feed = Feed.last
     data_store = mock(:value => @input.last_value)
-    DataStore.expects(:from).with(feed.id).returns([data_store])
+    DataStore.should_receive(:from).with(feed.id).and_return([data_store])
     @extractor.values.should == {:actual_electra => 252.55}
   end
 

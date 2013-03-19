@@ -15,14 +15,14 @@ describe PowerToKwhPerDayProcessor do
 
     it 'should store the data in the corresponding DataStore table' do
       arel_object  = mock
-      arel_object.expects(:first).returns(nil)
+      arel_object.should_receive(:first).and_return(nil)
 
       scope_object = mock
-      scope_object.expects(:where).with(:created_at => Date.today).returns(arel_object)
+      scope_object.should_receive(:where).with(:created_at => Date.today).and_return(arel_object)
 
-      DataStore.stubs(:from).with('data_store_' + @feed.id.to_s).returns(scope_object)
-      DataStore.expects(:create).with(:value => 0, :identified_by => @feed.id, :created_at => Date.today)
-      Feed.expects(:update).with(@feed.id, :last_value => 0)
+      DataStore.stub(:from).with('data_store_' + @feed.id.to_s).and_return(scope_object)
+      DataStore.should_receive(:create).with(:value => 0, :identified_by => @feed.id, :created_at => Date.today)
+      Feed.should_receive(:update).with(@feed.id, :last_value => 0)
 
       processor = PowerToKwhPerDayProcessor.new(3600, @feed.id)
       processor.perform.should == 3600
@@ -37,19 +37,19 @@ describe PowerToKwhPerDayProcessor do
 
     it 'should store the data in the corresponding DataStore table' do
       data_store   = mock
-      data_store.expects(:update_attributes).with(:value => 0.1, :identified_by => @feed.id, :created_at => Date.today)
-      Feed.expects(:update).with(@feed.id, :last_value => 0.1)
+      data_store.should_receive(:update_attributes).with(:value => 0.1, :identified_by => @feed.id, :created_at => Date.today)
+      Feed.should_receive(:update).with(@feed.id, :last_value => 0.1)
 
       arel_object  = mock
-      arel_object.expects(:first).returns(data_store)
+      arel_object.should_receive(:first).and_return(data_store)
 
       scope_object = mock
-      scope_object.expects(:where).with(:created_at => Date.today).returns(arel_object)
+      scope_object.should_receive(:where).with(:created_at => Date.today).and_return(arel_object)
 
-      DataStore.stubs(:from).with('data_store_' + @feed.id.to_s).returns(scope_object)
+      DataStore.stub(:from).with('data_store_' + @feed.id.to_s).and_return(scope_object)
 
-      Time.stubs(:now).returns(Time.at(1320857865))
-      Feed.any_instance.stubs(:updated_at).returns(Time.now - 100.seconds)
+      Time.stub(:now).and_return(Time.at(1320857865))
+      Feed.any_instance.stub(:updated_at).and_return(Time.now - 100.seconds)
 
       processor = PowerToKwhPerDayProcessor.new(3600, @feed.id)
       processor.perform.should == 3600

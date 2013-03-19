@@ -28,13 +28,13 @@ describe DataStoreCreator do
     end
 
     it 'should create all the correct tables' do
-      @database.expects(:create_table).with('data_store_12345')
-      @database.expects(:create_table).with('data_store_12345_one_min')
-      @database.expects(:create_table).with('data_store_12345_five_mins')
-      @database.expects(:create_table).with('data_store_12345_fifteen_mins')
-      @database.expects(:create_table).with('data_store_12345_one_hour')
-      @database.expects(:create_table).with('data_store_12345_four_hours')
-      @database.expects(:create_table).with('data_store_12345_twelve_hours')
+      @database.should_receive(:create_table).with('data_store_12345')
+      @database.should_receive(:create_table).with('data_store_12345_one_min')
+      @database.should_receive(:create_table).with('data_store_12345_five_mins')
+      @database.should_receive(:create_table).with('data_store_12345_fifteen_mins')
+      @database.should_receive(:create_table).with('data_store_12345_one_hour')
+      @database.should_receive(:create_table).with('data_store_12345_four_hours')
+      @database.should_receive(:create_table).with('data_store_12345_twelve_hours')
       @creator.execute!
     end
   end

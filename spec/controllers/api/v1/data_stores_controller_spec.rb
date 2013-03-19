@@ -20,9 +20,9 @@ describe Api::V1::DataStoresController do
       feed = Feed.create!(:last_value => 252.55, :name => 'electra', :input_id => 3, :user_id => @user.id)
       params  = {:from => 1321813064000, :till => 1321816647000, :feed_id => feed.id} #milliseconds
       data = mock
-      data.expects(:to_json)
+      data.should_receive(:to_json)
       #Fetching with timestamps in seconds
-      DataStore.expects(:fetch).with({:from => 1321813064, :till => 1321816647, :feed_id => feed.id}).returns(data)
+      DataStore.should_receive(:fetch).with({:from => 1321813064, :till => 1321816647, :feed_id => feed.id}).and_return(data)
       get :index, {:format => :js}.merge(params.merge(:api_read_token => @user.api_read_token))
     end
   end
