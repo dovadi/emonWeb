@@ -1,39 +1,40 @@
 source 'http://rubygems.org'
 
-gem 'rails', '3.2.12'
+gem 'rails', '3.2.13'
 
 # Gems used only for assets and not required
 # in production environments by default.
 group :assets do
-  gem 'coffee-rails', '~>3.2.2'
-  gem 'uglifier', '~>1.3.0'
+  gem 'coffee-rails'
+  gem 'uglifier'
 end
 
-gem 'jquery-rails', '~>2.2.0'
-gem "raphael-rails", "~>2.1.1"
-gem 'haml-rails', '~>0.3.5'
-gem 'devise', '~>2.2.3'
-gem 'rails_admin', '~>0.4.3'
-gem 'thin', '~>1.5.0'
-gem 'airbrake', '~>3.1.7'
-gem 'redis', '~>3.0.2'
-gem 'parse_p1', '0.0.5'
+gem 'jquery-rails'
+gem 'raphael-rails'
+gem 'haml-rails'
+gem 'devise'
+gem 'rails_admin'
+gem 'thin'
+gem 'airbrake'
+gem 'redis'
+gem 'parse_p1'
+gem 'nokogiri', '1.5.0' #1.5.6 and higher gave ruby bug errors
 
-gem 'formtastic', '~> 2.2.1'
-gem 'formtastic-bootstrap', '~>2.0.0'
+gem 'formtastic'
+gem 'formtastic-bootstrap'
 
 #heroku
 group :production do
   gem 'pg', '~>0.14.1'
-  gem 'newrelic_rpm', '~>3.5.6.46'
+  gem 'newrelic_rpm'
 end
 
 group :test, :development do
+  gem 'rspec'
   gem 'pry'
   gem 'steak'
   gem 'email_spec'
   gem 'shoulda-matchers'
-  gem 'mocha'
   gem 'guard'
   gem 'guard-rspec'
   gem 'rb-fsevent'

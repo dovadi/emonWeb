@@ -8,7 +8,7 @@ Emonweb::Application.routes.draw do
     end
   end
 
-  match "widgets/dial/"
+  match "widgets/dial"
 
   namespace :api do
     namespace :v1 do
