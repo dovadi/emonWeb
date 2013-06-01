@@ -16,6 +16,9 @@ Import PG backups from Heroku into local database
 # curl -o latest.dump `heroku pgbackups:url`
 # pg_restore --verbose --clean --no-acl --no-owner -h localhost -U emonweb -d emonweb_development latest.dump
 
+  Dump from local database
+# PGPASSWORD=RrR2009 pg_dump -Fc --no-acl --no-owner -h localhost -U kdvnet kdvnet_development > kdvnet.dump
+
 Simple workflow brew install certain version (for example postgresql)
 ---------------------------------------------------------------------
 # Step 1:
