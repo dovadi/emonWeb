@@ -80,8 +80,10 @@ describe DataStore do
       data = DataStore.fetch(:from => @from.to_i, :till => @till.to_i + 10, :feed_id => 1)
       data.size.should == 2
 
-      data.include?([ds1.created_at.to_i * 1000, ds1.value]).should == true
-      data.include?([ds2.created_at.to_i * 1000, ds2.value]).should == true
+      offset = Time.zone.now.utc_offset * 1000
+
+      data.include?([ds1.created_at.to_i * 1000 + offset, ds1.value]).should == true
+      data.include?([ds2.created_at.to_i * 1000 + offset, ds2.value]).should == true
     end
   end
 
